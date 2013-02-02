@@ -1,0 +1,82 @@
+@charset "utf-8";
+/* CSS Document */
+
+select {
+	border: 1px solid #000000;
+}
+.menu {
+	display: none;
+	visibility: hidden;
+}
+
+.hoverme:hover + .menu {
+	display: block;
+	visibility: visible;
+	position: absolute;
+}
+		
+.menu:hover {
+	display: block;
+	visibility: visible;
+	position: absolute;
+}
+
+.itemEpic, .itemEpic:hover, .itemEpic:active, .itemEpic:visited, .itemEpic.link{
+	color: #8c3fff;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+.itemRar, .itemRar:hover, .itemRar:active, .itemRar:visited, .itemRar:link {
+	color: #0b70dd;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+.itemLegend, .itemLegend:hover, .itemLegend:active, .itemLegend:visited, .itemLegend:link {
+	color: #ff8406;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+.raidmenu {
+	font-size: 12px;
+	text-decoration: none;
+	background-color: #0066FF;
+	border: 1px solid #000000;
+	font-weight: bold;
+	color: #FFFFFF;
+	padding-right: 5px;
+	padding-left: 5px;
+}
+.raidmenu:hover, .raidmenu:active {
+	font-size: 12px;
+	text-decoration: none;
+	background-color: #FF6600;
+	border: 1px solid #000000;
+	font-weight: bold;
+	color: #FFFFFF;
+	padding-right: 5px;
+	padding-left: 5px;
+}
+.raidmenu2 {
+	font-size: 14px;
+	text-decoration: none;
+	background-color: #FF6600;
+	border: 1px solid #000000;
+	font-weight: bold;
+	color: #FFFFFF;
+	padding-right: 5px;
+	padding-left: 5px;
+}
+
+.aDIV01, .aDIV02, .aDIV03, .aDIV04{
+	font-family: Tahoma;
+	font-size: 12px;
+	height: 18px;
+	line-height: 18px;
+	border-bottom: 1px dotted black;
+	background-color: #FFFFFF;
+	padding-left: 2px;
+	padding-right: 2px;
+}

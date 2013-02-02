@@ -1,0 +1,91 @@
+<script type='text/javascript' src='include/includes/js/bbcode.js'></script>
+<table width="100%" border="0" cellspacing="5" cellpadding="0">
+  <tr>
+    <td width="40%" valign="top">
+    {EXPLODE}
+    <form action="{pfad}" method="post" enctype="multipart/form-data" name="form">
+      <table width="100%" border="0" cellspacing="1" cellpadding="2" class="border">
+        <tr>
+          <td colspan="2" class="Chead"><strong>DKP's</strong></td>
+        </tr>
+        <tr class="Cnorm">
+          <td nowrap="nowrap">Info:</td>
+          <td><input name="name" type="text" id="name" value="{name}" size="30" />
+              <input name="id" type="hidden" id="id" value="{id}" /></td>
+        </tr>
+        <tr class="Cnorm">
+          <td nowrap="nowrap">PM:</td>
+          <td><p>
+            <label>
+              <input name="pm" type="radio" id="pm_0" value="+" {pm1} />
+              Plus</label>
+            (+)<br />
+            <label>
+              <input type="radio" name="pm" value="-" id="pm_1" {pm2} />
+              Minus</label>
+            (-)<br />
+          </p></td>
+        </tr>
+        <tr class="Cnorm">
+          <td nowrap="nowrap">DKP:</td>
+          <td><label>
+          <input name="dkp" type="text" id="dkp" value="{dkp}" size="30" />
+          </label></td>
+        </tr>
+        <tr class="Cnorm">
+          <td>&nbsp;</td>
+          <td><input type="submit" name="button" id="button" value="Senden" /></td>
+        </tr>
+      </table>
+    </form>
+    {EXPLODE}
+    <table width="100%" border="0" cellspacing="1" cellpadding="2" class="border">
+      <tr class="Cmite">
+        <td>{msg}</td>
+      </tr>
+    </table>
+    {EXPLODE}
+	</td>
+    <td width="20%" valign="top">
+    {EXPLODE}
+    <table width="100%" border="0" cellspacing="1" cellpadding="2" class="border">
+      <tr class="Chead">
+        <td colspan="2"><strong>Inztanzen</strong></td>
+      </tr>
+      {EXPLODE}
+      <tr class="{class}">
+        <td width="1%" class="Cdark">{img}</td>
+        <td width="99%" nowrap="nowrap">{name}</td>
+      </tr>
+      {EXPLODE}
+      <tr class="Cmite">
+        <td colspan="2">{msg}</td>
+      </tr>
+      {EXPLODE}
+    </table>
+    {EXPLODE}
+    </td>
+    <td width="40%" valign="top">
+    {EXPLODE}
+    <table width="100%" border="0" cellspacing="1" cellpadding="2" class="border">
+      <tr class="Chead">
+        <td colspan="4"><strong>DKP's f&uuml;r die Instanze: {inzen}</strong></td>
+      </tr>
+      {EXPLODE}
+      <tr class="Cnorm">
+        <td width="50" nowrap="nowrap" class="Cdark"><div align="right">{pm}{dkp}</div></td>
+        <td width="98%"><strong>{name}</strong></td>
+        <td width="1%">{edit}</td>
+        <td width="1%">{del}</td>
+      </tr>
+      {EXPLODE}
+      <tr class="Cmite">
+        <td colspan="4">{msg}</td>
+      </tr>
+      {EXPLODE}
+    </table>
+    {EXPLODE}
+    </td>
+  </tr>
+</table>
+

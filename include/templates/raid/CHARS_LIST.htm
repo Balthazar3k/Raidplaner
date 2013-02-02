@@ -1,0 +1,68 @@
+<script type="text/javascript">
+<!--
+function MM_jumpMenu(targ,selObj,restore){ //v3.0
+  eval(targ+".location=\'"+selObj.options[selObj.selectedIndex].value+"\'");
+  if (restore) selObj.selectedIndex=0;
+}
+//-->
+</script>
+
+<table width="100%" border="0" cellspacing="1" cellpadding="2" class="border">
+  <tr class="Chead"> 
+    <td width="20%" align="center"><strong>Chars</strong></td>
+    <td width="20%" align="center"><strong>70iger</strong></td>
+    <td width="20%" align="center" nowrap="nowrap">
+    <strong>Main Chars</strong></td>
+    <td width="20%" align="center">
+      <strong>Bewerber</strong></td>
+<td width="20%" align="center">
+  <strong>Deine Chars</strong></td>
+  </tr>
+  <tr class="Cdark"> 
+    <td align="center">{COUNT_CHARS}</td>
+    <td align="center">{COUNT_LEVEL}</td>
+    <td align="center">
+    {COUNT_MAINS}</td>
+    <td align="center" class="Cnorm">
+{COUNT_BEWERBER}</td>
+    <td align="center">{COUNT_EIGENE}</td>
+  </tr>
+</table>
+<br />
+<table width="100%" border="0" cellspacing="2" cellpadding="2">
+  <tr>
+    <td colspan="2" nowrap>
+      <form id="form2" name="form2" method="post" action="index.php?chars">
+        <div align="center">Charame:
+          <input type="text" name="search" id="search" />
+          <input type="submit" name="button" id="button" value="Suchen" />
+        </div>
+    </form>    </td>
+  </tr>
+  <tr>
+    <td nowrap>{USER}</td>
+    <td align="right" valign="middle" nowrap="nowrap">{list_klassen}</td>
+  </tr>
+</table>
+<table width="100%" border="0" cellspacing="1" cellpadding="2" class="border">
+  <tr class="Chead"> 
+    <td colspan="3"><strong>Charname</strong></td>
+    <td><strong>Username</strong></td>
+    <td><strong>Rang</strong></td>
+    <td>  </td>
+  </tr>
+{EXPLODE}
+<tr> 
+    <td colspan="6" class="Stil2 Cdark">{klass_name} ({COUNT_KLASSEN})</td>
+</tr>
+  {EXPLODE} 
+  <tr> 
+    <td width="4%" class="Chead">{img}</td>
+    <td colspan="2" class="{CLASS}"><strong>{name}</strong> ({level})<br />
+    <div style="font-size:9px; float:left;">{sb}</div><div style="float:right; font-size:9px;">{ARSENAL}</div></td>
+    <td align="center" class="{CLASS}">{username}</td>
+    <td align="center" valign="middle" nowrap="nowrap" class="{CLASS}">{rang}</td>
+    <td align="right" class="{CLASS}">{edit}</td>
+  </tr>
+  {EXPLODE} 
+</table>

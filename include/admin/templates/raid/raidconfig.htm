@@ -1,0 +1,80 @@
+ <script language="JavaScript" type="text/JavaScript">
+<!--
+function MM_jumpMenu(targ,selObj,restore){ //v3.0
+  eval(targ+".location='"+selObj.options[selObj.selectedIndex].value+"'");
+  if (restore) selObj.selectedIndex=0;
+}
+//-->
+</script>
+ <p>Einstellungen zu Ver&auml;ndern k&ouml;nnte schlimme Ausmase habe, einstellungen nur f&uuml;r Vortgeschrittene!<br />
+ Vorhande einstellungen k&ouml;nnen auch Bearbeitet werden, aber sie D&uuml;rfen kein Zeile nach oben oder nach unter geschoben werden.<br />
+ Hinter jeder einstellung befindet sich eine FESTE &quot;id&quot; die im ganzen Raidplaner alle werte richtig Darstellen!</p>
+ <p>Neue Zeilen Hinzuf&uuml;gen, sollte Jedoch ohne Problem M&ouml;glich sein.<br />
+ Felder in den man keine Zuordnung erkennen kann aber durchaus eine 0 oder 1 haben bedeutet meist 0 = Aus 1 = An,<br />
+   bsp. bei Klassen stehen diese zahlen, sie Steuern ob noch klassen gesucht werden oder nicht! 1=Wir Suchen noch 0=Wir Suchen keine dieser Klassen mehr.<br />
+ </p>
+<form name="form">
+  <table width="100%" border="0" cellspacing="1" cellpadding="1">
+    <tr> 
+      <td width="9%"><p>
+        <select name="menu1" onChange="MM_jumpMenu('parent',this,0)">
+          <option selected>Auswahl:</option>
+          <option value="admin.php?raidconfig-klassen">Klassen</option>
+          <option value="admin.php?raidconfig-rassen">Rassen</option>
+          <option value="admin.php?raidconfig-berufe">Berufe</option>
+          <option value="admin.php?raidconfig-level">Level</option>
+          <option value="admin.php?raidconfig-loot">Loot</option>
+          <option value="admin.php?raidconfig-grpsize">Gruppen Größe</option>
+          <option value="admin.php?raidconfig-info">Info</option>
+        </select>
+        </p>
+      </td>
+      <td width="91%"> f&uuml;r Konfiguration</td>
+    </tr>
+  </table>
+</form>
+	
+<br>
+{EXPLODE} 
+<!-- klassen, Rassen, Berufe, Gruppe, Level, Loot Explode: 1-3 & 2 = Dynamsich -->
+<form name="form1" method="post" action="{PFAD}">
+  <table width="100%" border="0" cellspacing="1" cellpadding="1" class='border'>
+    <tr> 
+      <td width="5%" class='Chead'><div align="center">ID</div></td>
+      <td width="86%" class='Chead'><strong>{NAME}</strong></td>
+      <td width="9%" class='Chead'><div align="center">Aktion</div></td>
+    </tr>
+    {EXPLODE} 
+    <tr> 
+      <td class='{CLASS}'><div align="center">{id}</div></td>
+      <td class='{CLASS}'><input name="{KEY}{id}" type="text" value="{VALUE}" size="50"></td>
+      <td class='{CLASS}'><div align="right">{AKTION}</div></td>
+    </tr>
+    {EXPLODE} 
+    <tr> 
+      <td><div align="center"></div></td>
+      <td><input type="submit" name="Submit" value="Speichern"></td>
+      <td>&nbsp;</td>
+    </tr>
+  </table>
+</form>
+{EXPLODE}
+<!-- Inzen Explode: 4-6 & 5 = Dynamsich -->
+<form action="{PFAD}" method="post" enctype="multipart/form-data" name="form3">
+<table width="100%" border="0" cellspacing="1" cellpadding="1" class="border">
+    <tr> 
+      <td class='Chead'>{NAME}</td>
+    </tr>
+	{EXPLODE}
+    <tr> 
+      <td class='{CLASS}'><div align="left">{FELDER}</div></td>
+    </tr>
+	{EXPLODE}
+    <tr> 
+      <td class='Cdark'><div align="center"><a name="ende"></a>
+          <input name="Submit" type="submit" id="Submit" value="Speichern">
+        </div></td>
+    </tr>
+  </table>
+</form>
+{EXPLODE}

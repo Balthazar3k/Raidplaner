@@ -1,0 +1,129 @@
+<script type="text/javascript">
+<!--
+function MM_jumpMenu(targ,selObj,restore){ //v3.0
+  eval(targ+".location=\'"+selObj.options[selObj.selectedIndex].value+"\'");
+  if (restore) selObj.selectedIndex=0;
+}
+//-->
+</script>
+<style type="text/css">
+<!--
+.Stil2 {font-weight: bold}
+-->
+</style>
+<br><br><table width="100%" border="0" cellspacing="1" cellpadding="2" class="border">
+    <tr> 
+      <td colspan="4" class="Chead">{TITEL}</td>
+    </tr>
+    <tr class="Cnorm">
+      <td>Username:</td>
+      <td width="18%">{username} </td>
+      <td width="19%">Alter: {alter}</td>
+  </tr>
+    <tr class="Cmite"> 
+      <td width="13%">Charname:</td>
+      <td colspan="2">{name} id: #{id}</td>
+    </tr>
+<tr class="Cnorm">
+<td>Real Name:</td>
+<td colspan="2">{rlname}</td>
+</tr>
+    <tr class="Cmite">
+      <td>Rang:</td>
+      <td colspan="2">{rang}</td>
+    </tr>
+    <tr class="Cnorm"> 
+      <td>Level:</td>
+      <td colspan="2">{level}</td>
+    </tr>
+    <tr class="Cmite"> 
+      <td>Klasse:</td>
+      <td colspan="2">{klassen}</td>
+    </tr>
+    <tr class="Cnorm"> 
+      <td>Rasse:</td>
+      <td colspan="2">{rassen}</td>
+    </tr>
+    <tr class="Cmite">
+      <td>Skill:</td>
+      <td colspan="2"><span class="{CLASS}">{sb}</span></td>
+  </tr>
+<tr class="Cnorm">
+<td nowrap="nowrap">Main Beruf / Skill:</td>
+<td colspan="2">{mberuf} {mskill}</td>
+</tr>
+<tr class="Cmite">
+<td nowrap="nowrap">Second Beruf / Skill:</td>
+<td colspan="2">{sberuf} {sskill}</td>
+</tr>
+    <tr class="Cnorm"> 
+      <td>Skill Gruppe:</td>
+      <td colspan="2">{skillgruppe}</td>
+    </tr>
+    <tr class="Cmite"> 
+      <td>Realm:</td>
+      <td colspan="2">{realm}</td>
+    </tr>
+    <tr class="Cnorm">
+      <td>Teamspeak: </td>
+      <td colspan="2">{teamspeak}</td>
+    </tr>
+    <tr class="Cmite">
+      <td>Raiden:</td>
+      <td colspan="2">{raiden}</td>
+    </tr>
+    <tr class="Cnorm">
+      <td>Warum:</td>
+      <td colspan="2">{warum}</td>
+    </tr>
+    <tr class="Cmite">
+      <td>PvP:</td>
+      <td colspan="2">{pvp}</td>
+    </tr>
+    <tr class="Cdark">
+      <td colspan="4">Raidkalender: <em>An welchen Tagen und Zeiten kannst du Raiden?</em><br /></td>
+    </tr>
+    <tr class="Cmite">
+      <td colspan="4">{raid_kalender}</td>
+    </tr>
+  </table>
+{EXPLODE}<br />
+<table width="100%" border="0" cellspacing="1" cellpadding="2" class="border">
+  <tr class="Chead">
+    <td colspan="5"><span class="Chead"><strong>{TITEL}</strong></span></td>
+  </tr>
+  <tr class="Cdark">
+    <td width="16%"><strong>Datum & Zeit</strong></td>
+    <td width="18%"><div align="center"><strong>DKP Gruppe</strong></div></td>
+    <td width="55%"><strong>Info</strong></td>
+    <td width="7%"><strong>DKP</strong></td>
+    <td width="4%"><div align="right"><strong>id</strong></div></td>
+  </tr>
+{EXPLODE}
+  <tr class="{CLASS}">
+    <td nowrap="nowrap"><span class="Stil2">{date}</span></td>
+    <td nowrap="nowrap"><div align="center">{gruppen}</div>    </td>
+    <td nowrap="nowrap">{info}</td>
+    <td nowrap="nowrap">{dkp}</td>
+    <td nowrap="nowrap"><div align="right">#{id}</div>    </td>
+  </tr>
+{EXPLODE}
+</table>
+{EXPLODE}<br />
+<table width="100%" cellspacing="1" cellpadding="2" class="border">
+  <tr>
+    <td colspan="3" class="Chead"><strong>Raidbeteiligung</strong></td>
+  </tr>
+  <tr class="Cdark">
+    <td width="18%" nowrap><strong>DKP / Gruppen</strong></td>
+    <td width="72%"> </td>
+    <td width="10%" nowrap="nowrap"> <div align="center"><strong>Anzahl</strong></div></td>
+  </tr>
+  {EXPLODE}
+  <tr class="{CLASS}">
+    <td nowrap="nowrap">{gruppen}</td>
+    <td>{prz}</td>
+    <td width="10%" nowrap="nowrap"><div align="center"> {vonbis}</div></td>
+  </tr>
+  {EXPLODE}
+</table>

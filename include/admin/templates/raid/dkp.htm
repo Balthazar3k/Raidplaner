@@ -1,0 +1,263 @@
+<script type="text/javascript" language="javascript1.5">
+<!--
+function CheckAll(){
+	if(document.FormRang.ALL){
+		var c = document.FormRang.ALL.checked;
+	}
+	for (var i=0;i<document.FormRang.elements.length;i++){
+		var e = document.FormRang.elements[i];
+		if(e.name != 'ALL') {
+			if((e.checked!=c)&&(e.type=="checkbox")){
+			 e.click();
+			 e.checked = c;
+			}
+		}
+	}
+}
+
+function ajaxGet(page, container)
+{	var http = null;
+	if(window.XMLHttpRequest)
+	{	ajax = new XMLHttpRequest();
+	}else
+	{	ajax = new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	
+	if(ajax != null)
+	{	ajax.open("GET", umlaut(page), true);
+		ajax.onreadystatechange = function ()
+		{	if(ajax.readyState == 4 )
+			{	var s = document.getElementById(container);
+				s.innerHTML = '';
+				
+				var items = ajax.responseText;
+				items = eval("("+items+")");
+				
+				for( var i = 0; i < items.length; i++ )
+				{	var it = items[i];
+					var op = document.createElement("option");
+					op.setAttribute("value", it.id);
+					op.setAttribute("class", (it.classen == "" ? "" : it.classen));
+					var na = document.createTextNode(it.name);
+					op.appendChild(na);
+					s.appendChild(op);
+				}
+			}
+		}
+		
+		ajax.send(null);
+	}
+}
+
+function umlaut( string )
+{	string = string.replace("ä", "%E4");
+	string = string.replace("ü", "%FC");
+	string = string.replace("ö", "%F6");
+	string = string.replace("Ä", "%C4");
+	string = string.replace("Ü", "%DC");
+	string = string.replace("Ö", "%D6");
+	return   string.replace("ß", "%DF");
+}
+
+function bossrezzen(boss)
+{	var id = boss.id;
+	var name = boss.innerHTML;
+	
+	var status = confirm( "\"" + name + "\" Wiederbeleben?\n OK für Ja, Abbrechen für Nein" );
+	if( status )
+		document.location.href = document.location.href + "-rezzen-" + id;
+}
+//-->
+</script>
+<fieldset>
+  <legend>DKP</legend>
+    <form action="{PFAD}" method="post" enctype="application/x-www-form-urlencoded" name="form">
+      {auswahl}={ENDE}=[ <a href="admin.php?raid">Zur&uuml;ck zur Raid &uuml;bersicht</a> ]&#8226;<br />
+      <br />
+      <table width="100%" border="0" cellspacing="1" cellpadding="0">
+        <tr valign="top"> 
+          <td>
+            <input 
+              id="search" 
+              style="" 
+              onfocus="this.value = '';" 
+              onkeyup="ajaxGet('include/raid/raidAjax.php?ajaxAction=itemNAME&item=' + this.value + '&limit='+document.getElementById('limit').value,'items');" 
+              value="item Name"
+              size="50"/>
+              
+            <input type="button" id="plus" value="+" 
+           	  onclick="document.getElementById('limit').value++;
+              ajaxGet('include/raid/raidAjax.php?ajaxAction=itemNAME&item=' + document.getElementById('search').value + '&limit=' + document.getElementById('limit').value ,'items');" />
+            <input 
+              name="textfield" 
+              type="text" 
+              id="limit" 
+              value="15" 
+              size="2" 
+              style="text-align:center;"
+              onkeyup="ajaxGet('include/raid/raidAjax.php?ajaxAction=itemNAME&item=' + document.getElementById('search').value + '&limit=' + this.value ,'items');" 
+              maxlength="2" />
+            <input type="button" id="minus" value="-" 
+              onclick="document.getElementById('limit').value--;
+              ajaxGet('include/raid/raidAjax.php?ajaxAction=itemNAME&item=' + document.getElementById('search').value + '&limit=' + document.getElementById('limit').value ,'items');" />
+            <select name="itemClass">
+              <option value="itemEpic">Epic Item</option>
+              <option value="itemRar">Rar Item</option>
+              <option value="itemLegend">Legend Item</option>
+            </select>
+          </td>
+        </tr>
+        <tr valign="top"> 
+        <td>
+		  <select name="chars[]" size="15" multiple id="chars" style="float:left; margin-right: 2px;">
+            {chars}
+      	  </select>
+          <select id="punkte" name="punkte" size="15" style="float:left; margin-right: 2px;">
+	  	    {DKP}
+     	  </select>
+      	  <select id="bosse" name="boss" size="15" 
+            onchange="ajaxGet('include/raid/raidAjax.php?ajaxAction=itemID&bid=' + this.options[this.options.selectedIndex].id,'items');"
+            ondblclick="bossrezzen(this.options[this.options.selectedIndex]);" style="float:left;  margin-right: 2px;">
+	  	    {BOSSE}
+      	  </select>
+          <select name="item" size="15" id="items" style=" float:left;  margin-right: 2px;">
+          </select>
+            <table border="0" cellpadding="0" cellspacing="1" style="border: #000000 1px solid;">
+              <tr>
+                <td nowrap="nowrap"><strong>Eigene DKP Definieren</strong></td>
+              </tr>
+              <tr>
+                <td>
+                <input 
+                  id="sinfo"
+                  name="sinfo" 
+                  type="text"
+                  size="30"  
+                  onFocus="if (value == 'Self Info') {value = ''}" 
+                  onBlur="if (value == '') {value = 'Self Info'}" 
+                  value="Self Info"
+                  style="background-color:#CCCCCC;" />
+                </td>
+              </tr>
+              <tr>
+                <td nowrap="nowrap">
+                  <input 
+                    id="sdkp"
+                    name="sdkp" 
+                    type="text"  
+                    size="30" 
+                    maxlength="8" 
+                    onFocus="if (value == 'Self DKP') {value = ''}" 
+                    onBlur="if (value == '') {value = 'Self DKP'}" 
+                    value="Self DKP"
+                    style="background-color:#CCCCCC;" />
+                </td>
+              </tr>
+          </table>          </td>
+        </tr>
+      <tr valign="top"> 
+        <td align="left" nowrap>
+          <input type="submit" name="Submit" value="Speichern" style="width: 100%; margin-bottom: 1px; background-color: #B0FFB0; color:black; font-weight:bolder;" /><br />
+          <input type="reset" name="Submit4" value="L&ouml;schen" style="width: 100%; margin-bottom: 1px; background-color: #FFA8A8; color:black; font-weight:bolder;" /><br />
+          <div style="border:#000000 solid 1px; padding: 5px; font-size: 9px;"><img src="include/images/icons/admin/info.png" alt="info" style="float:left; margin: 5px;" /> <b>Doppekklick auf einen Bossnamen um diesen Boss Wiederzubeleben, wenn er Tot ist!</b><br />
+            <span style="color: red; font-size: 9px;">TIP: Wenn ihr nicht mehr genau wisst wie der anfang vom Name des items war, ein %restname eingeben! beispiel: ich suche  "Formel: Waffe - Mungo" weis jedoch nicht das es mit Formel: Waffe anf&auml;ngt so kann man das mit %mungo suchen.</span><br />
+            Feld &quot;item Name&quot; filtert nocht nicht Boss Regestrierte Items aus der Datenbank!<br />
+            Auswahl &quot;Epic Item&quot; f&uuml;g den Items die Farben zu. Standart ist er auf Epic's eingestellt!<br />
+            Ajax (item Sucher) geteste im IE 7.0 und Firefox 3.0.10<br />
+            Das zuweisen von Items (Boss anklicken, items suchen und Item Klasse ausw&auml;hlen) speichert die Items unter dem Bossname<br />
+            der dann nur angeklickt werden muss damit die items erscheinen!<br />
+            Bei Fehlern probiert erst mal den Firefox aus und IE wenn beides nicht gehtdann www.balthazar3k.de.vu</div>
+          </td>
+        </tr>
+    </table>
+</form>
+</fieldset>
+{EXPLODE}
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="50%" align="center" valign="top">
+<!--- VERLAUF ---------------------------------------------------------------------------------------------------------------- -->
+<fieldset id="verlauf" style="padding: 5px;">
+  <legend>Verlauf</legend>
+  <form name="form2" method="post" action="{PFAD}">
+    <select name="versort" id="versort">
+      <option value="1">Name</option>
+      <option value="2">Info</option>
+      <option value="3">PM</option>
+      <option value="4">DKP</option>
+      <option value="5">Datum</option>
+    </select>
+    <select name="updown" id="select3">
+      <option value="ASC">Absteigend</option>
+      <option value="DESC">Aufsteigend</option>
+    </select>
+    <input type="submit" name="Submit3" value="Sortiren">
+  </form>
+  <hr>
+  <table width="100%" border="0" cellspacing="1" cellpadding="2" class="border">
+    <tr class="Chead"> 
+      <td colspan="2">Name</td>
+      <td width="35%">Info</td>
+      <td width="18%" align="center">Punkte</td>
+      <td align="center">Zeit</td>
+      <td>&nbsp;</td>
+    </tr>
+    {EXPLODE} 
+    <tr class="{CLASS}"> 
+      <td width="6%" class="Chead"><div align="center"><strong>{nr}</strong></div></td>
+      <td width="15%" nowrap><b>{name}</b></td>
+      <td align="left" nowrap>{info}</td>
+      <td style="font-size:18px; font-weight:bold;" align="center" nowrap>{dkp}</td>
+      <td width="22%" align="center" nowrap>{date}</td>
+      <td width="4%" align="center" valign="middle">{DEL}</td>
+    </tr>
+    {EXPLODE} 
+  </table>
+</fieldset>
+<!--- VERLAUF --------- ENDE ------------------------------------------------------------------------------------------------- -->
+    </td>
+    <td width="50%" align="center" valign="top">
+<!--- User DKP ---------------------------------------------------------------------------------------------------------------- -->
+<fieldset id="userdkp" style="padding: 5px;">
+  <legend>User DKP</legend>
+    <form name="form1" method="post" action="{PFAD}">
+      {addchar}
+      <select name="stat" id="stat">
+        {msg}
+      </select>
+      <input name="admsg" type="text" id="admsg" value="Vom Raidleiter Angmeldet" size="40" /> 
+      <input type="submit" name="Submit2" value="Hinzuf&uuml;gen">
+    </form>
+	<hr>
+	  <table width="100%" border="0" cellspacing="1" cellpadding="2" class="border">
+      	<form name="FormRang" method="post" action="{PFADA}">
+        <tr class="Chead">
+          <td colspan="2">Name</td>
+          <td>DKP</td>
+          <td align="right" nowrap="nowrap">Alle: <input name="ALL" type="checkbox" value="CHECK ALL" onclick="CheckAll();" /></td>
+        </tr>
+	    {EXPLODE}
+        <tr class="{CLASS}">
+          <td align="center" class="Chead"><strong>{nr}</strong></td>
+          <td align="left"><div style="float:left;">{name} - ({klassen})</div><div style="float:right;">{del}</div><br /><div style="font-size:9px;">{sb}<br />{datum}</div></td>
+          <td align="center" nowrap="nowrap" style="font-size:20px; font-weight:bold; font:Arial;">{dkp}</td>
+    	  <td align="right" nowrap="nowrap" bgcolor="{color}">{statusmsg}<input name="cid[]" type="checkbox" id="cid[]" value="{cid}" /></td>
+        </tr>
+        {EXPLODE}
+        <tr class="Cdark">
+          <td colspan="4" class="Chead" align="right">      
+            <select name="all" id="all" onchange="submit();">
+              <option value="">Keine Auswahl</option>
+          		{msg}
+            </select>
+            <span style="text-align: right;"><img src="include/images/icons/pfeil_nach_rechts_unten.jpg" alt="" /></span>
+          </td>
+        </tr>
+        </form>
+      </table>
+</fieldset>
+<!--- User DKP -------------- ENDE ----------------------------------------------------------------------------------------------- -->
+    </td>
+  </tr>
+</table>
+<br style="clear:both;" />
