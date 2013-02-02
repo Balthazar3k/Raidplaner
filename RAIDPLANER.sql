@@ -367,16 +367,3 @@ CREATE TABLE IF NOT EXISTS `prefix_raid_zeitgruppen_chars` (
   `charid` int(11) NOT NULL default '0',
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
-CREATE TABLE `prefix_raid_items` (
-  `id` int(11) NOT NULL default '0',
-  `name` varchar(250) NOT NULL default '',
-  `color` varchar(50) NOT NULL default '',
-  `bid` int(11) default '0',
-  `iid` int(11) default '0',
-  `drop` int(11) NOT NULL default '0',
-  `class` varchar(50) NOT NULL default ''
-) TYPE=MyISAM;
-
-ALTER TABLE `prefix_raid_items` ADD PRIMARY KEY ( `id` );
-ALTER TABLE `prefix_raid_items` CHANGE `id` `id` INT( 11 ) NOT NULL AUTO_INCREMENT;
