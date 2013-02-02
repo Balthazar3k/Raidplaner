@@ -3,7 +3,7 @@
 CreatRaidSession();
 
 function copyright(){
- echo "<br><div align='center' class='smallfont'>[ Raidplaner &amp; DKP System v1.1 &copy; by <a href='http://www.Balthazar3k.co.de' target='_blank'>Balthazar3k.de.vu</a> ]</div>";
+ echo "<br><div align='center' class='smallfont'>[ Raidplaner &amp; DKP System v1.1 &copy; by <a href='http://www.Balthazar3k.funpic.de' target='_blank'>Balthazar3k.funpic.de</a> ]</div>";
 }
 ###### RAIDPLANER HEADER
 $raidHeader .= "<link href=\"include/includes/css/raidplaner.css\" type=\"text/css\" />\n";
