@@ -1,11 +1,9 @@
 <?php
-#arrPrint($_SERVER);
-#arrPrint($_SESSION);
-### b3k_func.php Copyright: 2007/2008 edit 2009, 2012 By: Balthazar3k.de
+### b3k_func.php Copyright: 2007/2008 edit 2009, 2012, 2013 By: Balthazar3k.de
 CreatRaidSession();
 
 function copyright(){
- echo "<br><div align='center' class='smallfont'>[ Raidplaner &amp; DKP System v1.1 &copy; by <a href='http://www.Balthazar3k.co.de' target='_blank'>Balthazar3k.de.vu</a> ]<br />Item Liste von <a href='http://www.Buffed.de/' target='_blank'>www.Buffed.de</a></div>";
+ echo "<br><div align='center' class='smallfont'>[ Raidplaner &amp; DKP System v1.1 &copy; by <a href='http://www.Balthazar3k.co.de' target='_blank'>Balthazar3k.de.vu</a> ]</div>";
 }
 ###### RAIDPLANER HEADER
 $raidHeader .= "<link href=\"include/includes/css/raidplaner.css\" type=\"text/css\" />\n";

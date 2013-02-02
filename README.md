@@ -1,10 +1,10 @@
-Raidplaner & DKP System v1.0 für IlchClan 1.1o:
+Raidplaner & DKP System v1.1 für IlchClan 1.1o (www.ilch.de):
 """""""""""""""""""""""
 Beschreibung:
 -------------
 Raidplaner mit DKP System für den Gebrauch von Gilden deren Aktivität
 World-of-Warcraft angehört. Aber bestimmt auch möglich anders anzupassen.
-Bei weiteren Fragen Verbesserungsvorschläge... www.balthazar3k.co.de!
+Bei weiteren Fragen Verbesserungsvorschläge... www.balthazar3k.funpic.de!
 
 Entwickelt
 ----------
@@ -36,4 +36,4 @@ Benutzung ausschließlich AUF EIGENE GEFAHR.
 -- Empfehle Datenbank Backup zu machen.
 
 
-Fehler bitte an www.balthazar3k.co.de ( Forum ).
+Fehler bitte an www.balthazar3k.funpic.de ( Forum ).
