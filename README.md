@@ -1,5 +1,5 @@
 Raidplaner & DKP System v1.1 für IlchClan 1.1o (www.ilch.de):
-"""""""""""""""""""""""
+_____________________________________________________________
 Beschreibung:
 -------------
 Raidplaner mit DKP System für den Gebrauch von Gilden deren Aktivität
