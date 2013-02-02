@@ -90,14 +90,14 @@ function MM_jumpMenu(targ,selObj,restore){ //v3.0
 {EXPLODE}<br />
 <table width="100%" border="0" cellspacing="1" cellpadding="2" class="border">
   <tr class="Chead">
-    <td colspan="5"><span class="Chead"><strong>{TITEL}</strong></span></td>
+    <td colspan="5"><span class="Chead"><b>{TITEL}</b></span></td>
   </tr>
   <tr class="Cdark">
-    <td width="16%"><strong>Datum & Zeit</strong></td>
-    <td width="18%"><div align="center"><strong>DKP Gruppe</strong></div></td>
-    <td width="55%"><strong>Info</strong></td>
-    <td width="7%"><strong>DKP</strong></td>
-    <td width="4%"><div align="right"><strong>id</strong></div></td>
+    <td width="16%"><b>Datum & Zeit</b></td>
+    <td width="18%"><div align="center"><b>DKP Gruppe</b></div></td>
+    <td width="55%"><b>Info</b></td>
+    <td width="7%"><b>DKP</b></td>
+    <td width="4%"><div align="right"><b>id</b></div></td>
   </tr>
 {EXPLODE}
   <tr class="{CLASS}">
@@ -112,18 +112,38 @@ function MM_jumpMenu(targ,selObj,restore){ //v3.0
 {EXPLODE}<br />
 <table width="100%" cellspacing="1" cellpadding="2" class="border">
   <tr>
-    <td colspan="3" class="Chead"><strong>Raidbeteiligung</strong></td>
+    <td colspan="3" class="Chead"><b>Raidbeteiligung</b></td>
   </tr>
   <tr class="Cdark">
-    <td width="18%" nowrap><strong>DKP / Gruppen</strong></td>
+    <td width="18%" nowrap><b>DKP / Gruppen</b></td>
     <td width="72%"> </td>
-    <td width="10%" nowrap="nowrap"> <div align="center"><strong>Anzahl</strong></div></td>
+    <td width="10%" nowrap="nowrap"> <div align="center"><b>Anzahl</b></div></td>
   </tr>
   {EXPLODE}
   <tr class="{CLASS}">
     <td nowrap="nowrap">{gruppen}</td>
     <td>{prz}</td>
     <td width="10%" nowrap="nowrap"><div align="center"> {vonbis}</div></td>
+  </tr>
+  {EXPLODE}
+</table>
+{EXPLODE}<br />
+<table width="100%" cellspacing="1" cellpadding="2" class="border">
+
+  <tr>
+    <td colspan="3" class="Chead"><b>Weitere Charaktere</b></td>
+  </tr>
+  
+  <tr class="Cdark">
+    <td><b>Name</b></td>
+    <td><b>Rasse/Klasse</b></td>
+    <td><b>Rang</b></td>
+  </tr>
+  {EXPLODE}
+  <tr class="Cnorm">
+    <td>{level} <b><a href="index.php?chars-show-{id}">{name}</a></b></td>
+    <td align="center">{rassen} {klassen}</td>
+    <td align="center">{rang}</td>
   </tr>
   {EXPLODE}
 </table>

@@ -221,6 +221,33 @@ switch($menu->get(1)){
 		$row['raid_kalender'] = $kalout;
 		$tpl->set_ar_out( $row, 0 );
 		
+		
+		#### WEITERE CHARAKTERE
+		$tpl->out(7);
+		
+		$res = db_query("
+			SELECT 
+				a.id, a.name,
+				b.level,
+				c.klassen,
+				d.rassen,
+				e.rang
+			FROM prefix_raid_chars AS a
+			  LEFT JOIN prefix_raid_level AS b ON a.level=b.id
+			  LEFT JOIN prefix_raid_klassen AS c ON a.klassen=c.id
+			  LEFT JOIN prefix_raid_rassen AS d ON a.rassen=d.id
+			  LEFT JOIN prefix_raid_rang AS e ON a.rang=e.id
+			WHERE a.user = '".$row['user']."'
+			  AND a.id != '".$row['id']."' 
+			ORDER BY a.name ASC
+		");
+		
+		while( $charaktere = db_fetch_assoc( $res ) ){
+			$tpl->set_ar_out($charaktere, 8);
+		}
+		
+		$tpl->out(9);
+		
 		### Deine Ausgegeben DKP
 		$tpl->set_ar_out( array("TITEL" => "Deine DKP Ausgaben"), 1 );
 		$abf = db_query("
