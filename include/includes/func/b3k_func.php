@@ -51,22 +51,15 @@ function RaidErrorMsg(){
 	### Fehler nur für Admins
 	if( is_admin() ){
 		
-		if( file_exists( "include/raidplaner/sql/install.sql" ) )
-		{	$sql = file_get_contents( "include/raidplaner/sql/install.sql" );
-			if( db_query($sql) )
-			{	if( @unlink("include/raidplaner/sql/install.sql") )
-				{	$error['installer'] = "Datenbank änderung vorgenommen.";
-				}else
-				{	$error['installer'] = "Wichtig! Bitte L&ouml;schen Sie die \"include/raidplaner/sql/install.sql\"";
-				}
-			}
-			
-		}
+		### Updates überprüfen
+		include("include/raidplaner/raidplaner.updater.php");
+		$ru = new updater();
 		
 		### Wichtige Daten zum Ausführen des Raidplaners"
 		$error['isChmodBosse'] = ( !@is_writeable('include/images/bosse') ? 'CHMOD: Der Ordner: "include/images/bosse" brauch Schreibrechte (777)':'' );
 		$error['isChmodInzen'] = ( !@is_writeable('include/images/inzen') ? 'CHMOD: Der Ordner: "include/images/inzen" brauch Schreibrechte (777)':'' );
 		$error['isChmodRaidgrp'] = ( !@is_writeable('include/images/raidgruppen') ? 'CHMOD: Der Ordner: "include/images/raidgruppen" brauch Schreibrechte (777)':'' );
+		$error['isChmodUpdater'] = ( !@is_writeable('include/raidplaner/update/') ? 'CHMOD: Der Ordner: "include/raidplaner/update/" brauch Schreibrechte (777)':'' );
 		
 		$isRaidGrp = db_result(db_query('SELECT COUNT(id) FROM prefix_raid_gruppen'),0);
 		$error['isRaidGrp'] = ( $isRaidGrp == 0 ? 'Raidplaner: Es müssen DKP Gruppen angelegt werden, '.aLink('Anlegen','raidgruppen',1).'!' : '');
