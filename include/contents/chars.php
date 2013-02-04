@@ -221,8 +221,6 @@ switch($menu->get(1)){
 		$row['raid_kalender'] = $kalout;
 		$tpl->set_ar_out( $row, 0 );
 		
-		echo escape("14.sql", 'integer');
-		
 		#### WEITERE CHARAKTERE
 		$tpl->out(7);
 		
