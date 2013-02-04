@@ -369,11 +369,4 @@ CREATE TABLE IF NOT EXISTS `prefix_raid_zeitgruppen_chars` (
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
-INSERT INTO `prefix_menu` (`wo`, `was`, `ebene`, `recht`, `name`, `path`) VALUES
-(1, 3, 0, 0, 'Gilden Navigation', ''),
-(1, 7, 0, -4, 'Charaktere', 'chars'),
-(1, 7, 0, -4, 'Raidplaner', 'raidlist'),
-(1, 7, 0, -4, 'Statistik', 'raidstatistik'),
-(1, 7, 0, 0, 'Bewerben', 'bewerbung');
-
 ALTER TABLE `ic1_raid_chars` CHANGE `s1` `s1` VARCHAR(255) NOT NULL, CHANGE `s2` `s2` VARCHAR(255) NOT NULL;
