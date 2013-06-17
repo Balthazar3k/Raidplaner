@@ -1,5 +1,8 @@
 <?php
 ### b3k_func.php Copyright: 2007/2008 edit 2009, 2012, 2013 By: Balthazar3k.de
+#arrPrint($_SESSION); 
+#arrPrint($_POST);
+
 CreatRaidSession();
 
 function copyright(){
@@ -7,7 +10,8 @@ function copyright(){
 }
 ###### RAIDPLANER HEADER
 $ILCH_HEADER_ADDITIONS .= "<link href='include/includes/css/raidplaner.css' type='text/css' />\n\t";
-$ILCH_HEADER_ADDITIONS .= "<script src='http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js' type='text/javascript'></script>\n\t";
+$ILCH_HEADER_ADDITIONS .= "<script src='http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js' type='text/javascript'></script>\n\t";
+$ILCH_HEADER_ADDITIONS .= "<script src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js'></script>\n\t";
 $ILCH_HEADER_ADDITIONS .= "<script type='text/javascript' src='include/includes/js/b3k.js'></script>\n";
 
 ### Sessions der mainchars Generieren.
@@ -35,6 +39,22 @@ function CreatRaidSession(){
 				$_SESSION['stammgrp'][$row->sid] = 1;
 			}
 		}
+		
+		### adminaccess neu mit 1.1p
+		$perm = db_query( "
+			SELECT 
+				a.uid, a.mid, b.url 
+			FROM prefix_modulerights AS a
+				LEFT JOIN prefix_modules AS b ON a.mid = b.id
+			WHERE 
+				a.uid = ".$_SESSION['authid']."
+				AND b.name LIKE 'R:%'
+		");
+		
+		while( $row = db_fetch_assoc( $perm ) ){
+			$_SESSION['adminaccess'][$row['url']] = true;
+		}
+		
 	}else{
 		$_SESSION['charname'] = $_SESSION['charid'] = $_SESSION['charrang'] = $_SESSION['charklasse'] = 0;
 	}
