@@ -1,24 +1,17 @@
 <?php
 require_once("include/includes/func/b3k_func.php");
-arrPrint($_SESSION); 
-arrPrint($_POST);
 
 defined ('main') or die ( 'no direct access' );
 defined ('admin') or die ( 'only admin access' );
-
-
-
 
 # DESIGN
 $design = new design ( 'Admins Area', 'Admins Area', 2 );
 $design->header();
 
-echo "123<br>";
-
 RaidErrorMsg();
 aRaidMenu();
 
-echo "321<br>";
+echo "<br>";
 
 
 $tpl = new tpl ( 'raid/raid.htm',1 );
@@ -118,7 +111,6 @@ switch($menu->get(1)){
 		$row['SMILIS'] = getsmilies();
 	break;
 	default:
-		echo "Hello World!";
 		$row['PFAD'] = "admin.php?raid-add";
 		$row['status'] = drop_down_menu("SELECT id, statusmsg FROM prefix_raid_statusmsg WHERE sid='1'", "statusmsg", 1, "", true);
 		$row['char'] = drop_down_menu("SELECT id, name FROM prefix_raid_chars WHERE rang>='4'" , "leader", $_SESSION['charid'],"" , true);

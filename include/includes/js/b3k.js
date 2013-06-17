@@ -1,3 +1,7 @@
+$(document).ready(function() {
+	$( ".datepicker" ).datepicker({ dateFormat: "yy-mm-dd" });
+});
+
 function button(a){
 	document.location.href= a;
 }
