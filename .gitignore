@@ -6,6 +6,7 @@ include/admin/archiv.php
 include/admin/awards.php
 include/admin/backup.php
 include/admin/checkconf.php
+include/admin/compatibility.php
 include/admin/contact.php
 include/admin/forum.php
 include/admin/gallery.php
@@ -40,6 +41,7 @@ include/admin/templates/archiv/upload_move_file.htm
 include/admin/templates/awards.htm
 include/admin/templates/backup.htm
 include/admin/templates/checkconf.htm
+include/admin/templates/compatibility.htm
 include/admin/templates/contact.htm
 include/admin/templates/forum/eforum.htm
 include/admin/templates/forum/forum.htm
@@ -397,14 +399,28 @@ include/images/wargames/sc.gif
 include/images/wargames/soldner.gif
 include/images/wargames/ut2004.gif
 include/images/wargames/war3.gif
+include/includes/captcha/Captcha.php
+include/includes/captcha/MemorySession.php
+include/includes/captcha/captchaimg.php
+include/includes/captcha/fonts/D3 Electronism.ttf
+include/includes/captcha/fonts/D3 Radicalism.ttf
+include/includes/captcha/fonts/Weird.ttf
+include/includes/captcha/fonts/Weirdo.ttf
+include/includes/captcha/fonts/Weiss Initialen.ttf
+include/includes/captcha/fonts/WhallyWhilly.ttf
+include/includes/captcha/fonts/fontinfo.txt
+include/includes/captcha/fonts/webster.ttf
+include/includes/captcha/settings.php
 include/includes/class/AzDGCrypt.class.inc.php
 include/includes/class/design.php
 include/includes/class/menu.php
 include/includes/class/phpmailer/class.phpmailer.php
 include/includes/class/phpmailer/class.pop3.php
 include/includes/class/phpmailer/class.smtp.php
+include/includes/class/pwcrypt.php
 include/includes/class/tpl.php
-include/includes/class/xajax.inc.php
+include/includes/class/xajax.php4.inc.php
+include/includes/class/xajax.php5.inc.php
 include/includes/config.php
 include/includes/func/allg.php
 include/includes/func/bbcode.php
@@ -421,8 +437,10 @@ include/includes/func/smtp.php
 include/includes/func/statistic.php
 include/includes/func/user.php
 include/includes/func/warsys.php
+include/includes/init.php
 include/includes/js/JSCookMenu.js
 include/includes/js/bbcode.js
+include/includes/js/captcha.js
 include/includes/js/editor/deutsch.js
 include/includes/js/editor/whizzywig.js
 include/includes/js/editor.js
@@ -433,7 +451,12 @@ include/includes/lang/en.php
 include/includes/loader.php
 include/includes/xajax_js/xajax_core.js
 include/includes/xajax_js/xajax_debug.js
+include/includes/xajax_js/xajax_lang_bg.js
 include/includes/xajax_js/xajax_lang_de.js
+include/includes/xajax_js/xajax_lang_es.js
+include/includes/xajax_js/xajax_lang_fr.js
+include/includes/xajax_js/xajax_lang_nl.js
+include/includes/xajax_js/xajax_lang_tr.js
 include/includes/xajax_js/xajax_legacy.js
 include/includes/xajax_js/xajax_verbose.js
 include/templates/awards.htm
