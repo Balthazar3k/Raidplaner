@@ -27,7 +27,7 @@ if( $menu->get(1) == "bossinfos" ){
 $title = $allgAr['title'].' :: Raidplaner';
 $hmenu = 'Raidplaner';
 $design = new design ( $title , $hmenu );
-$design->addheader($raidHeader);
+
 $design->header();
 
 RaidErrorMsg();

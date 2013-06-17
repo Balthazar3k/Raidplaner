@@ -1,74 +1,29 @@
-<?php #print_r($_SESSION); 
-#print_r($_POST);
+<?php
+require_once("include/includes/func/b3k_func.php");
+arrPrint($_SESSION); 
+arrPrint($_POST);
+
 defined ('main') or die ( 'no direct access' );
 defined ('admin') or die ( 'only admin access' );
-#######################
-function XAJAX_showCalendar ($m,$j,$f) {
-  if (empty($m)) { $m = date('n'); }
-  if (empty($j)) { $j = date('Y'); }
-  
-  $objResponse = new xajaxResponse();
-  
-  $content = '<table border="0" cellpadding="1" cellspacing="1" class="border"><tr><td class="Cnorm"><a href="javascript:close'.$f.'();">schliessen</a></td></tr></table>';
-  $content .= getCalendar($m, $j, 'javascript:set'.$f.'(\'{jahr}-{mon}-{tag}\')', 'javascript:xajax_XAJAX_showCalendar({mon},{jahr},\''.$f.'\')', '');
-  
-  $objResponse->addAssign('skalender'.$f, 'style.display', 'block' );
-  $objResponse->addAssign('skalender'.$f, 'innerHTML', $content);
-  
-  # return object
-  return ($objResponse->getXML());
-}
-
-function checkzyklusins ($x,$i0,$i1,$i2,$z,$sar) {
-  $ts = mktime(0,0,0,$i1,$i2,$i0);
-  $wt = date('w',$ts);
-  if ($z == 'wer' AND ($wt > 0 AND $wt < 6)) {
-    return (true);
-  } elseif ($z == 'wek' AND ($wt == 0 OR $wt == 6)) {
-    return (true);
-  } elseif ($z == 'woc' AND (($x % 7) == 1)) {
-    return (true);
-  } elseif ($z == '14t' AND (($x % 14) == 1)) {
-    return (true);
-  } elseif ($z == 'mon' AND ($i2 == $sar[2])) {
-    return (true);
-  } elseif ($z == 'jae' AND ($i1 == $sar[1] AND $i2 == $sar[2])) {
-    return (true);
-  }
-  
-  return (false);
-}
 
 
 
-# AJAX Start
-$xajax = new xajax('http://'.$_SERVER["HTTP_HOST"].$_SERVER["SCRIPT_NAME"].'?kalender=0');
-$xajax->registerFunction("XAJAX_showCalendar");
-$xajax->processRequest();
 
 # DESIGN
 $design = new design ( 'Admins Area', 'Admins Area', 2 );
-require_once("include/includes/func/b3k_func.php");
-$design->addheader($raidHeader);
 $design->header();
 
-# AJAX ausgabe
-echo $xajax->printJavascript();
-#######################
-
-$Cnorm = 'Cnorm';
-$Cmite = 'Cmite';
-$Class = $Cnorm;
-$authid = $_SESSION['authid'];
-
-$del_img =	"<img src='include/images/b3kimg/loeschen.jpg' border='0'  title='Löschen'>";
-
-echo "<br>";
+echo "123<br>";
 
 RaidErrorMsg();
 aRaidMenu();
 
+echo "321<br>";
+
+
 $tpl = new tpl ( 'raid/raid.htm',1 );
+
+
 switch($menu->get(1)){
 	case "add":
 		list($jahr, $monat, $tag ) = explode( "-", $_POST['begind'] );
@@ -162,7 +117,8 @@ switch($menu->get(1)){
 		$row['txt'] = db_value( $db, "txt", $menu->get(2));
 		$row['SMILIS'] = getsmilies();
 	break;
-	default:	
+	default:
+		echo "Hello World!";
 		$row['PFAD'] = "admin.php?raid-add";
 		$row['status'] = drop_down_menu("SELECT id, statusmsg FROM prefix_raid_statusmsg WHERE sid='1'", "statusmsg", 1, "", true);
 		$row['char'] = drop_down_menu("SELECT id, name FROM prefix_raid_chars WHERE rang>='4'" , "leader", $_SESSION['charid'],"" , true);

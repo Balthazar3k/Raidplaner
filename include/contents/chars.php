@@ -18,7 +18,7 @@ $title = $allgAr['title'].' :: Chars';
 $hmenu = 'Chars';
 $design = new design ( $title , $hmenu );
 require_once("include/includes/func/b3k_func.php");
-$design->addheader($raidHeader);
+
 $design->header();
 
 

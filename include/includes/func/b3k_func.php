@@ -3,12 +3,12 @@
 CreatRaidSession();
 
 function copyright(){
- echo "<br><div align='center' class='smallfont'>[ Raidplaner &amp; DKP System v1.1 &copy; by <a href='http://www.Balthazar3k.funpic.de' target='_blank'>Balthazar3k.funpic.de</a> ]</div>";
+ echo "<br><div align='center' class='smallfont'>[ Raidplaner &amp; DKP System v1.1 &copy; by <a href='http://Balthazar3k.funpic.de' target='_blank'>Balthazar3k.funpic.de</a> ]</div>\n";
 }
 ###### RAIDPLANER HEADER
-$raidHeader .= "<link href=\"include/includes/css/raidplaner.css\" type=\"text/css\" />\n";
-$raidHeader .= "<script type=\"text/javascript\" src=\"include/includes/js/b3k.js\"></script>\n";
-$raidHeader .= "<script src=\"http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js\" type=\"text/javascript\"></script>\n";
+$ILCH_HEADER_ADDITIONS .= "<link href='include/includes/css/raidplaner.css' type='text/css' />\n\t";
+$ILCH_HEADER_ADDITIONS .= "<script src='http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js' type='text/javascript'></script>\n\t";
+$ILCH_HEADER_ADDITIONS .= "<script type='text/javascript' src='include/includes/js/b3k.js'></script>\n";
 
 ### Sessions der mainchars Generieren.
 function CreatRaidSession(){

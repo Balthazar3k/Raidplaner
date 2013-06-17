@@ -6,7 +6,7 @@ $title = $allgAr['title'].' :: Bewerbung';
 $hmenu = 'Bewerbung';
 $design = new design ( $title , $hmenu );
 require_once("include/includes/func/b3k_func.php");
-$design->addheader($raidHeader);
+
 $design->header();
 
 $tpl = new tpl ("raid/LEERE_BOX.htm");

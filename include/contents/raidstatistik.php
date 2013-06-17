@@ -4,7 +4,7 @@ $title = $allgAr['title'].' :: Raidstatistik';
 $hmenu = 'Raidstatistik';
 $design = new design ( $title , $hmenu );
 require_once("include/includes/func/b3k_func.php");
-$design->addheader($raidHeader);
+
 $design->header();
 
 button("Start", "index.php?raidstatistik", 0);
