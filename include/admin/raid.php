@@ -158,7 +158,7 @@ $anfang = ($page - 1) * $limit;
 $pages = ( $menu->get(1) == 'order' ? '' : 'LIMIT '.$anfang.','.$limit );
 
 $res = db_query( "	SELECT 
-						a.id, a.inv, a.gruppen as grp, a.bosskey, a.stammgrp AS sid,   
+						a.id, a.inv, a.gruppen as grp, a.bosskey, a.stammgrp AS sid, a.von AS owner, 
 						b.name as inzen,
 						c.gruppen, c.stammgrp, 
 						d.statusmsg, d.color,
@@ -193,7 +193,7 @@ while( $row = db_fetch_assoc( $res )){
 			$row['edit'] = "";
 		}
 		
-		if( RaidPermission() ){ #$_SESSION['authright']
+		if( $_SESSION['authid'] == $row['owner'] || RaidPermission() ){ #$_SESSION['authright']
 			$wayl = "admin.php?raid-del-" . $row['id'];
 			$wayn = "Raid wirklich löschen? (DKP und Anemldungen werden mitgelöscht)";
 			$row['del'] = "<a href='javascript:janein(\"$wayn\",\"$wayl\");'><img src='include/images/icons/del.gif'></a>";
