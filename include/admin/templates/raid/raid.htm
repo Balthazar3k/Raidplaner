@@ -182,8 +182,8 @@ function MM_jumpMenu(targ,selObj,restore){ //v3.0
             <td>id</td>
             <td>&nbsp;</td>
             <td><div align="center"><strong>Spieler</strong></div></td>
-            <td><strong>Datum/Zeit</strong></td>
-            <td><strong>Inze</strong></td>
+            <td><strong>Datum/Zeit/Inze</strong></td>
+            <td><strong>Erstellt</strong></td>
             <td><strong>Leader</strong></td>
             <td><strong>DKP Gruppe</strong></td>
             <td><strong>Status</strong></td>
@@ -191,12 +191,12 @@ function MM_jumpMenu(targ,selObj,restore){ //v3.0
             <td width="0%">&nbsp;</td>
           </tr>
           {EXPLODE} 
-          <tr class="{CLASS}">
+          <tr class="Cnorm">
             <td width="0%" nowrap>{idn}</td>
             <td width="0%" nowrap>{img}</td>
             <td width="0%" nowrap><div align="center"><font size="1">{ply}</font></div></td>
-            <td nowrap><font size="1">{inv}</font></td>
-            <td nowrap><font size="1">{inzen}</font></td>
+            <td nowrap><font size="1">{inv} {inzen}</font></td>
+            <td nowrap><font size="1">{ownername}</font></td>
             <td nowrap><font size="1">{leader}</font></td>
             <td nowrap><font size="1">{gruppen}</font></td>
             <td nowrap bgcolor="{color}"><div align="center" class="Stil1"><font size="1">{statusmsg}</font></div></td>

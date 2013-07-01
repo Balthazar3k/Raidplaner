@@ -163,13 +163,15 @@ $res = db_query( "	SELECT
 						c.gruppen, c.stammgrp, 
 						d.statusmsg, d.color,
 						e.grpsize, 
-						f.name as leader 
+						f.name as leader,
+						g.name AS ownername 
 					FROM prefix_raid_raid AS a 
 						LEFT JOIN prefix_raid_inzen AS b ON a.inzen = b.id
 						LEFT JOIN prefix_raid_gruppen AS c ON a.gruppen = c.id
 						LEFT JOIN prefix_raid_statusmsg AS d ON a.statusmsg = d.id
 						LEFT JOIN prefix_raid_grpsize AS e ON b.grpsize = e.id 
 						LEFT JOIN prefix_raid_chars AS f ON a.leader = f.id 
+						LEFT JOIN prefix_user AS g ON a.von = g.id 
 					".$filter."
 					ORDER BY d.id, a.inv  ASC ". $pages );
 					#a.inv ASC, d.id  DESC
@@ -185,19 +187,15 @@ while( $row = db_fetch_assoc( $res )){
 		$row['ply'] = $ply_res . "/" .  $row['grpsize'];
 		####
 		
-		if( RaidPermission($row['id'])){
+		if( RaidPermission( $row['id'] )){
 			$row['inv'] = "<a href='admin.php?dkp-".$row['id']."-".$row['grp']."'>".DateFormat("H:i - D d.m.Y", $row['inv'])."</a>";
 			$row['edit'] = "<a href='admin.php?raid-edit-".$row['id']."'><img src='include/images/icons/edit.gif'></a>";
-		}else{
-			$row['inv'] = DateFormat("H:i - D d.m.Y", $row['inv']);
-			$row['edit'] = "";
-		}
-		
-		if( $_SESSION['authid'] == $row['owner'] || RaidPermission() ){ #$_SESSION['authright']
 			$wayl = "admin.php?raid-del-" . $row['id'];
 			$wayn = "Raid wirklich löschen? (DKP und Anemldungen werden mitgelöscht)";
 			$row['del'] = "<a href='javascript:janein(\"$wayn\",\"$wayl\");'><img src='include/images/icons/del.gif'></a>";
 		}else{
+			$row['inv'] = DateFormat("H:i - D d.m.Y", $row['inv']);
+			$row['edit'] = "";
 			$row['del'] = "";
 		}
 		

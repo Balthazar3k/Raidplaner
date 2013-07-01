@@ -253,20 +253,17 @@ function setModulrightsForCharRang($cid,$if){
 	}
 }
 ##############################################
-function RaidPermission($rid=0, $onlyGaO=FALSE, $has_modul_rights=NULL ){
-	global $menu;
-	if( $has_modul_rights == NULL ){
-		$has_modul_rights = $menu->get(0);
-	}
-	
+function RaidPermission($rid=0, $onlyGaO=FALSE){
+
 	$uid = ( $rid == 0 ? $rid : db_result(db_query('SELECT von FROM prefix_raid_raid WHERE id='. $rid),0)) ;
-	if( $_SESSION['charrang'] == 10 and $_SESSION['authid'] == $uid and $onlyGaO == FALSE ){ # Rang: Raidleiter
+	
+	if( $_SESSION['authid'] == $uid ){ # Eigentümer kann die eigenen Raids Bearbeiten!
+		return (TRUE);
+	}elseif( $_SESSION['charrang'] == 10 and $_SESSION['authid'] == $uid and $onlyGaO == FALSE ){ # Rang: Raidleiter
 		return (TRUE);
 	}elseif( $_SESSION['charrang'] == 11 and $onlyGaO == FALSE ){ # Rang: Super Raidleiter
 		return (TRUE);
 	}elseif( $_SESSION['charrang'] >= 13 ){ # Rang: Offiezier oder Höher
-		return (TRUE);
-	}elseif( $_SESSION['authid'] == $uid ){ # Eigentümer kann die eigenen Raids Bearbeiten!
 		return (TRUE);
 	}elseif( is_admin() ){ # wenn alle kriterien nicht zu treffen ist der admin dafür verantwortlich!
 		return (TRUE);
