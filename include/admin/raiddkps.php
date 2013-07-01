@@ -54,9 +54,8 @@ switch($menu->get(2)){
 		### FORMULAR
 		if( $menu->get(1) != '' ){
 			if( $menu->get(2) == '' ){
-				$out->pfad = "admin.php?raiddkps-".$menu->get(1)."-new";
-				$out->name = $out->dkp = "";
-				
+				$out['pfad'] = "admin.php?raiddkps-".$menu->get(1)."-new";
+				$out['name'] = $out['dkp'] = "";
 			}else{
 				$res = db_query("SELECT * FROM prefix_raid_dkps WHERE id=".$menu->get(2)." LIMIT 1" );
 				$out = db_fetch_object( $res );

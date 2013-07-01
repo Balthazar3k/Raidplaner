@@ -84,9 +84,9 @@ switch($menu->get(2)){
 		### FORMULAR
 		if( $menu->get(1) != '' ){
 			if( $menu->get(2) == '' ){
-				$out->pfad = "admin.php?raidbosse-".$menu->get(1)."-new";
-				$out->bosse = $out->taktik = "";
-				$out->img = img_popup( $imgPath, 'img');
+				$out['pfad'] = "admin.php?raidbosse-".$menu->get(1)."-new";
+				$out['bosse'] = $out['taktik'] = "";
+				$out['img'] = img_popup( $imgPath, 'img');
 				
 			}else{
 				$res = db_query("SELECT * FROM prefix_raid_bosse WHERE id=".$menu->get(2)." LIMIT 1" );

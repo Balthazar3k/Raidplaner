@@ -735,11 +735,11 @@ function button( $name, $url, $if = 0 ){
 		}
 	}
 	
-	if( !empty($allgAr['buttons']) ){
-		$bt = $allgAr['buttons'];
-		$bt = str_replace( "{name}", $name, $bt);
-		$bt = str_replace( "{url}", $url, $bt);
-	}
+	
+	$bt = "<a href='{url}' title='{name}' class='buttons'>{name}</a> ";
+	$bt = str_replace( "{name}", $name, $bt);
+	$bt = str_replace( "{url}", $url, $bt);
+	
 	
 	switch( $if ){
 		case "0": print $bt; break;

@@ -185,8 +185,9 @@ switch($menu->get(1)){
 		
 			$tpl->set_out("srcClass",$classImg,0); ### SUCHEN
 			
-			button("NewChar", "javascript:creatWindow( \"admin.php?chars-new\", \"NewChar\", \"517\", \"350\" );", 12);
-			button("CharChangeAccount", "javascript:creatWindow( \"admin.php?extern-CharChangeAccount\", \"CharChangeAccount\", \"500\", \"40\" );", 12);
+			echo "<br />";
+			button("NewChar", "javascript:creatWindow( \"admin.php?chars-new\", \"NewChar\", \"500\", \"705\" );", 12);
+			button("CharChangeAccount", "javascript:creatWindow( \"admin.php?extern-CharChangeAccount\", \"CharChangeAccount\", \"500\", \"70\" );", 12);
 		}
 				
 		$search = ( isset( $_POST['search'] ) ? 'WHERE '. $_POST['from'].' LIKE \''.$_POST['search'].'%\' ' : '' );
@@ -225,8 +226,8 @@ switch($menu->get(1)){
 			while( $row = db_fetch_object( $res )){
 				$aRang = $row->rang;
 				if( $row->rang != $cRang ){
-					$t->class = 'Cdark';
-					$t->msg = "<b>".$row->rang."</b>";
+					$t['class'] = 'Cdark';
+					$t['msg'] = "<b>".$row->rang."</b>";
 					$tpl->set_ar_out( $t , 3);
 				}
 				$row->class = cssClass( $row->class );
@@ -363,6 +364,9 @@ switch($menu->get(1)){
 	
 	case "new":
 		echo "<link rel='stylesheet' type='text/css' href='".$cssPfad.$cssFile."'>\n";
+		
+		class cobject{}
+		$c = new cobject();
 	
 		$c->editPath = "admin.php?chars-add";
 		$c->title = "Neuen Char Anlegen!";

@@ -61,9 +61,9 @@ switch($menu->get(1)){
 	break;
 	default:
 		if( $menu->get(1) == '' ){
-			$out->pfad = "admin.php?raidstammgrp-new";
-			$out->id = "";
-			$out->stammgrp = '';
+			$out['pfad'] = "admin.php?raidstammgrp-new";
+			$out['id'] = "";
+			$out['stammgrp'] = '';
 			
 		}else{
 			$res = db_query("SELECT * FROM prefix_raid_stammgrp WHERE id=".$menu->get(1)." LIMIT 1" );

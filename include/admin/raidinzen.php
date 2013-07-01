@@ -82,13 +82,13 @@ switch($menu->get(1)){ # `id`, `name`, `level`, `grpsize`, `img`, `info`, `maxbo
 	break;
 	default:
 		if( $menu->get(1) == '' ){
-			$out->pfad = "admin.php?raidinzen-new";
-			$out->name = $out->maxbosse = "";
-			$out->level = drop_down_menu("prefix_raid_level" , "level", "", "");
-			$out->info = drop_down_menu("prefix_raid_info" , "info", "", "");
-			$out->grpsize = drop_down_menu("prefix_raid_grpsize" , "grpsize", "", "");
-			$out->img = img_popup( $imgPath, 'img');
-			$out->regeln = "";
+			$out['pfad'] = "admin.php?raidinzen-new";
+			$out['name'] = $out['maxbosse'] = "";
+			$out['level'] = drop_down_menu("prefix_raid_level" , "level", "", "");
+			$out['info'] = drop_down_menu("prefix_raid_info" , "info", "", "");
+			$out['grpsize'] = drop_down_menu("prefix_raid_grpsize" , "grpsize", "", "");
+			$out['img'] = img_popup( $imgPath, 'img');
+			$out['regeln'] = "";
 			
 		}else{
 			$res = db_query("SELECT * FROM prefix_raid_inzen WHERE id=".$menu->get(1)." LIMIT 1" );

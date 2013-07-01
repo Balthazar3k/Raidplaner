@@ -79,11 +79,11 @@ switch($menu->get(1)){
 	break;
 	default:
 		if( $menu->get(1) == '' ){
-			$out->pfad = "admin.php?raidgruppen-new";
-			$out->id = $out->gruppen = "";
-			$out->stammgrp = drop_down_menu("prefix_raid_stammgrp" , "stammgrp", "", "");
-			$out->img = img_popup( $imgPath, 'img');
-			$out->regeln = "";
+			$out['pfad'] = "admin.php?raidgruppen-new";
+			$out['id'] = $out['gruppen'] = "";
+			$out['stammgrp'] = drop_down_menu("prefix_raid_stammgrp" , "stammgrp", "", "");
+			$out['img'] = img_popup( $imgPath, 'img');
+			$out['regeln'] = "";
 			
 		}else{
 			$res = db_query("SELECT * FROM prefix_raid_gruppen WHERE id=".$menu->get(1)." LIMIT 1" );

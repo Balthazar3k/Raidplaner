@@ -86,6 +86,7 @@ switch( $menu->get(1) ){
        <?php echo drop_down_menu("SELECT id, name FROM prefix_user ORDER BY name ASC" , "uid", '', '', true); ?>
 	   <input type="submit" name="button" id="button" value="Uebertragen">
 	</form>
+	<br />
 <?php
 	break;
 }

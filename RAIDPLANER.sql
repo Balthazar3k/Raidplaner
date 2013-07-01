@@ -13,8 +13,7 @@ INSERT INTO `prefix_config` (`schl`, `typ`, `kat`, `frage`, `wert`, `pos`) VALUE
 ('isRaidSkillung', 'r2', 'Raidplaner', 'Muss ein Char seine Skillung eintragen um am Raid Teilnehmen zu d&uuml;rfen?', '1', 0),
 ('nextlastraid', 'r2', 'Raidplaner', 'Sollen soviele Last Raids Angezeigt werden wie Next Raids? (Ansonsten 5 Last Raids)', '0', 0),
 ('bewerbung', 'textarea', 'Raidplaner', 'Bewerbung''s Msg', 'Um dich bei uns Bewerben zu K&ouml;nnen musst du dich [url={domain}index.php?user-regist]Regestrieren[/url]!\r\n\r\nWenn du Jedoch schon Rang Member hast kannst du dir einen Char auf der Chars Seite Erstellen. [url={domain}index.php?chars-newchar]Char Erstellen[/url]', 0),
-('buttons', 'input', 'Raidplaner', 'Wie sollen die Buttons im Raidplaner aussehen?', '<a style=''{background-color:black; color:white; border: 1px solid white; text-decoration: none; padding: 2px;'' href=''{url}'' title=''{name}''>{name}</a> ', 0),
-('pzBalkenStyle', 'input', 'Raidplaner', 'Style f&uuml;r den Pronzent Balken', '{background-color:#00CC00;font-size:9px;}', 0),
+('pzBalkenStyle', 'input', 'Raidplaner', 'Style f&uuml;r den Pronzent Balken', 'background-color: #00CC00; font-size: 9px;', 0),
 ('canSeeStamm', 'r2', 'Raidplaner', 'Solle "Alle" User die Stamm Gruppen und Stamm Raids sehen?', '0', 0),
 ('version', 'input', 'Raidplaner', 'Version vom Raidplaner, bitte nichts verstellen wenn Sie keine ahnung davon haben! (Damit werden Updates gesteuert)', '11', '0');
 

@@ -157,6 +157,10 @@ switch($menu->get(1)){
 		
 		$tpl = new tpl ('raid/RAID_LIST.htm');
 		
+		class rowler{}
+		$row = new rowler();
+		$ss = new rowler();
+		
 		$res = db_query("SELECT 
 							a.gruppen, a.img, a.date,
 							b.stammgrp, 

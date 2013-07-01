@@ -51,15 +51,15 @@ switch($menu->get(1)){
 	default:
 		$res = db_query("SELECT id, name FROM prefix_modules WHERE name LIKE 'R:%' ORDER BY id ASC");
 		while( $rang = db_fetch_object( $res ) ){
-			$header->list_raid_module .= "Modul <b>".$rang->id."</b>: ". str_replace("R:","", $rang->name)."<br>";
+			$header['list_raid_module'] .= "Modul <b>".$rang->id."</b>: ". str_replace("R:","", $rang->name)."<br>";
 		}
 		
 		$res = db_query("SELECT id, name FROM prefix_modules WHERE name NOT LIKE 'R:%' ORDER BY id ASC");
 		while( $rang = db_fetch_object( $res ) ){
-			$header->list_noraid_module .= "Modul <b>".$rang->id."</b>: ". str_replace("R:","", $rang->name)."<br>";
+			$header['list_noraid_module'] .= "Modul <b>".$rang->id."</b>: ". str_replace("R:","", $rang->name)."<br>";
 		}
 		
-		$header->pfad = "admin.php?raidrang-edit";
+		$header['pfad'] = "admin.php?raidrang-edit";
 		$tpl->set_ar_out($header,0); # Header
 	
 		$res = db_query("SELECT * FROM prefix_raid_rang ORDER BY id DESC");
