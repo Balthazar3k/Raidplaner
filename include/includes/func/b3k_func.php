@@ -9,10 +9,14 @@ function copyright(){
  echo "<br><div align='center' class='smallfont'>[ Raidplaner &amp; DKP System v1.1 &copy; by <a href='http://Balthazar3k.funpic.de' target='_blank'>Balthazar3k.funpic.de</a> ]</div>\n";
 }
 ###### RAIDPLANER HEADER
-$ILCH_HEADER_ADDITIONS .= "<link href='include/includes/css/raidplaner.css' type='text/css' />\n\t";
-$ILCH_HEADER_ADDITIONS .= "<script src='http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js' type='text/javascript'></script>\n\t";
-$ILCH_HEADER_ADDITIONS .= "<script src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js'></script>\n\t";
-$ILCH_HEADER_ADDITIONS .= "<script type='text/javascript' src='include/includes/js/b3k.js'></script>\n";
+$ILCH_HEADER_ADDITIONS .= "<!--RAIDPLANER HEADER-->\n\t";
+$ILCH_HEADER_ADDITIONS .= "<link rel=\"stylesheet\" type=\"text/css\" href=\"http://fonts.googleapis.com/css?family=Ubuntu:regular,bold&subset=Latin&effect=shadow-multiple|3d\">\n";
+$ILCH_HEADER_ADDITIONS .= "<link rel='stylesheet' type='text/css' href='include/includes/css/raidplaner.css' />\n\t";
+$ILCH_HEADER_ADDITIONS .= "<script src='include/includes/libs/jquery-ui-1.10.3.custom/js/jquery-1.9.1.js' type='text/javascript'></script>\n\t";
+$ILCH_HEADER_ADDITIONS .= "<script src='include/includes/libs/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js'></script>\n\t";
+$ILCH_HEADER_ADDITIONS .= "<link rel='stylesheet' type='text/css' href='include/includes/libs/jquery-ui-1.10.3.custom/css/start/jquery-ui-1.10.3.custom.min.css' />\n\t";
+$ILCH_HEADER_ADDITIONS .= "<script src='include/includes/js/b3k.js' type='text/javascript'></script>\n\t";
+$ILCH_HEADER_ADDITIONS .= "<!--RAIDPLANER HEADER END-->\n";
 
 ### Sessions der mainchars Generieren.
 function CreatRaidSession(){
@@ -154,14 +158,13 @@ function aRaidMenu(){
     "Ränge" => "raidrang",
     "DKP'S" => "raiddkps");
     
-    echo "<div style='border: 1px solid #999999; padding: 5px; background-color: yellow; color: #FFFFFF;' align='center'>";
+    echo "<div class=\"Chead\" style='border: 1px solid #000; border-radius: 5px; padding: 5px; box-shadow: 0 3px 1px rgba( 0, 0, 0, 0.3);' align='center'>";
     
     foreach( $raidLinks as $name => $url )
     {
         if( isset( $_SESSION['authmod'][$url] ) && $_SESSION['authmod'][$url] == 1 || is_admin() )
         {
-            $class = ( $menu->get(0) == $url ? 'raidmenu2' : 'raidmenu' );
-            echo "<a href='admin.php?".$url."' class='".$class."'>".$name."</a> ";
+            echo "<a href='admin.php?".$url."' class='buttons'>".$name."</a> ";
         }
     }
     
