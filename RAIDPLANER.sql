@@ -368,4 +368,11 @@ CREATE TABLE IF NOT EXISTS `prefix_raid_zeitgruppen_chars` (
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
-ALTER TABLE `ic1_raid_chars` CHANGE `s1` `s1` VARCHAR(255) NOT NULL, CHANGE `s2` `s2` VARCHAR(255) NOT NULL;
+ALTER TABLE `prefix_raid_chars` CHANGE `s1` `s1` VARCHAR(255) NOT NULL, CHANGE `s2` `s2` VARCHAR(255) NOT NULL;
+
+INSERT INTO `prefix_menu` (`wo`, `pos`, `was`, `ebene`, `recht`, `name`, `path`) VALUES
+(1, 1024, 3, 0, 0, 'Gilden Menü', 'allianz.php'),
+(1, 1025, 7, 0, 0, 'Raidplaner', 'raidlist'),
+(1, 1026, 7, 0, 0, 'Charaktere', 'chars'),
+(1, 1027, 7, 0, 0, 'Statistik', 'raidstatistik'),
+(1, 1028, 7, 0, 0, 'Bewerben', 'bewerbung');
