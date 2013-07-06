@@ -124,16 +124,19 @@ function RaidErrorMsg(){
 	### Errors Ausgeben wenn vorhanden
 	if( $redwindow ){
 		$i=0;
-		echo '<table width="100%" border="0" cellpadding="2" cellspacing="1" class="border";>
-		<tr><td class="Cdark"><b><center><font color=red>';
+		echo '
+			<div class="Cnorm" style="text-shadow: 1px 1px 0 #FFF; padding: 5px; border-radius: 10px; border: 5px solid red; margin-bottom: 5px;">
+				<h3 style="margin-top: 0;">Folgende Fehler sind aufgetreten!</h3>
+				<ol>
+		';
 		foreach( $error as $value ){
 			if( !empty( $value ) ){
 				$br = ( $i > 0 ? '<br>' : '' );
-				echo $br.$value;
+				echo "<li style='font-weight: bold; color: darkred;'>".$value."</li>";
 				$i++;
 			}
 		}
-		echo '</font><center></b></td></tr></table><br><br>';
+		echo '</ol></div>';
 	}
 }
 ### Raidplaner Menu Leiste
