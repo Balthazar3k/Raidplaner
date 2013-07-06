@@ -80,9 +80,9 @@ function RaidErrorMsg(){
 		$ru = new updater();
 		
 		### Wichtige Daten zum Ausführen des Raidplaners"
-		$error['isChmodBosse'] = ( !@is_writeable('include/images/bosse') ? 'CHMOD: Der Ordner: "include/images/bosse" brauch Schreibrechte (777)':'' );
-		$error['isChmodInzen'] = ( !@is_writeable('include/images/inzen') ? 'CHMOD: Der Ordner: "include/images/inzen" brauch Schreibrechte (777)':'' );
-		$error['isChmodRaidgrp'] = ( !@is_writeable('include/images/raidgruppen') ? 'CHMOD: Der Ordner: "include/images/raidgruppen" brauch Schreibrechte (777)':'' );
+		$error['isChmodBosse'] = ( !@is_writeable('include/raidplaner/images/bosse') ? 'CHMOD: Der Ordner: "include/raidplaner/images/bosse" brauch Schreibrechte (777)':'' );
+		$error['isChmodInzen'] = ( !@is_writeable('include/raidplaner/images/inzen') ? 'CHMOD: Der Ordner: "include/raidplaner/images/inzen" brauch Schreibrechte (777)':'' );
+		$error['isChmodRaidgrp'] = ( !@is_writeable('include/raidplaner/images/raidgruppen') ? 'CHMOD: Der Ordner: "include/raidplaner/images/raidgruppen" brauch Schreibrechte (777)':'' );
 		$error['isChmodUpdater'] = ( !@is_writeable('include/raidplaner/update/') ? 'CHMOD: Der Ordner: "include/raidplaner/update/" brauch Schreibrechte (777)':'' );
 		
 		$isRaidGrp = db_result(db_query('SELECT COUNT(id) FROM prefix_raid_gruppen'),0);
@@ -644,7 +644,7 @@ function bossinfos($ini, $rid){
 		while( $row = db_fetch_assoc( $res )){
 			$class = cssClass($class);
 			$ret .= "<tr>";
-			$ret .= '<td width="75" class="'.$class.'"><center><img height=50 src="include/images/bosse/'.$row['img'].'"></center></td>';
+			$ret .= '<td width="75" class="'.$class.'"><center><img height=50 src="include/raidplaner/images/bosse/'.$row['img'].'"></center></td>';
 			$ret .= '<td  class="'.$class.'" nowrap><b>'.$row['bosse'].'</b></td>';
 			$erg = @db_result(@db_query("SELECT id FROM prefix_raid_bosscounter WHERE rid='".$rid."' AND bid='".$row['id']."'"),0);
 			$time = @db_result(@db_query("SELECT time FROM prefix_raid_bosscounter WHERE rid='".$rid."' AND bid='".$row['id']."'"),0);

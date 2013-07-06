@@ -16,7 +16,7 @@ aRaidMenu();
 
 $tpl = new tpl ( 'raid/raiddkps.htm',1 );
 
-$iniPath = "include/images/inzen/";
+$iniPath = "include/raidplaner/images/dungeon/";
 
 switch($menu->get(2)){ 
 	case "new":			

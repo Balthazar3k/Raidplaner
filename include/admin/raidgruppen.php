@@ -14,7 +14,7 @@ if( !RaidPermission(0, TRUE, $menu->get(0) ) ){ echo "don't Permission"; $design
 RaidErrorMsg();
 aRaidMenu();
 
-$imgPath = "include/images/raidgruppen/";
+$imgPath = "include/raidplaner/images/raidgruppen/";
 
 $tpl = new tpl ( 'raid/raidgruppen.htm',1 );
 

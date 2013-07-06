@@ -112,7 +112,7 @@ switch($menu->get(1)){
 						 
 		if( db_num_rows( $res ) != 0 ){
 			while( $row = db_fetch_object( $res ) ){
-				if( $allgAr['show_details_raidgruppen'] OR !is_file("include/images/raidgruppen/".$row->img) ){
+				if( $allgAr['show_details_raidgruppen'] OR !is_file("include/raidplaner/images/raidgruppen/".$row->img) ){
 					$row->gruppen = aLink( $row->gruppen, "raidlist-raids-".$row->gid);
 					$row->dkplink = aLink( "<img src='include/images/icons/editor/number.gif' border=0>", "raidlist-dkplist-".$row->gid);
 					$row->stammgrp = ( !empty( $row->stammgrp ) ? "&raquo; ".$row->stammgrp : "" );
@@ -120,9 +120,9 @@ switch($menu->get(1)){
 					$row->aktive = ( $row->aRaids > 0 ? "<div style='background-color:green;".$style."'>Akive Raids</div>":"<div style='background-color:darkred;".$style."'>No Active Raids</div>" );
 					$tpl->set_ar_out($row, 1);
 				}
-				if( $allgAr['show_img_raidgruppen'] AND is_file("include/images/raidgruppen/".$row->img) ){
-					$img = getimagesize("include/images/raidgruppen/".$row->img);
-					$tpl->set_out("img", aLink("<img ".$img[3]." src='include/images/raidgruppen/".$row->img."' border='0'>", "raidlist-raids-".$row->gid), 2);
+				if( $allgAr['show_img_raidgruppen'] AND is_file("include/raidplaner/images/raidgruppen/".$row->img) ){
+					$img = getimagesize("include/raidplaner/images/raidgruppen/".$row->img);
+					$tpl->set_out("img", aLink("<img ".$img[3]." src='include/raidplaner/images/raidgruppen/".$row->img."' border='0'>", "raidlist-raids-".$row->gid), 2);
 				}
 				
 			}
@@ -182,9 +182,9 @@ switch($menu->get(1)){
 						WHERE a.id=".$menu->get(2));
 		$row = db_fetch_object( $res );
 		
-		if( $allgAr['show_img_raidgruppen'] AND is_file("include/images/raidgruppen/".$row->img) ){
-			$img = getimagesize("include/images/raidgruppen/".$row->img);
-			$row->img = "<img src='include/images/raidgruppen/".$row->img."' ".$img[3].">";
+		if( $allgAr['show_img_raidgruppen'] AND is_file("include/raidplaner/images/raidgruppen/".$row->img) ){
+			$img = getimagesize("include/raidplaner/images/raidgruppen/".$row->img);
+			$row->img = "<img src='include/raidplaner/images/raidgruppen/".$row->img."' ".$img[3].">";
 		}else{
 			$row->img = "<span style='font-size:15px'><b>".$row->gruppen."</b></span>";
 		}
@@ -377,7 +377,7 @@ switch($menu->get(1)){
 		### Spieler Anzahl ermitteln
 		$row['size'] = db_value( "prefix_raid_grpsize", "grpsize", $row['size'], "");
 		### Raid Images Laden und Abfragen
-		$img_inis = "include/images/inzen/".$row['img'];
+		$img_inis = "include/raidplaner/images/dungeon/".$row['img'];
 		if( file_exists( $img_inis )){
 			$row['img'] = "<img src='".$img_inis."'>";
 		}else{

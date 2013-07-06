@@ -14,7 +14,7 @@ if( !RaidPermission(0, TRUE) ){ echo "don't Permission"; $design->footer(); exit
 RaidErrorMsg();
 aRaidMenu();
 
-$imgPath = "include/images/inzen/";
+$imgPath = "include/raidplaner/images/dungeon/";
 
 $tpl = new tpl ( 'raid/raidinzen.htm',1 );
 

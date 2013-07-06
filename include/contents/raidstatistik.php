@@ -58,7 +58,7 @@ switch($menu->get(1)){
 			$row['firstkill'] = DateFormat("D d.m.Y", $row['firstkill']);
 			$row['lastkill'] = DateFormat("D d.m.Y", $row['lastkill']);
 			$row['CLASS'] = cssClass($row['CLASS']);
-			$row['img'] = ( file_exists("include/images/bosse/".$row["img"]) ? "<img height=\"50\" src=\"/include/images/bosse/".$row["img"]."\">" : "noImg" );
+			$row['img'] = ( file_exists("include/raidplaner/images/bosse/".$row["img"]) ? "<img height=\"50\" src=\"/include/raidplaner/images/bosse/".$row["img"]."\">" : "noImg" );
 			$row['pz'] = pzVortschritsAnzeige( $row['kills'], $all );
 			$tpl->set_ar_out( $row, 2);
 		}
@@ -94,7 +94,7 @@ switch($menu->get(1)){
 				$i++;
 				$tpl->set_out("nr", $i, 1);
 				### Ausgabe
-				$pfad = "include/images/inzen/";
+				$pfad = "include/raidplaner/images/dungeon/";
 				
 				$row->CLASS = cssClass($row->CLASS);
 				$row->img = ( file_exists( $pfad . $img ) ? "<img width='75' src='".$pfad.$row->img."'>" : "n/a" );
