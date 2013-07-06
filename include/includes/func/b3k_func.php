@@ -79,12 +79,6 @@ function RaidErrorMsg(){
 		include("include/raidplaner/raidplaner.updater.php");
 		$ru = new updater();
 		
-		### Wichtige Daten zum Ausführen des Raidplaners"
-		$error['isChmodBosse'] = ( !@is_writeable('include/raidplaner/images/bosse') ? 'CHMOD: Der Ordner: "include/raidplaner/images/bosse" brauch Schreibrechte (777)':'' );
-		$error['isChmodInzen'] = ( !@is_writeable('include/raidplaner/images/inzen') ? 'CHMOD: Der Ordner: "include/raidplaner/images/inzen" brauch Schreibrechte (777)':'' );
-		$error['isChmodRaidgrp'] = ( !@is_writeable('include/raidplaner/images/raidgruppen') ? 'CHMOD: Der Ordner: "include/raidplaner/images/raidgruppen" brauch Schreibrechte (777)':'' );
-		$error['isChmodUpdater'] = ( !@is_writeable('include/raidplaner/update/') ? 'CHMOD: Der Ordner: "include/raidplaner/update/" brauch Schreibrechte (777)':'' );
-		
 		$isRaidGrp = db_result(db_query('SELECT COUNT(id) FROM prefix_raid_gruppen'),0);
 		$error['isRaidGrp'] = ( $isRaidGrp == 0 ? 'Raidplaner: Es müssen DKP Gruppen angelegt werden, '.aLink('Anlegen','raidgruppen',1).'!' : '');
 		
