@@ -119,6 +119,10 @@ switch( $_GET['step'] ){
 		
 		$res = $error = array();
 		foreach( $chmod as $key => $path ){
+			if( !is_dir( $path ) ){
+				mkdir( $path );
+			}
+		
 			if( is_writeable( $path ) ){
 				$res[] = true;
 			}else{
