@@ -31,11 +31,11 @@ $img_edit = "<img src='include/images/icons/edit.gif' border='0'>";
 
 $kalout .= $_SESSION['authid'] ."=". $uid_s;
 switch($menu->get(1)){
-	#### Char Löschen
+	#### Char Lï¿½schen
 	case "del":
 		$char_name = db_result(db_query('SELECT name FROM prefix_raid_chars WHERE id='.$menu->get(2) ),0);
 		if(   $menu->get(3) != "true" ){
-			echo "<center>Wirklich alle daten von \"".$char_name."\" Löschen? ";
+			echo "<center>Wirklich alle daten von \"".$char_name."\" Lï¿½schen? ";
 			echo "[ <a href='index.php?".$_SERVER['QUERY_STRING']."-true'>Ja</a> | <a href='index.php?chars'>Nein</a> ]</center>";
 		}
 		
@@ -44,9 +44,9 @@ switch($menu->get(1)){
 			db_query("DELETE FROM prefix_raid_dkp WHERE cid = '".$menu->get(2)."'") &&
 			db_query("DELETE FROM prefix_raid_kalender WHERE cid = '".$menu->get(2)."'") &&
 			db_query("DELETE FROM prefix_raid_anmeldung WHERE `char` = '".$menu->get(2)."'") ){
-				wd('index.php?chars',$char_name.' wurde erfolgreich gelöscht!', 1);
+				wd('index.php?chars',$char_name.' wurde erfolgreich gelï¿½scht!', 1);
 			}else{
-				wd('index.php?chars',$char_name.' wurde "<b>NICHT</b>" erfolgreich gelöscht!', 3);
+				wd('index.php?chars',$char_name.' wurde "<b>NICHT</b>" erfolgreich gelï¿½scht!', 3);
 			}
 		}
 	break;
@@ -78,7 +78,7 @@ switch($menu->get(1)){
 			 wd('index.php?chars',escape($_POST['name'], 'string').' wurde erstellt, warte Bitte 3sec!', 3);
 		}else{
 			echo arrDataCheck($_POST, "name=is,level=is,klassen=is,rassen=is",1)."<br>";
-			button("Zurück und die Daten erneut eingeben.","", 8);
+			button("Zurï¿½ck und die Daten erneut eingeben.","", 8);
 		}
 				  
 	break;
@@ -110,7 +110,7 @@ switch($menu->get(1)){
 				db_query('INSERT INTO `prefix_raid_kalender` (`cid`, `zid`, `wid`) VALUES (\''.$menu->get(2).'\', \''.$zeit.'\', \''.$wochtag.'\');');
 			}
 		}
-		wd('index.php?chars--show-'.$menu->get(2),'Raidtage wurde geändert');
+		wd('index.php?chars--show-'.$menu->get(2),'Raidtage wurde geï¿½ndert');
 	break;
 	#### Neuer Char Formular
 	case "newchar":
@@ -122,7 +122,7 @@ switch($menu->get(1)){
 		$row['level'] = drop_down_menu("prefix_raid_level" , "level", $value, "");
 		$row['klassen'] = drop_down_menu("prefix_raid_klassen" , "klassen", $value, "");
 		$row['rassen'] = drop_down_menu("prefix_raid_rassen" , "rassen", $value, "");
-		$row['spz'] = "Klasse wählen!";
+		$row['spz'] = "Klasse wï¿½hlen!";
 		$row['skillgruppe'] = skillgruppe(1,0);
 		$row['raiden'] = $row['pvp'] = $row['warum'] = $row['rlname'] = "";
 		$row['mskill'] = $row['sskill'] = "";
@@ -146,7 +146,7 @@ switch($menu->get(1)){
 		$row['skillgruppe'] = skillgruppe(1,$row['skillgruppe']);
 		$row['level'] = drop_down_menu("prefix_raid_level" , "level", $row['level'], "");
 		$row['klassen'] = drop_down_menu("prefix_raid_klassen" , "klassen", $value, "");
-		$row['spz'] = "Klasse wählen!";
+		$row['spz'] = "Klasse wï¿½hlen!";
 		$row['rassen'] = drop_down_menu("prefix_raid_rassen" , "rassen",  $row['rassen'], "");
 		$row['mberuf'] = drop_down_menu("prefix_raid_berufe" , "mberuf",  $row['mberuf'], "");
 		$row['sberuf'] = drop_down_menu("prefix_raid_berufe" , "sberuf",  $row['sberuf'], "");
@@ -158,7 +158,7 @@ switch($menu->get(1)){
 	
 	case "show":
 		$tpl = new tpl ('raid/CHARS_DETAILS.htm');
-		button("Zurück","",8);
+		button("Zurï¿½ck","",8);
 		$row = db_fetch_assoc(db_query("SELECT 
 							a.name, a.teamspeak, a.mberuf, a.mskill, a.sberuf, a.sskill, a.raiden, a.warum, a.pvp, a.skillgruppe,
 							a.s1, a.s2, a.s3, a.realm, a.user, a.punkte, a.id, a.rlname, 
@@ -186,7 +186,7 @@ switch($menu->get(1)){
 		$row['sberuf'] = db_value( "prefix_raid_berufe", "berufe", $row['sberuf']);
 		### Raidkalender
 		$wochentag = array( 0 => "So", 1 => "Mo", 2 => "Di", 3 => "Mi", 4 => "Do", 5 => "Fr", 6 => "Sa");
-		$ctd = count($wochentag); #--- Zähele Spalten (td)
+		$ctd = count($wochentag); #--- Zï¿½hele Spalten (td)
 		$res = db_query("SELECT * FROM prefix_raid_zeit");
 		$kalout = '<form id="form" name="form" method="post" action="index.php?chars-raidtage-'.$menu->get(2).'">';
 		$kalout .= "<table border='0' cellspacing='1' cellpadding='5' class='border'><tr class='Chead'><td></td>";
@@ -341,14 +341,14 @@ switch($menu->get(1)){
 				$tpl->set_ar_out( array( "klass_name" => $row['klassen'], "COUNT_KLASSEN" => $c_klassen ), 1 );
 			}
 
-			### Ausgaben Ändern/Hinzufügen
+			### Ausgaben ï¿½ndern/Hinzufï¿½gen
 			$row['ARSENAL'] = "<a href='http://eu.battle.net/wow/de/character/".urlencode(utf8_encode($row['realm']))."/".str_replace(" ", "+",urlencode(utf8_encode($row['name'])))."/advanced' target='_blank'>Arsenal</a>";
 			$row['CLASS'] = cssClass($row['CLASS']);
-			$row['img'] = "<img src='include/images/wowklein/".$row['klassen'].".gif'>";
+			$row['img'] = "<img src='include/raidplaner/images/wowklein/".$row['klassen'].".gif'>";
 			$row['name'] = "<a href='index.php?chars-show-".$row['id']."' name='".$row['id']."'>".$row['name']."</a>";
 			### Skillung Auswerten
 			$row['sb'] = char_skill($row['s1'],$row['s2'],$row['s3'],$row['klassenid']);
-			### Edit für Chareigentümer
+			### Edit fï¿½r Chareigentï¿½mer
 			if( $row['user'] == $_SESSION['authid']){
 				$row['edit'] = "<a href='index.php?chars-edit-".$row['id']."'>".$img_edit."</a>";
 			}else{
