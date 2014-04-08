@@ -507,7 +507,7 @@ switch($menu->get(1)){
 				$Class = cssClass($Class);
 				$row["CLASS"] = $Class;
 				$row['img'] = class_img($row['klassen']);
-				$row['name'] = "<a href='index.php?raidlist-verlauf-".$row['rid']."-".$row['cid']."' title='".$name_title."'>".$row['name']."</a>";
+				$row['name'] = "<a href='index.php?chars-show-".$row['cid']."' title='".$name_title."'>".$row['name']."</a>";
 				$row['sb'] = char_skill($row['s1'],$row['s2'],$row['s3'],$row['kid']);
 				$tpl->set_ar_out( $row, 1 );
 			}
