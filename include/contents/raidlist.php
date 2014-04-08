@@ -192,7 +192,7 @@ switch($menu->get(1)){
 		$row->date = ( $row->date == '0000-00-00 00:00:00' ? '' : DateFormat("D d.m.Y", DateToTimestamp($row->date)) );
 		$title = "<span style='float:left;'>Raids Beendet.</span><span style='float:right;'>".$row->bRaids."/".$row->aRaids." Beendete Raids</span>";
 		$row->pzRaids = pzVortschritsAnzeige($row->bRaids,$row->aRaids, $title,2);
-		$title = "<span style='float:left;'>Clear Status.</span><span style='float:right;'>".$row->akBosse."/".$row->amBosse." möglichen Bossen Eliminiert</span>";
+		$title = "<span style='float:left;'>Clear Status.</span><span style='float:right;'>".$row->akBosse."/".$row->amBosse." mï¿½glichen Bossen Eliminiert</span>";
 		$row->pzBosse = pzVortschritsAnzeige($row->akBosse,$row->amBosse, $title, 2);
 		$title = "<span style='float:left;'>Raidleistung Insgesamt.</span>"
 		."<span style='float:right;'>".$row->bRaids."/".$row->allgRaids." Raids von ".$row->gruppen."</span>";
@@ -211,7 +211,7 @@ switch($menu->get(1)){
 		 "Anmeldungen"=>"cAnmeldungen",
 		 "Zusagen"=>"cZusagen");
 		 
-		 $canUpOrDown = array( "Reihenfolge"=>"ASC", "Aufwärts (A,B,C)"=>"ASC", "Abwärts (C,B,A)"=>"DESC" );
+		 $canUpOrDown = array( "Reihenfolge"=>"ASC", "Aufwï¿½rts (A,B,C)"=>"ASC", "Abwï¿½rts (C,B,A)"=>"DESC" );
 		
 		foreach( $canSort as $name => $sort ){
 			$selected = ( $_SESSION['raidlist']['sort'] == $sort ? 'selected="selected"' : '' );
@@ -291,12 +291,12 @@ switch($menu->get(1)){
 					$row->dkplink = aLink( "<img src='include/images/icons/editor/number.gif' border=0>", "raidlist-dkplist-".$row->gid."--".$row->id);
 					$tpl->set_ar_out($row, 8);
 				}else{
-					$tpl->set_out("msg", "Du hast hier Leider nicht die Nötigen Rechte!", 9);
+					$tpl->set_out("msg", "Du hast hier Leider nicht die Nï¿½tigen Rechte!", 9);
 					break;
 				}
 			}
 		}else{
-			$tpl->set_out("msg", "Es wurden keine Raids gefunden! (evt. keine Raids für diese Einstellungen)", 9);
+			$tpl->set_out("msg", "Es wurden keine Raids gefunden! (evt. keine Raids fï¿½r diese Einstellungen)", 9);
 		}
 		
 		$tpl->set_out("MPL", $MPL, 10);
@@ -323,7 +323,7 @@ switch($menu->get(1)){
 				wd('index.php?raidlist-showraid-'.$menu->get(2),'Fehler beim Anmelden!');
 			}
 		}else{
-			wd('index.php?raidlist-showraid-'.$menu->get(2),'Doppelt Anmeldungen sind nicht Möglich! =Þ');
+			wd('index.php?raidlist-showraid-'.$menu->get(2),'Doppelt Anmeldungen sind nicht Mï¿½glich! =ï¿½');
 		}
 	break;
 	
@@ -333,7 +333,7 @@ switch($menu->get(1)){
 				db_query("UPDATE prefix_raid_anmeldung SET `".$key."`='".$value."' WHERE id='".$menu->get(3)."'");
 			}
 		}
-		wd('index.php?raidlist-showraid-'.$menu->get(2),'Deine Anmeldung wurde erfolgreich geändert!');
+		wd('index.php?raidlist-showraid-'.$menu->get(2),'Deine Anmeldung wurde erfolgreich geï¿½ndert!');
 	break;
 	 
 	case "showraid":
@@ -341,38 +341,34 @@ switch($menu->get(1)){
 		### RAID Details ###
 		####################
 		$tpl = new tpl ('raid/RAIDLIST_RAIDDETAILS.htm');
-		$res = db_query( "SELECT 
-								a.id, a.inv, a.pull, a.ende, a.invsperre, a.txt, a.treff, a.statusmsg AS status_raid_ende, a.gruppen as gid, a.erstellt,
-								IF(a.bosskey>0, a.bosskey, a.id) AS bosskey,
-								b.id as bid, b.name as inzen, b.grpsize as size, b.maxbosse, b.img, 
-								c.gruppen, c.id AS grpid, c.regeln, 
-								d.statusmsg, d.color,
-								e.name as leader,
-								f.loot, 
-								i.grpsize, 
-								(SELECT COUNT(aa.id) FROM prefix_raid_anmeldung AS aa WHERE aa.rid=a.id AND stat=12) AS gamers 
-							FROM prefix_raid_raid AS a 
-								LEFT JOIN prefix_raid_inzen AS b ON a.inzen = b.id
-								LEFT JOIN prefix_raid_gruppen AS c ON a.gruppen = c.id
-								LEFT JOIN prefix_raid_statusmsg AS d ON a.statusmsg = d.id
-								LEFT JOIN prefix_raid_chars AS e ON a.leader = e.id
-								LEFT JOIN prefix_raid_loot AS f ON a.loot = f.id 
-								LEFT JOIN prefix_raid_stammrechte AS g ON a.stammgrp=g.sid AND g.cid='".$_SESSION['charid']."' 
-								LEFT JOIN prefix_config AS h ON h.schl='canSeeStamm' 
-								LEFT JOIN prefix_raid_grpsize AS i ON b.grpsize=i.id
-							WHERE 
-								a.id = '".$menu->get(2)."' AND 
-								(h.wert=1 OR a.stammgrp='' OR g.sid = a.stammgrp) 
-							LIMIT 1" );
-							#echo $res;
-		if( @db_num_rows( $res ) == 0 ){ $tpl->set_out("msg", "Du Hast hier keine Rechte für diesen Raid!", 1); $design->footer(); exit(); }
+		$res = db_query( "
+		SELECT 
+			a.id, a.inv, a.pull, a.ende, a.invsperre, a.txt, a.treff, a.statusmsg AS status_raid_ende, a.gruppen as gid, a.erstellt,
+			IF(a.bosskey>0, a.bosskey, a.id) AS bosskey,
+			b.id as bid, b.name as inzen, b.grpsize as size, b.maxbosse, b.img, 
+			c.gruppen, c.id AS grpid, c.regeln, 
+			d.statusmsg, d.color,
+			e.name as leader,
+			f.loot, 
+			i.grpsize, 
+			(SELECT COUNT(aa.id) FROM prefix_raid_anmeldung AS aa WHERE aa.rid=a.id AND stat=12) AS gamers 
+		FROM prefix_raid_raid AS a 
+			LEFT JOIN prefix_raid_inzen AS b ON a.inzen = b.id
+			LEFT JOIN prefix_raid_gruppen AS c ON a.gruppen = c.id
+			LEFT JOIN prefix_raid_statusmsg AS d ON a.statusmsg = d.id
+			LEFT JOIN prefix_raid_chars AS e ON a.leader = e.id
+			LEFT JOIN prefix_raid_loot AS f ON a.loot = f.id 
+			LEFT JOIN prefix_raid_stammrechte AS g ON a.stammgrp=g.sid AND g.cid='".$_SESSION['charid']."' 
+			LEFT JOIN prefix_config AS h ON h.schl='canSeeStamm' 
+			LEFT JOIN prefix_raid_grpsize AS i ON b.grpsize=i.id
+		WHERE 
+			a.id = '".$menu->get(2)."' AND 
+			(h.wert=1 OR a.stammgrp='' OR g.sid = a.stammgrp) 
+		LIMIT 1
+		" );
+							
+		if( @db_num_rows( $res ) == 0 ){ $tpl->set_out("msg", "Du Hast hier keine Rechte fï¿½r diesen Raid!", 1); $design->footer(); exit(); }
 		$row = db_fetch_assoc( $res );
-		#if( $row['erstellt'] > $_SESSION['lastlogin'] ){
-			#list($date, $time) = explode( " ", $row['restellt'] );
-			#list($y, $m, $d ) = explode( "-", $date );
-			#list($H, $i, $s ) = explode( ":", $time);
-			#$_SESSION['lastlogin'] = mktime($H,$i,$s,$m,$d,$y) ;
-		#}
 		$row['CLASS'] = cssClass($row['CLASS']);
 		### Spieler Anzahl ermitteln
 		$row['size'] = db_value( "prefix_raid_grpsize", "grpsize", $row['size'], "");
@@ -424,7 +420,7 @@ switch($menu->get(1)){
 			$opt_sperre = @db_result(@db_query("SELECT sid FROM prefix_raid_statusmsg WHERE id=".$res['stat']),0); ### Akttiviert die IF abfrage #101
 		}
 		while( $opt = db_fetch_assoc( $abf )){
-			### #101 ### Prüfen ob Raitleiter dem User schon ein Status gegeben hat und in die auswahl hinzufügen (Kniffliege sache ^^ mal schauen obs funktioniert ^^)
+			### #101 ### Prï¿½fen ob Raitleiter dem User schon ein Status gegeben hat und in die auswahl hinzufï¿½gen (Kniffliege sache ^^ mal schauen obs funktioniert ^^)
 			if( $opt_sperre == 3 ){
 				$raid_stat = "<option value='".$res['stat']."' selected>Raid: Einstellung</option>\n";
 				$opt_sperre = ""; ### Deaktiviert die IF Abfrage #101			
@@ -445,7 +441,7 @@ switch($menu->get(1)){
 		$RaidInvTime = db_result( $RaidRes , 0, 0);
 		$RaidInvSperre = db_result( $RaidRes ,0, 1);
 		$isRaidStarted = ( time() > $RaidInvTime ? FALSE : TRUE );
-		### Main Chars Daten Überprüfen
+		### Main Chars Daten ï¿½berprï¿½fen
 		$exRaidChar = exRaidChar();
 		$isRaidKalender = ( $allgAr['isRaidKalender'] == 0 ? TRUE : isRaidKalender() );
 		$isRaidSkillung = ( $allgAr['isRaidSkillung'] == 0 ? TRUE : isRaidSkillung() );
@@ -455,12 +451,12 @@ switch($menu->get(1)){
 				$form['title'] = "Anmeldung Bearbeiten";
 				$form['smsg'] = "Hier kannst du deine Anmeldung Bearbeiten";
 				$form['kom'] = $res['kom'];
-				$form['button'] = "Ändern";
+				$form['button'] = "ï¿½ndern";
 				$form['pfad'] = "index.php?raidlist-edit-".$menu->get(2)."-".$res['id'];
 	
 				$tpl->set_ar_out( $form, 0 );
 			}else{
-				### Raid Mindest anmelde Zeit überprüfung!
+				### Raid Mindest anmelde Zeit ï¿½berprï¿½fung!
 				if( time() <= $RaidInvTime - ($RaidInvSperre*3600) ){
 					$RaidStatus = TRUE;
 				}else{
@@ -528,7 +524,7 @@ switch($menu->get(1)){
 		$charID = $menu->get(3);
 		
 		$tpl = new tpl ('raid/DKPLISTE_DKPVERLAUF_CHAR.htm');
-		$tpl->set_out("title","Verlauf für diesen Raid", 0);
+		$tpl->set_out("title","Verlauf fï¿½r diesen Raid", 0);
 		$res = db_query("SELECT info, dkp, date FROM prefix_raid_dkp WHERE rid = '".$rID."' AND cid = '".$charID."'"); 
 		while( $row = db_fetch_assoc( $res )){
 			$row['CLASS'] = cssClass($row['CLASS']);
@@ -548,7 +544,7 @@ switch($menu->get(1)){
 		#######################
 		### DKPLISTE GESAMT ###
 		#######################
-		button("Zurück","", 8);
+		button("Zurï¿½ck","", 8);
 		button("Aktualisieren","", 10);
 		$tpl = new tpl ('raid/RAIDLIST_DKPLIST.htm');
 		$row['gruppen'] = db_result(db_query("SELECT gruppen FROM prefix_raid_gruppen WHERE id='".$menu->get(2)."'"),0);
@@ -565,7 +561,7 @@ switch($menu->get(1)){
 			$klassen .= '<option value="index.php?raidlist-dkplist-'.$menu->get(2).'-'.$k['id'].'-'.$menu->get(4).'"'.$select.'>'.$k['klassen'].'</option>\n';
 		}
 		$klassen .= '<option value="index.php?raidlist-dkplist-'.$menu->get(2).'-dkp-'.$menu->get(4).'">SET: Druide, Krieger, Priester</option>\n';
-		$klassen .= '<option value="index.php?raidlist-dkplist-'.$menu->get(2).'-mhj-'.$menu->get(4).'">SET: Magier, Hexenmeister, Jäger</option>\n';
+		$klassen .= '<option value="index.php?raidlist-dkplist-'.$menu->get(2).'-mhj-'.$menu->get(4).'">SET: Magier, Hexenmeister, Jï¿½ger</option>\n';
 		$klassen .= '<option value="index.php?raidlist-dkplist-'.$menu->get(2).'-pss-'.$menu->get(4).'">SET: Paladin, Schurke, Schamane</option>\n';
 		$row['list_klassen_dkp'] = $klassen;
 		$tpl->set_ar_out( $row ,0);
@@ -584,7 +580,7 @@ switch($menu->get(1)){
 				 GROUP BY a.name 
 				 ORDER BY `adkp` DESC';
 			break;
-			case "mhj": # MAGIER, JÄGER, HEXENMEISTER
+			case "mhj": # MAGIER, Jï¿½GER, HEXENMEISTER
 				$sql = 'SELECT a.id, a.name , c.klassen, SUM( b.dkp ) AS adkp 
 				 FROM prefix_raid_chars AS a , prefix_raid_dkp AS b, prefix_raid_klassen AS c  WHERE 
 				 a.klassen IN( 4, 8, 9 ) AND b.dkpgrp = '.$menu->get(2).' AND  a.id = b.cid AND a.klassen=c.id   
