@@ -357,7 +357,7 @@ switch($menu->get(1)){
 								LEFT JOIN prefix_raid_statusmsg AS d ON a.statusmsg = d.id
 								LEFT JOIN prefix_raid_chars AS e ON a.leader = e.id
 								LEFT JOIN prefix_raid_loot AS f ON a.loot = f.id 
-								LEFT JOIN prefix_raid_stammrechte AS g ON a.stammgrp=g.sid AND g.cid=".$_SESSION['charid']." 
+								LEFT JOIN prefix_raid_stammrechte AS g ON a.stammgrp=g.sid AND g.cid='".$_SESSION['charid']."' 
 								LEFT JOIN prefix_config AS h ON h.schl='canSeeStamm' 
 								LEFT JOIN prefix_raid_grpsize AS i ON b.grpsize=i.id
 							WHERE 
