@@ -212,12 +212,12 @@ $design->footer();
 
 function send_pm2legitimate($title, $text, $status = 0){
 	$res = db_query('
-        SELECT 
-            a.id
-        FROM `prefix_user` AS a
-            LEFT JOIN `prefix_raid_chars` AS b ON a.id = b.user 
-        WHERE b.rang > 6
-    ');
+		SELECT 
+		    a.id
+		FROM `prefix_user` AS a
+		    LEFT JOIN `prefix_raid_chars` AS b ON a.id = b.user 
+		WHERE b.rang > 6
+	');
 	while( $row = db_fetch_assoc($res) ){
 		sendpm($_SESSION['authid'], $row['user'], $title, $text, $status);
 	}
