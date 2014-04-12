@@ -81,9 +81,9 @@ switch($menu->get(1)){
                         'Es hat sich jemand neues Beworben!'
                     );
 
-                    //wd("index.php?bewerbung","Du hast dich erfolgreich Beworben");
+                    wd("index.php?bewerbung","Du hast dich erfolgreich Beworben");
                 }else{
-                    //wd("index.php?bewerbung","Du hast dich <b>nicht</b> erfolgreich Beworben " );
+                    wd("index.php?bewerbung","Du hast dich <b>nicht</b> erfolgreich Beworben " );
                 }
 
     break;
