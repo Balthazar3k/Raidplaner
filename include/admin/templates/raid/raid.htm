@@ -52,164 +52,172 @@ function MM_jumpMenu(targ,selObj,restore){ //v3.0
 }
 //-->
 </script>
-<table width="100%" border="0" cellspacing="2" cellpadding="2">
-  <tr>
-    <td valign="top">
-<form name="form" method="post" action="{PFAD}">
-        <table width="100%" border="0" cellspacing="1" cellpadding="2" class='border'>
-          <tr class='Chead'> 
-            <td colspan="2">RAID PLANER ( edit / new )</td>
-          </tr>
-          <tr class='Cnorm'> 
-            <td>Status:</td>
-            <td>{status}</td>
-          </tr>
-          <tr class='Cnorm'> 
-            <td>Leader</td>
-            <td>{char}</td>
-          </tr>
-          <tr class='Cnorm'> 
-            <td>Raidgruppe:</td>
-            <td>{gruppen} id fortsetzen 
-              <select name="bosskey" id="bosskey">
-            	{bbid}
-			</select> 
-              [ <a href="admin.php?raidgruppen">Neue GRP?</a> ]</td>
-          </tr>
-          <tr class='Cnorm'>
-            <td>Stammgrp:</td>
-            <td>{stammgrp} [ <a href="admin.php?raidstammgrp">Neue Stamm Gruppe</a> ]</td>
-          </tr>
-          <tr class='Cnorm'> 
-            <td>Inztanze:</td>
-            <td>{inzen} [ <a href="admin.php?raidinzen">Edit / Neue</a> ]</td>
-          </tr>
-          <tr class='Cnorm'> 
-            <td>Treffpunkt:</td>
-            <td><input name="treff" type="text" value="{treff}"></td>
-          </tr>
-          <tr class='Cnorm'> 
-            <td>Loot:</td>
-            <td>{loot}</td>
-          </tr>
-          <tr class='Cnorm'> 
-            <td>Datum:</td>
-            <td> <input class="datepicker" value="{begind}" name="begind" size="12" maxlength="10" />
-              YYYY-MM-TT</td>
-          </tr>
-          <tr class='Cnorm'> 
-            <td>Invite:</td>
-            <td><label>
-              <input name="istd" type="text" id="istd" value="{istd}" size="2" maxlength="2" />
-            </label>
-            :
-            <input name="imin" type="text" id="imin" value="{imin}" size="2" maxlength="2" /> 
-            Uhr <font size="1">( Std. : Min. )</font></td>
-          </tr>
-          <tr class='Cnorm'> 
-            <td>Pull:</td>
-            <td><label>
-              <input name="pstd" type="text" id="pstd" value="{pstd}" size="2" maxlength="2" />
-            </label>
-:
-<input name="pmin" type="text" id="istd4" value="{pmin}" size="2" maxlength="2" />
- Uhr <font size="1">( Std. : Min. )</font></td>
-          </tr>
-          <tr class='Cnorm'> 
-            <td>Ende:</td>
-            <td><label>
-              <input name="estd" type="text" id="istd5" value="{estd}" size="2" maxlength="2" />
-            </label>
-:
-<input name="emin" type="text" id="istd6" value="{emin}" size="2" maxlength="2" />
- Uhr <font size="1">( Std. : Min. )</font></td>
-          </tr>
-          <tr class='Cnorm'>
-            <td>mindest Anmeldezeit:</td>
-            <td>
-              <input name="invsperre" type="text" id="invsperre" value="{invsperre}" size="2" maxlength="2" />
-            Std. vor Raidbegin. <em>(2 Stellig)</em></td>
-          </tr>
-          <tr class='Cnorm'> 
-            <td>Info/Bemerkung/Ank&uuml;ndigung</td>
-            <td> 
-              <!-- BB Code START -->
-              <a href="javascript:simple('b')"><img style="padding-left: 4%; float: left;" src="include/images/icons/button.bold.gif" alt="b" title="{_lang_bold}" border="0"></a> 
-              <a href="javascript:simple('i')"><img style="padding-left: 4%; float: left;" src="include/images/icons/button.italic.gif" alt="i" title="{_lang_italic}" border="0"></a> 
-              <a href="javascript:simple('u')"><img style="padding-left: 4%; float: left;" src="include/images/icons/button.underline.gif" alt="u" title="{_lang_underlined}" border="0"></a> 
-              <a href="javascript:simple('code')"><img style="padding-left: 4%; float: left;" src="include/images/icons/button.code.gif" alt="Code" title="{_lang_code}" border="0"></a> 
-              <a href="javascript:simple_liste()"><img style="padding-left: 4%; float: left;" src="include/images/icons/button.insertunorderedlist.gif" alt="{_lang_list}" title="{_lang_list}" border="0"></a> 
-              <a href="javascript:simple('url')"><img style="padding-left: 4%; float: left;" src="include/images/icons/button.link.gif" alt="Url" title="{_lang_link}" border="0"></a> 
-              <a href="javascript:simple('img')"><img style="padding-left: 4%; float: left;" src="include/images/icons/button.image.gif" alt="{_lang_picture}" title="{_lang_picture}" border="0"></a> 
-              <!-- BB Code ENDE -->            </td>
-          </tr>
-          <tr class='Cnorm'>
-            <td><div align="center">{SMILIS}</div></td>
-            <td><textarea name="txt" cols="80" rows="10" id="txt">{txt}</textarea></td>
-          </tr>
-          <tr class='Cnorm'> 
-            <td>&nbsp;</td>
-            <td><p>
-              <input type="submit" name="Submit" value="Abschicken">
-            </p>            </td>
-          </tr>
-          <tr class='Cnorm'>
-            <td colspan="2"><p><strong>Ohne einen Char mindest Rang Raidleiter kann kein Raid Gestartet werden.<br />
-              Status: Aktiv </strong>- Raid ist f&uuml;r Anmeldungen Offen! <strong>Beendet</strong> - Raid ist bereits Fertig! <strong>Abgesagt</strong> - Raid wurde aus verschiedenen Gr&uuml;nden abgesagt! <strong>Abgebrochen </strong>- Raid ist zwar Gestartet wurde aber nicht Bendet! <strong>Ausstehend:</strong> Dieser Status gibt das Script Automatisch dem Raid wenn er ausgelaufen ist und niemand den Status angepasst hat.<br />
-              <strong>Leader:</strong>Die Person die den Raid Leitet<br />
-                <strong>Raidgruppe</strong>: Die Raidgruppen werden von den DKP getrennt also k&ouml;nnte man 2-5 andere/neue DKP konten starten. Aber eine Raidgruppe wird auch Ben&ouml;tigt um &Uuml;berhaupt ein Raid zu erstellen.<br />
-                <strong>Stamm Gruppe:</strong> Wenn diese Einstellung Aktivert ist sehen nur die Chars die dieser Stamm Gruppe auch angeh&ouml;ren die erstellten Raids. Diese Einstellung kann man auf der Chars Seite machen wozu man Rechte Brauch. Lasst ihr das Feld jedoch Leer kann sich jeder anmelden der einen Char hat.<br />
-                <strong>Instanzen:</strong> Wo wollt ihr Raiden?! Das k&ouml;nnt ihr euch hier aussuchen, wird aber auch Ben&ouml;tigt einen Raid zu erstellen.<br />
-                <strong>Treffpunkt:</strong> Optional.<br />
-                <strong>Loot:</strong> Optional! Hat keine Bedeutung auser f&uuml;r die anzeige in den Raiddetails.<br />
-                <strong>Datum/Inv/Pull/Ende:</strong> D&uuml;rfte Klar sein.<br />
-                <strong>mindest Anmeldezeit:</strong> ist in wird in std. vorgegeben. Also Bsp. 2std. vor Raidbeginn wird die Raidanmeldung Geschlossen. Es kann sich niemand mehr anmelden, nur noch Raidleiter k&ouml;nnen Chars Hinzuf&uuml;gen.<br />
-                <strong>Info/Bemerkung/Ank&uuml;ndigung:</strong> Was euer Herz nieder Schreiben will das f&uuml;r den Raid notwendig ist!</p>
-            </td>
-          </tr>
-        </table>
-      </form></td>
-    <td width="50%" valign="top"> <div align="left">
+<div class="col-lg-6">
+    <form name="form" method="post" action="{PFAD}" class="form">
+        <table class='table table-striped'>
+            <thead>
+                <tr class="Chead"> 
+                    <th colspan="2">RAID PLANER ( edit / new )</th>
+                </tr>
+            </thead>
+            <tbody>
+              <tr class='Cnorm'> 
+                <td>Status:</td>
+                <td>{status}</td>
+              </tr>
+              <tr class='Cnorm'> 
+                <td>Leader</td>
+                <td>{char}</td>
+              </tr>
+              <tr class='Cnorm'> 
+                <td>Raidgruppe:</td>
+                <td>{gruppen} id fortsetzen 
+                  <select name="bosskey" id="bosskey">
+                    {bbid}
+                            </select> 
+                  [ <a href="admin.php?raidgruppen">Neue GRP?</a> ]</td>
+              </tr>
+              <tr class='Cnorm'>
+                <td>Stammgrp:</td>
+                <td>{stammgrp} [ <a href="admin.php?raidstammgrp">Neue Stamm Gruppe</a> ]</td>
+              </tr>
+              <tr class='Cnorm'> 
+                <td>Inztanze:</td>
+                <td>{inzen} [ <a href="admin.php?raidinzen">Edit / Neue</a> ]</td>
+              </tr>
+              <tr class='Cnorm'> 
+                <td>Treffpunkt:</td>
+                <td><input name="treff" type="text" value="{treff}"></td>
+              </tr>
+              <tr class='Cnorm'> 
+                <td>Loot:</td>
+                <td>{loot}</td>
+              </tr>
+              <tr class='Cnorm'> 
+                <td>Datum:</td>
+                <td> <input class="datepicker" value="{begind}" name="begind" size="12" maxlength="10" />
+                  YYYY-MM-TT</td>
+              </tr>
+              <tr class='Cnorm'> 
+                <td>Invite:</td>
+                <td><label>
+                  <input name="istd" type="text" id="istd" value="{istd}" size="2" maxlength="2" />
+                </label>
+                :
+                <input name="imin" type="text" id="imin" value="{imin}" size="2" maxlength="2" /> 
+                Uhr <font size="1">( Std. : Min. )</font></td>
+              </tr>
+              <tr class='Cnorm'> 
+                <td>Pull:</td>
+                <td><label>
+                  <input name="pstd" type="text" id="pstd" value="{pstd}" size="2" maxlength="2" />
+                </label>
+    :
+    <input name="pmin" type="text" id="istd4" value="{pmin}" size="2" maxlength="2" />
+     Uhr <font size="1">( Std. : Min. )</font></td>
+              </tr>
+              <tr class='Cnorm'> 
+                <td>Ende:</td>
+                <td><label>
+                  <input name="estd" type="text" id="istd5" value="{estd}" size="2" maxlength="2" />
+                </label>
+    :
+    <input name="emin" type="text" id="istd6" value="{emin}" size="2" maxlength="2" />
+     Uhr <font size="1">( Std. : Min. )</font></td>
+              </tr>
+              <tr class='Cnorm'>
+                <td>mindest Anmeldezeit:</td>
+                <td>
+                  <input name="invsperre" type="text" id="invsperre" value="{invsperre}" size="2" maxlength="2" />
+                Std. vor Raidbegin. <em>(2 Stellig)</em></td>
+              </tr>
+              <tr class='Cnorm'> 
+                <td>Info/Bemerkung/Ank&uuml;ndigung</td>
+                <td> 
+                  <!-- BB Code START -->
+                  <a href="javascript:simple('b')"><img style="padding-left: 4%; float: left;" src="include/images/icons/button.bold.gif" alt="b" title="{_lang_bold}" border="0"></a> 
+                  <a href="javascript:simple('i')"><img style="padding-left: 4%; float: left;" src="include/images/icons/button.italic.gif" alt="i" title="{_lang_italic}" border="0"></a> 
+                  <a href="javascript:simple('u')"><img style="padding-left: 4%; float: left;" src="include/images/icons/button.underline.gif" alt="u" title="{_lang_underlined}" border="0"></a> 
+                  <a href="javascript:simple('code')"><img style="padding-left: 4%; float: left;" src="include/images/icons/button.code.gif" alt="Code" title="{_lang_code}" border="0"></a> 
+                  <a href="javascript:simple_liste()"><img style="padding-left: 4%; float: left;" src="include/images/icons/button.insertunorderedlist.gif" alt="{_lang_list}" title="{_lang_list}" border="0"></a> 
+                  <a href="javascript:simple('url')"><img style="padding-left: 4%; float: left;" src="include/images/icons/button.link.gif" alt="Url" title="{_lang_link}" border="0"></a> 
+                  <a href="javascript:simple('img')"><img style="padding-left: 4%; float: left;" src="include/images/icons/button.image.gif" alt="{_lang_picture}" title="{_lang_picture}" border="0"></a> 
+                  <!-- BB Code ENDE -->            </td>
+              </tr>
+              <tr class='Cnorm'>
+                <td><div align="center">{SMILIS}</div></td>
+                <td><textarea name="txt" cols="80" rows="10" id="txt">{txt}</textarea></td>
+              </tr>
+              <tr class='Cnorm'> 
+                <td>&nbsp;</td>
+                <td><p>
+                  <input type="submit" name="Submit" value="Abschicken">
+                </p>            </td>
+              </tr>
+              <tr class='Cnorm'>
+                <td colspan="2"><p><strong>Ohne einen Char mindest Rang Raidleiter kann kein Raid Gestartet werden.<br />
+                  Status: Aktiv </strong>- Raid ist f&uuml;r Anmeldungen Offen! <strong>Beendet</strong> - Raid ist bereits Fertig! <strong>Abgesagt</strong> - Raid wurde aus verschiedenen Gr&uuml;nden abgesagt! <strong>Abgebrochen </strong>- Raid ist zwar Gestartet wurde aber nicht Bendet! <strong>Ausstehend:</strong> Dieser Status gibt das Script Automatisch dem Raid wenn er ausgelaufen ist und niemand den Status angepasst hat.<br />
+                  <strong>Leader:</strong>Die Person die den Raid Leitet<br />
+                    <strong>Raidgruppe</strong>: Die Raidgruppen werden von den DKP getrennt also k&ouml;nnte man 2-5 andere/neue DKP konten starten. Aber eine Raidgruppe wird auch Ben&ouml;tigt um &Uuml;berhaupt ein Raid zu erstellen.<br />
+                    <strong>Stamm Gruppe:</strong> Wenn diese Einstellung Aktivert ist sehen nur die Chars die dieser Stamm Gruppe auch angeh&ouml;ren die erstellten Raids. Diese Einstellung kann man auf der Chars Seite machen wozu man Rechte Brauch. Lasst ihr das Feld jedoch Leer kann sich jeder anmelden der einen Char hat.<br />
+                    <strong>Instanzen:</strong> Wo wollt ihr Raiden?! Das k&ouml;nnt ihr euch hier aussuchen, wird aber auch Ben&ouml;tigt einen Raid zu erstellen.<br />
+                    <strong>Treffpunkt:</strong> Optional.<br />
+                    <strong>Loot:</strong> Optional! Hat keine Bedeutung auser f&uuml;r die anzeige in den Raiddetails.<br />
+                    <strong>Datum/Inv/Pull/Ende:</strong> D&uuml;rfte Klar sein.<br />
+                    <strong>mindest Anmeldezeit:</strong> ist in wird in std. vorgegeben. Also Bsp. 2std. vor Raidbeginn wird die Raidanmeldung Geschlossen. Es kann sich niemand mehr anmelden, nur noch Raidleiter k&ouml;nnen Chars Hinzuf&uuml;gen.<br />
+                    <strong>Info/Bemerkung/Ank&uuml;ndigung:</strong> Was euer Herz nieder Schreiben will das f&uuml;r den Raid notwendig ist!</p>
+                </td>
+              </tr>
+                </tbody>
+            </table>
+          </form>
+</div>
 
-          <select name="jumpMenu" id="jumpMenu" onchange="MM_jumpMenu('parent',this,0)">
-          	<option value="admin.php?raid">Filtern</option>
-            {listgrp}
-          </select>
-          <br />
-          <br />
-        <table width="100%" border="0" cellspacing="1" cellpadding="2" class="border">
-          <tr class="Chead">
-            <td>id</td>
-            <td>&nbsp;</td>
-            <td><div align="center"><strong>Spieler</strong></div></td>
-            <td><strong>Datum/Zeit/Inze</strong></td>
-            <td><strong>Erstellt</strong></td>
-            <td><strong>Leader</strong></td>
-            <td><strong>DKP Gruppe</strong></td>
-            <td><strong>Status</strong></td>
-            <td width="0%">&nbsp;</td>
-            <td width="0%">&nbsp;</td>
-          </tr>
-          {EXPLODE} 
-          <tr class="Cnorm">
-            <td width="0%" nowrap>{idn}</td>
-            <td width="0%" nowrap>{img}</td>
-            <td width="0%" nowrap><div align="center"><font size="1">{ply}</font></div></td>
-            <td nowrap><font size="1">{inv} {inzen}</font></td>
-            <td nowrap><font size="1">{ownername}</font></td>
-            <td nowrap><font size="1">{leader}</font></td>
-            <td nowrap><font size="1">{gruppen}</font></td>
-            <td nowrap bgcolor="{color}"><div align="center" class="Stil1"><font size="1">{statusmsg}</font></div></td>
-            <td nowrap><div align="center"><font size="1">{edit}</font></div></td>
-            <td nowrap><div align="center"><font size="1">{del}</font></div></td>
-          </tr>
-          {EXPLODE} 
-          <tr class="Cdark"> 
-            <td colspan="10" nowrap>{MPL}</td>
-          </tr>
-        </table>
-        <div align="center"><br>
-        <img src='include/images/icons/online.gif'> Heute ist der Raid!</div>
-    </div></td>
-  </tr>
-</table>
+<div class="col-lg-6">
+
+      <select name="jumpMenu" id="jumpMenu" onchange="MM_jumpMenu('parent',this,0)">
+            <option value="admin.php?raid">Filtern</option>
+        {listgrp}
+      </select>
+      <br />
+      <br />
+      <table class="table table-striped">
+        <thead>
+            <tr class="Chead">
+                <th>id</th>
+                <th>&nbsp;</th>
+                <th><div align="center"><strong>Spieler</strong></div></th>
+                <th><strong>Datum/Zeit/Inze</strong></th>
+                <th><strong>Erstellt</strong></th>
+                <th><strong>Leader</strong></th>
+                <th><strong>DKP Gruppe</strong></th>
+                <th><strong>Status</strong></th>
+                <th width="0%">&nbsp;</th>
+                <th width="0%">&nbsp;</th>
+            </tr>
+        </thead>
+        <tbody>
+            {EXPLODE} 
+            <tr class="Cnorm">
+              <td width="0%" nowrap>{idn}</td>
+              <td width="0%" nowrap>{img}</td>
+              <td width="0%" nowrap><div align="center"><font size="1">{ply}</font></div></td>
+              <td nowrap><font size="1">{inv} {inzen}</font></td>
+              <td nowrap><font size="1">{ownername}</font></td>
+              <td nowrap><font size="1">{leader}</font></td>
+              <td nowrap><font size="1">{gruppen}</font></td>
+              <td nowrap bgcolor="{color}"><div align="center" class="Stil1"><font size="1">{statusmsg}</font></div></td>
+              <td nowrap><div align="center"><font size="1">{edit}</font></div></td>
+              <td nowrap><div align="center"><font size="1">{del}</font></div></td>
+            </tr>
+            {EXPLODE} 
+            <tr class="Cdark"> 
+              <td colspan="10" nowrap>{MPL}</td>
+            </tr>
+        </tbody>
+    </table>
+    <div align="center"><br>
+    <img src='include/images/icons/online.gif'> Heute ist der Raid!</div>
+</div>
+
+<br style="clear: both;" />

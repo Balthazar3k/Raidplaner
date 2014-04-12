@@ -1,60 +1,69 @@
 <script src="include/includes/js/b3k.js" language="JavaScript" type="text/javascript"></script>
 <form id="form" name="form" method="post" action="admin.php?chars">
-<table width="150" border="0" cellspacing="1" cellpadding="5" class="border">
-  <tr>
-    <td nowrap="nowrap" class="Cnorm"><select name="from" id="from">
-        <option value="a.name" selected="selected">Name</option>
-        <option value="d.name">User</option>
-      </select></td>
-    <td nowrap="nowrap" class="Cnorm"><input type="text" name="search" id="search" /></td>
-    <td nowrap="nowrap" class="Cdark"><input type="submit" name="button" id="button" value="Suchen" />
-      <input type="hidden" name="TRUE" id="TRUE" /></td>
-    <td nowrap="nowrap" class="Cmite">{srcClass}</td>
-    <td nowrap="nowrap" class="Cdark"><input type="button" value="Reset" onClick="javascript:document.location.href('admin.php?chars');"/></td>
-  </tr>
-</table>
+    <table width="150">
+        <tr>
+            <td nowrap="nowrap">
+                <select name="from" id="from">
+                    <option value="a.name" selected="selected">Name</option>
+                    <option value="d.name">User</option>
+                </select>
+            </td>
+            <td nowrap="nowrap">
+                <input type="text" name="search" id="search" />
+            </td>
+            <td nowrap="nowrap">
+                <input type="submit" name="button" id="button" value="Suchen" />
+                <input type="hidden" name="TRUE" id="TRUE" /></td>
+            <td nowrap="nowrap">
+                {srcClass}
+            </td>
+            <td nowrap="nowrap">
+                <input type="button" value="Reset" onClick="javascript:document.location.href('admin.php?chars');"/>
+            </td>
+        </tr>
+    </table>   
 </form>
-{EXPLODE}<br />
+{EXPLODE}
 <br />
-<script type="text/javascript">
-<!--
-function MM_jumpMenu(targ,selObj,restore){ //v3.0
-  eval(targ+".location='"+selObj.options[selObj.selectedIndex].value+"'");
-  if (restore) selObj.selectedIndex=0;
-}
-//-->
-</script>
-<table width="80%" border="0" cellspacing="1" cellpadding="2" class="border">
-  <tr class="Chead">
-    <td>&nbsp;</td>
-    <td><strong>[ Level ] Name</strong></td>
-    <td><strong>[ Alter ] User</strong></td>
-    <td><strong>Rang</strong></td>
-    <td><strong>Skillung</strong></td>
-    <td><strong>lezte &Auml;nderung</strong></td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-  </tr>
-  {EXPLODE}
-  <tr>
-    <td width="1" nowrap="nowrap" class="{class}" >{img}</td>
-    <td nowrap="nowrap" class="{class}">[{level}] <strong>{name}</strong></td>
-    <td nowrap="nowrap" class="{class}">{geb} <strong>{uname}</strong></td>
-    <td width="1%" nowrap="nowrap" class="{class}">{rang}</td>
-    <td nowrap="nowrap" class="{class}">{skill}</td>
-    <td class="{class}" nowrap="nowrap">{regist}</td>
-    <td width="1" nowrap="nowrap" class="{class}">{edit}</td>
-    <td width="1" nowrap="nowrap" class="{class}">{del}</td>
-  </tr>
-  {EXPLODE}
-  <tr class="{class}">
-    <td colspan="8">{msg}</td>
-  </tr>
-  {EXPLODE}
-  <tr class="Cdark">
-    <td colspan="8"><div align="center">{MPL}</div></td>
-  </tr>
+<br />
+
+<table class="table table-striped">
+    <thead>
+        <tr class="Chead">
+            <td>&nbsp;</td>
+            <td><strong>[ Level ] Name</strong></td>
+            <td><strong>[ Alter ] User</strong></td>
+            <td><strong>Rang</strong></td>
+            <td><strong>Skillung</strong></td>
+            <td><strong>lezte &Auml;nderung</strong></td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+        </tr>
+    </thead>
+    {EXPLODE}
+    <tbody>
+        <tr>
+            <td width="1" nowrap="nowrap" class="{class}" >{img}</td>
+            <td nowrap="nowrap" class="{class}">[{level}] <strong>{name}</strong></td>
+            <td nowrap="nowrap" class="{class}">{geb} <strong>{uname}</strong></td>
+            <td width="1%" nowrap="nowrap" class="{class}">{rang}</td>
+            <td nowrap="nowrap" class="{class}">{skill}</td>
+            <td class="{class}" nowrap="nowrap">{regist}</td>
+            <td width="1" nowrap="nowrap" class="{class}">{edit}</td>
+            <td width="1" nowrap="nowrap" class="{class}">{del}</td>
+        </tr>
+    
+        {EXPLODE}
+        <tr class="success">
+            <td colspan="8">{msg}</td>
+        </tr>
+        {EXPLODE}
+        <tr class="info">
+            <td colspan="8"><div align="center">{MPL}</div></td>
+        </tr>
+    </tbody>
 </table>
+
 <div align="center"><br />
 </div>
   {EXPLODE}

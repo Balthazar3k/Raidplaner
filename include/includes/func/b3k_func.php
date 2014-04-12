@@ -8,10 +8,12 @@ CreatRaidSession();
 function copyright(){
  echo "<br><div align='center' class='smallfont'>[ Raidplaner &amp; DKP System v1.1 &copy; by <a href='http://Balthazar3k.funpic.de' target='_blank'>Balthazar3k.funpic.de</a> ]</div>\n";
 }
-###### RAIDPLANER HEADER
+###### RAIDPLANER HEADER include/raidplaner/libs/bootstraps/css
 $ILCH_HEADER_ADDITIONS .= "<!--RAIDPLANER HEADER-->\n\t";
 $ILCH_HEADER_ADDITIONS .= "<link rel=\"stylesheet\" type=\"text/css\" href=\"http://fonts.googleapis.com/css?family=Ubuntu:regular,bold&subset=Latin&effect=shadow-multiple|3d\">\n";
 $ILCH_HEADER_ADDITIONS .= "<link rel='stylesheet' type='text/css' href='include/includes/css/raidplaner.css' />\n\t";
+$ILCH_HEADER_ADDITIONS .= "<link rel='stylesheet' type='text/css' href='include/raidplaner/libs/bootstraps/css/bootstrap.min.css' />\n\t";
+$ILCH_HEADER_ADDITIONS .= "<script src='include/raidplaner/libs/bootstraps/js/bootstrap.min.js' type='text/javascript'></script>\n\t";
 $ILCH_HEADER_ADDITIONS .= "<script src='include/includes/libs/jquery-ui-1.10.3.custom/js/jquery-1.9.1.js' type='text/javascript'></script>\n\t";
 $ILCH_HEADER_ADDITIONS .= "<script src='include/includes/libs/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js'></script>\n\t";
 $ILCH_HEADER_ADDITIONS .= "<link rel='stylesheet' type='text/css' href='include/includes/libs/jquery-ui-1.10.3.custom/css/start/jquery-ui-1.10.3.custom.min.css' />\n\t";
@@ -155,17 +157,16 @@ function aRaidMenu(){
     "R&auml;nge" => "raidrang",
     "DKP'S" => "raiddkps");
     
-    echo "<div class=\"Chead\" style='border: 1px solid #000; border-radius: 5px; padding: 5px; box-shadow: 0 3px 1px rgba( 0, 0, 0, 0.3);' align='center'>";
-    
+    echo '<div align="center"><div class="btn-group">';    
     foreach( $raidLinks as $name => $url )
     {
         if( isset( $_SESSION['authmod'][$url] ) && $_SESSION['authmod'][$url] == 1 || is_admin() )
         {
-            echo "<a href='admin.php?".$url."' class='buttons'>".$name."</a> ";
+            echo "<a href='admin.php?".$url."' class=\"btn btn-default\">".$name."</a> ";
         }
     }
     
-    echo "</div><br />";
+    echo "</div></div><br />";
 } 
 ### Ist der User Stamm?
 function isStamm($i){
