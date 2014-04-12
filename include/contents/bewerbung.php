@@ -1,7 +1,6 @@
 <?php 
 
 defined ('main') or die ( 'no direct access' );
-#print_r($_SESSION);
 $title = $allgAr['title'].' :: Bewerbung';
 $hmenu = 'Bewerbung';
 $design = new design ( $title , $hmenu );
@@ -69,9 +68,16 @@ switch($menu->get(1)){
 						 \''.$_POST['teamspeak'].'\',
 						  CURRENT_TIMESTAMP);');
 			if( $erg ){
+
+				// Sendet eine PM an berechtigte das eine Neuer bewerbe vorhande ist!
+				send_pm2legitimate(
+					'Script: eine neue Bewerbung',
+					'Es hat sich jemand neues Beworben!'
+				);
+
 				wd("index.php?bewerbung","Du hast dich erfolgreich Beworben");
 			}else{
-				wd("index.php?bewerbung","Du hast dich <b>nicht</b> erfolgreich Beworben");
+				wd("index.php?bewerbung","Du hast dich <b>nicht</b> erfolgreich Beworben " );
 			}
 		 
 	break;
@@ -203,4 +209,11 @@ switch($menu->get(1)){
 
 copyright();
 $design->footer();
+
+function send_pm2legitimate($title, $text, $status = 0){
+	$res = db_query('SELECT user FROM `prefix_raid_chars` WHERE `rang` < 6');
+	while( $row = db_fetch_assoc($res) ){
+		sendpm($_SESSION['authid'], $row['user'], $title, $text, $status);
+	}
+}
 ?>
