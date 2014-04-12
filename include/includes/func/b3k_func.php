@@ -80,13 +80,13 @@ function RaidErrorMsg(){
 		$ru = new updater();
 		
 		$isRaidGrp = db_result(db_query('SELECT COUNT(id) FROM prefix_raid_gruppen'),0);
-		$error['isRaidGrp'] = ( $isRaidGrp == 0 ? 'Raidplaner: Es m�ssen DKP Gruppen angelegt werden, '.aLink('Anlegen','raidgruppen',1).'!' : '');
+		$error['isRaidGrp'] = ( $isRaidGrp == 0 ? 'Raidplaner: Es m&uuml;ssen DKP Gruppen angelegt werden, '.aLink('Anlegen','raidgruppen',1).'!' : '');
 		
 		$isInzen = db_result(db_query('SELECT COUNT(id) FROM prefix_raid_inzen'),0);
-		$error['isInzen'] = ( $isInzen == 0 ? 'Raidplaner: Es m�ssen Instanzen angelegt werden, '.aLink('Anlegen','raidinzen',1).'!' : '');
+		$error['isInzen'] = ( $isInzen == 0 ? 'Raidplaner: Es m&uuml;ssen Instanzen angelegt werden, '.aLink('Anlegen','raidinzen',1).'!' : '');
 		
 		$isDkps = db_result(db_query('SELECT COUNT(id) FROM prefix_raid_dkps'),0);
-		$error['isDkps'] = ( $isDkps == 0 ? 'Raidplaner: Es m�ssen DKP Definiert werden, '.aLink('Definieren','raiddkps',1).'!' : '');
+		$error['isDkps'] = ( $isDkps == 0 ? 'Raidplaner: Es m&uuml;ssen DKP Definiert werden, '.aLink('Definieren','raiddkps',1).'!' : '');
 		
 		
 	}
@@ -152,7 +152,7 @@ function aRaidMenu(){
     "Stammgruppen" => "raidstammgrp",
     "Instanzen" => "raidinzen",
     "Bosse" => "raidbosse",
-    "R�nge" => "raidrang",
+    "R&auml;nge" => "raidrang",
     "DKP'S" => "raiddkps");
     
     echo "<div class=\"Chead\" style='border: 1px solid #000; border-radius: 5px; padding: 5px; box-shadow: 0 3px 1px rgba( 0, 0, 0, 0.3);' align='center'>";

@@ -35,9 +35,9 @@ switch($menu->get(1)){
 			setModulrightsForCharRang($menu->get(2),'remove');
 			if( db_query("UPDATE prefix_raid_chars SET rang='".$menu->get(3)."' WHERE id='".$menu->get(2)."'") ){
 				setModulrightsForCharRang($menu->get(2),'insert');
-				wd('admin.php?chars-'.$menu->get(4),'Rang wurde erfolgreich geändert!', 0);
+				wd('admin.php?chars-'.$menu->get(4),'Rang wurde erfolgreich ge&auml;ndert!', 0);
 			}else{
-				wd('admin.php?chars-'.$menu->get(4),'Rang wurde <b>nicht</b> erfolgreich geändert!');
+				wd('admin.php?chars-'.$menu->get(4),'Rang wurde <b>nicht</b> erfolgreich ge&auml;ndert!');
 			}
 		}else{
 			wd('admin.php?chars-'.$menu->get(4),'no Permission!');	
@@ -104,11 +104,11 @@ switch($menu->get(1)){
 			'".ascape( $_POST['pvp'] )."',
 			'".ascape( $_POST['teamspeak'] )."');" ) ){
 				echo "<center>Char wurde unter deinen Username/id Gespeichert! ";
-				button("Fenster Schließen","javascript:window.close();", 1);
+				button("Fenster SchlieÃŸen","javascript:window.close();", 1);
 				echo "</center>";
 			}else{
 				echo "<center>Char konnte <b>nicht</b> Gespeichert werden! ";
-				button("Zurück","", 8);
+				button("Zur&uuml;ck","", 8);
 				echo "</center>";
 			}
 		}else{
@@ -122,7 +122,7 @@ switch($menu->get(1)){
 		$char_name = db_result(db_query('SELECT name FROM prefix_raid_chars WHERE id='.$menu->get(2) ),0);
 		if(   $menu->get(3) != "true" ){
 			echo "<center><table border=0 cellpadding=5 cellspacing=1 class=border><tr class=Cnorm><td algin='center'>";
-			echo "<b><font  color=red>Wirklich alle daten von \"".$char_name."\" Löschen? ( dkp, anmeldungen, kalender )";
+			echo "<b><font  color=red>Wirklich alle daten von \"".$char_name."\" L&ouml;schen? ( dkp, anmeldungen, kalender )";
 			echo "[ <a href='admin.php?".$_SERVER['QUERY_STRING']."-true'>Ja</a> | <a href='admin.php?chars'>Nein</a> ]</font></b>";
 			echo "</td></tr></table></center>";
 		}
@@ -132,9 +132,9 @@ switch($menu->get(1)){
 			db_query("DELETE FROM prefix_raid_dkp WHERE cid = '".$menu->get(2)."'") &&
 			db_query("DELETE FROM prefix_raid_kalender WHERE cid = '".$menu->get(2)."'") &&
 			db_query("DELETE FROM prefix_raid_anmeldung WHERE `char` = '".$menu->get(2)."'") ){
-				wd('admin.php?chars',$char_name.' wurde erfolgreich gelöscht!', 0);
+				wd('admin.php?chars',$char_name.' wurde erfolgreich gel&ouml;scht!', 0);
 			}else{
-				wd('admin.php?chars',$char_name.' wurde <b>nicht</b> erfolgreich gelöscht!', 3);
+				wd('admin.php?chars',$char_name.' wurde <b>nicht</b> erfolgreich gel&ouml;scht!', 3);
 			}
 		}
 	break;
@@ -158,9 +158,9 @@ switch($menu->get(1)){
 		$ginfo = groupinfos($menu->get(2),$menu->get(3));
 		if( db_query("DELETE FROM prefix_raid_stammrechte WHERE cid=".$menu->get(2)." AND sid=".$menu->get(3)."")
 			and db_query("DELETE FROM prefix_groupusers WHERE uid=".$ginfo->guid." AND gid=".$ginfo->ggid) ){
-			wd('admin.php?chars-details-'.$menu->get(2),'Wurde erfolgreich Gelöscht', 3);
+			wd('admin.php?chars-details-'.$menu->get(2),'Wurde erfolgreich Gel&ouml;scht', 3);
 		}else{
-			wd('admin.php?chars-details-'.$menu->get(2),'Wurde <b>nicht</b> erfolgreich Gelöscht', 3);
+			wd('admin.php?chars-details-'.$menu->get(2),'Wurde <b>nicht</b> erfolgreich Gel&ouml;scht', 3);
 		}
 	break;
 	
@@ -179,7 +179,7 @@ switch($menu->get(1)){
 		if( $_SESSION['authmod']['CharsEditKlassen'] != 1 ){
 			$res = db_query("SELECT id, klassen FROM prefix_raid_klassen ORDER BY id DESC");
 			while( $row = db_fetch_object( $res ) ){
-				$classImg .= '<input type="image" name="klassen['.$row->id.']" src="include/images/wowklein/'.$row->klassen.'.gif" /> ';
+				$classImg .= '<input type="image" name="klassen['.$row->id.']" src="include/raidplaner/images/wowklein/'.$row->klassen.'.gif" /> ';
 				#$classen[$row->id] = $row->klassen;
 			}
 		
@@ -199,19 +199,19 @@ switch($menu->get(1)){
 		
 		$tpl->out(1);
 		$sql = "SELECT 
-					a.id, a.name, a.user, a.regist, a.s1, a.s2, a.s3, 
-					b.id as kid, b.klassen, 
-					c.id as rid, c.rang, 
-					d.id as uid, d.name as uname, d.gebdatum, 
-					e.level 
-				FROM prefix_raid_chars AS a 
-					LEFT JOIN prefix_raid_klassen AS b ON a.klassen = b.id 
-					LEFT JOIN prefix_raid_rang AS c ON a.rang = c.id
-					LEFT JOIN prefix_user AS d ON a.user = d.id 
-					LEFT JOIN prefix_raid_level AS e ON a.level = e.id 
-				".$search."
-				".( $_SESSION['authmod']['CharsEditKlassen'] == 1  ? 'WHERE b.id = '.$_SESSION['charklasse'].' ' : '' )."
-				ORDER BY c.id DESC, b.id DESC ";
+                        a.id, a.name, a.user, a.regist, a.s1, a.s2, a.s3, 
+                        b.id as kid, b.klassen, 
+                        c.id as rid, c.rang, 
+                        d.id as uid, d.name as uname, d.gebdatum, 
+                        e.level 
+                FROM prefix_raid_chars AS a 
+                        LEFT JOIN prefix_raid_klassen AS b ON a.klassen = b.id 
+                        LEFT JOIN prefix_raid_rang AS c ON a.rang = c.id
+                        LEFT JOIN prefix_user AS d ON a.user = d.id 
+                        LEFT JOIN prefix_raid_level AS e ON a.level = e.id 
+                ".$search."
+                ".( $_SESSION['authmod']['CharsEditKlassen'] == 1  ? 'WHERE b.id = '.$_SESSION['charklasse'].' ' : '' )."
+                ORDER BY c.id DESC, b.id DESC ";
 				
 				$limit = 18;  // Limit
 				$page = ( $menu->getA(1) == 'p' ? escape($menu->getE(1), 'integer') : 1 );
@@ -255,7 +255,7 @@ switch($menu->get(1)){
 					$row->rang = $select;
 				}else{
 					$row->rang = $row->rang;
-				} ## Rang änderungen!
+				} ## Rang Ã„nderungen!
 				$row->skill = char_skill($row->s1, $row->s2, $row->s3, $row->kid);
 				$row->regist = DateToTimestamp($row->regist);
 				$row->regist = DateFormat("D d.m.Y H:i:s", $row->regist, 1) ."  ". agoTimeMsg($row->regist);
@@ -286,7 +286,7 @@ switch($menu->get(1)){
 	break;
 	
 	case "details":
-		## INHALT für TD1
+		## INHALT fï¿½r TD1
 		defined ('main') or die ( 'no direct access' );
 		defined ('admin') or die ( 'only admin access' );
 		$design = new design ( 'Admins Area', 'Admins Area', 2 );
@@ -296,21 +296,21 @@ switch($menu->get(1)){
 		RaidErrorMsg();
 		aRaidMenu();
 		
-		button("Zurück", "admin.php?chars", 0);
+		button("Zur&uuml;ck", "admin.php?chars", 0);
 		
 		$table->out(0); #Table bis TD 1
 		
 		$res = db_query("SELECT 
-							a.id, a.name, a.user, a.rang, a.level, a.klassen, a.rassen,
-							a.s1, a.s2, a.s3, a.skillgruppe, a.warum, a.pvp, a.raiden,
-							a.mberuf, a.mskill, a.sberuf, a.sskill, a.teamspeak, 
-							a.realm, 
-							b.rang as rangname 
-						FROM prefix_raid_chars AS a 
-							LEFT JOIN prefix_raid_rang AS b ON a.rang=b.id 
-						WHERE
-						a.id = ".$menu->get(2)." 
-						LIMIT 1");
+                            a.id, a.name, a.user, a.rang, a.level, a.klassen, a.rassen,
+                            a.s1, a.s2, a.s3, a.skillgruppe, a.warum, a.pvp, a.raiden,
+                            a.mberuf, a.mskill, a.sberuf, a.sskill, a.teamspeak, 
+                            a.realm, 
+                            b.rang as rangname 
+                    FROM prefix_raid_chars AS a 
+                            LEFT JOIN prefix_raid_rang AS b ON a.rang=b.id 
+                    WHERE
+                    a.id = ".$menu->get(2)." 
+                    LIMIT 1");
 						
 		$c = db_fetch_object( $res );
 		
@@ -329,7 +329,7 @@ switch($menu->get(1)){
 		
 		$tpl->set_ar_out($c, 5);
 		
-		$table->out(1); ## SCHLIE?T TD1 öffnet TD2
+		$table->out(1); ## SCHLIEÃŸT TD1 Ã¶ffnet TD2
 		$stamm->pfad = "admin.php?chars-addtostamm-".$menu->get(2);
 		$stamm->stammgrp = drop_down_menu("prefix_raid_stammgrp" , "stammgrp", "", "");
 		$tpl->set_ar_out($stamm,6);

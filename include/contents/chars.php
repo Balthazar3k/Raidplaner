@@ -11,7 +11,6 @@ function klassenSpz( $id)
 
 if( isset( $_POST['kid'] ))
 {	exit(klassenSpz($_POST['kid']));
-	//ALTER TABLE `prefix_raid_chars` CHANGE `s1` `s1` VARCHAR( 55 ) NOT NULL DEFAULT '0', CHANGE `s2` `s2` VARCHAR( 55 ) NOT NULL DEFAULT '0'
 }
 
 $title = $allgAr['title'].' :: Chars';
@@ -44,9 +43,9 @@ switch($menu->get(1)){
 			db_query("DELETE FROM prefix_raid_dkp WHERE cid = '".$menu->get(2)."'") &&
 			db_query("DELETE FROM prefix_raid_kalender WHERE cid = '".$menu->get(2)."'") &&
 			db_query("DELETE FROM prefix_raid_anmeldung WHERE `char` = '".$menu->get(2)."'") ){
-				wd('index.php?chars',$char_name.' wurde erfolgreich gel�scht!', 1);
+				wd('index.php?chars',$char_name.' wurde erfolgreich gel&ouml;scht!', 1);
 			}else{
-				wd('index.php?chars',$char_name.' wurde "<b>NICHT</b>" erfolgreich gel�scht!', 3);
+				wd('index.php?chars',$char_name.' wurde "<b>NICHT</b>" erfolgreich gel&ouml;scht!', 3);
 			}
 		}
 	break;
@@ -57,13 +56,13 @@ switch($menu->get(1)){
 		db_query("INSERT INTO ".$_POST['db']." (name,user,level,klassen,rassen,s1,s2,skillgruppe,mberuf,mskill,
 				 sberuf,sskill,rlname,teamspeak,warum,pvp,raiden,realm,rang) VALUES (
 				'". escape($_POST['name'], 'string')		."',
-				'". $_SESSION['authid']						."',
+				'". $_SESSION['authid']				."',
 				'". escape($_POST['level'], 'integer')		."',
 				'". escape($_POST['klassen'], 'integer')	."',
 				'". escape($_POST['rassen'], 'integer')		."',
-				'". escape($_POST['s1'], 'string')			."',
-				'". escape($_POST['s2'], 'string')			."',
-				'". escape($_POST['skillgruppe'], 'integer')."',
+				'". escape($_POST['s1'], 'string')		."',
+				'". escape($_POST['s2'], 'string')		."',
+				'". escape($_POST['skillgruppe'], 'integer')    ."',
 				'". escape($_POST['mberuf'], 'integer')		."',
 				'". escape($_POST['mskill'], 'integer')		."',
 				'". escape($_POST['sberuf'], 'integer')		."',
@@ -122,7 +121,7 @@ switch($menu->get(1)){
 		$row['level'] = drop_down_menu("prefix_raid_level" , "level", $value, "");
 		$row['klassen'] = drop_down_menu("prefix_raid_klassen" , "klassen", $value, "");
 		$row['rassen'] = drop_down_menu("prefix_raid_rassen" , "rassen", $value, "");
-		$row['spz'] = "Klasse w�hlen!";
+		$row['spz'] = "Klasse w&auml;hlen!";
 		$row['skillgruppe'] = skillgruppe(1,0);
 		$row['raiden'] = $row['pvp'] = $row['warum'] = $row['rlname'] = "";
 		$row['mskill'] = $row['sskill'] = "";
@@ -146,7 +145,7 @@ switch($menu->get(1)){
 		$row['skillgruppe'] = skillgruppe(1,$row['skillgruppe']);
 		$row['level'] = drop_down_menu("prefix_raid_level" , "level", $row['level'], "");
 		$row['klassen'] = drop_down_menu("prefix_raid_klassen" , "klassen", $value, "");
-		$row['spz'] = "Klasse w�hlen!";
+		$row['spz'] = "Klasse w&auml;hlen!";
 		$row['rassen'] = drop_down_menu("prefix_raid_rassen" , "rassen",  $row['rassen'], "");
 		$row['mberuf'] = drop_down_menu("prefix_raid_berufe" , "mberuf",  $row['mberuf'], "");
 		$row['sberuf'] = drop_down_menu("prefix_raid_berufe" , "sberuf",  $row['sberuf'], "");
@@ -158,23 +157,23 @@ switch($menu->get(1)){
 	
 	case "show":
 		$tpl = new tpl ('raid/CHARS_DETAILS.htm');
-		button("Zur�ck","",8);
+		button("Zur&uuml;ck","",8);
 		$row = db_fetch_assoc(db_query("SELECT 
-							a.name, a.teamspeak, a.mberuf, a.mskill, a.sberuf, a.sskill, a.raiden, a.warum, a.pvp, a.skillgruppe,
-							a.s1, a.s2, a.s3, a.realm, a.user, a.punkte, a.id, a.rlname, 
-							b.id as klassenid, b.klassen,
-							c.level,
-							d.id as rangid,
-							d.rang, 
-							f.name AS username, 
-							e.rassen
-						 FROM prefix_raid_chars AS a 
-						 	LEFT JOIN prefix_raid_klassen AS b ON a.klassen = b.id 
-						 	LEFT JOIN prefix_raid_level AS c ON a.level = c.id 
-						 	LEFT JOIN prefix_raid_rang AS d ON a.rang = d.id 
-						 	LEFT JOIN prefix_raid_rassen AS e ON a.rassen = e.id 
-						 	LEFT JOIN prefix_user AS f ON a.user = f.id 
-						 WHERE a.id = ".$menu->get(2) ) );
+                        a.name, a.teamspeak, a.mberuf, a.mskill, a.sberuf, a.sskill, a.raiden, a.warum, a.pvp, a.skillgruppe,
+                        a.s1, a.s2, a.s3, a.realm, a.user, a.punkte, a.id, a.rlname, 
+                        b.id as klassenid, b.klassen,
+                        c.level,
+                        d.id as rangid,
+                        d.rang, 
+                        f.name AS username, 
+                        e.rassen
+                 FROM prefix_raid_chars AS a 
+                        LEFT JOIN prefix_raid_klassen AS b ON a.klassen = b.id 
+                        LEFT JOIN prefix_raid_level AS c ON a.level = c.id 
+                        LEFT JOIN prefix_raid_rang AS d ON a.rang = d.id 
+                        LEFT JOIN prefix_raid_rassen AS e ON a.rassen = e.id 
+                        LEFT JOIN prefix_user AS f ON a.user = f.id 
+                 WHERE a.id = ".$menu->get(2) ) );
 		
 		$row['TITEL'] = "Deatails von ". $row['name'];
 		$row['username'] = "<a href='index.php?user-details-".$row['user']."'>".$row['username']."</a>";
@@ -307,7 +306,7 @@ switch($menu->get(1)){
 		$erg = db_query("SELECT id, klassen FROM prefix_raid_klassen ORDER BY id DESC");
 		$l_klassen = "<a href='index.php?chars'>".$img_del."</a> ";
 		while( $row = db_fetch_assoc( $erg )){
-			$c['list_klassen'] .= "<a href='index.php?chars-".$row['id']."'><img src='include/images/wowklein/".$row['klassen'].".gif' border=0></a> ";
+			$c['list_klassen'] .= "<a href='index.php?chars-".$row['id']."'><img src='include/raidplaner/images/wowklein/".$row['klassen'].".gif' border=0></a> ";
 		}
 		### Ausgabe der Daten.
 		$tpl->set_ar_out( $c , 0 );
