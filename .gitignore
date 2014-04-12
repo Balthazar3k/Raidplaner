@@ -1,3 +1,4 @@
+nbproject/*
 include/downs/downloads/downs/.gitignore
 include/downs/downloads/user_upload/.gitignore
 info_update.txt
