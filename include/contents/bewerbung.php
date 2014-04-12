@@ -75,8 +75,8 @@ switch($menu->get(1)){
 
                 if( $erg ){
 
-                    // Sendet eine PM an berechtigte das eine Neuer bewerbe vorhande ist!
-                    send_pm2legitimate(
+                    // Sendet eine PM an berechtigte
+                    sendpm_2legitimate(
                         'Script: eine neue Bewerbung',
                         'Es hat sich jemand neues Beworben!'
                     );
@@ -210,12 +210,4 @@ switch($menu->get(1)){
 
 copyright();
 $design->footer();
-
-function send_pm2legitimate($title, $text, $status = 0){
-    $res = db_query('SELECT DISTINCT user FROM `prefix_raid_chars` WHERE rang < 6');
-    
-    while( $row = db_fetch_assoc($res) ){
-        sendpm($_SESSION['authid'], $row['user'], $title, $text, $status);
-    }
-}
 ?>
