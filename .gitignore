@@ -1,3 +1,7 @@
+include/downs/downloads/downs/.gitignore
+include/downs/downloads/user_upload/.gitignore
+info_update.txt
+update.php
 admin.php
 changelog.txt
 include/admin/admin.php
