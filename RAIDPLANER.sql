@@ -52,25 +52,6 @@ CREATE TABLE IF NOT EXISTS `prefix_raid_anmeldung` (
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
-CREATE TABLE IF NOT EXISTS `prefix_raid_berufe` (
-  `id` smallint(6) NOT NULL auto_increment,
-  `berufe` varchar(55) NOT NULL default '',
-  PRIMARY KEY  (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=12 ;
-
-INSERT INTO `prefix_raid_berufe` (`id`, `berufe`) VALUES
-(1, 'Schneider'),
-(2, 'Alchimie'),
-(3, 'Juwelenschleier'),
-(4, 'Ingenieur'),
-(5, 'Lederer'),
-(6, 'Schmied'),
-(7, 'Kr&auml;uterkunde'),
-(8, 'Bergbau'),
-(9, 'K&uuml;rschner'),
-(10, 'Verzauberungskunst'),
-(11, 'Inschriftenkundiger');
-
 CREATE TABLE IF NOT EXISTS `prefix_raid_bosscounter` (
   `id` int(11) NOT NULL auto_increment,
   `bid` int(11) NOT NULL default '0',
@@ -98,18 +79,10 @@ CREATE TABLE IF NOT EXISTS `prefix_raid_chars` (
   `rassen` int(11) NOT NULL default '1',
   `level` int(11) NOT NULL default '1',
   `skillgruppe` int(1) NOT NULL default '0',
-  `s1` int(11) NOT NULL default '0',
-  `s2` int(11) NOT NULL default '0',
-  `s3` int(11) NOT NULL default '0',
+  `s1` VARCHAR(255) NOT NULL default '0',
+  `s2` VARCHAR(255) NOT NULL default '0',
   `alter` int(2) NOT NULL default '0',
-  `rlname` varchar(25) NOT NULL default '',
-  `mberuf` int(1) NOT NULL default '0',
-  `mskill` int(3) NOT NULL default '0',
-  `sberuf` int(1) NOT NULL default '0',
-  `sskill` int(3) NOT NULL default '0',
   `warum` text NOT NULL,
-  `pvp` text NOT NULL,
-  `raiden` text NOT NULL,
   `punkte` int(11) NOT NULL default '1',
   `gruppen` int(11) NOT NULL default '1',
   `rang` int(11) NOT NULL default '1',
@@ -186,7 +159,7 @@ CREATE TABLE IF NOT EXISTS `prefix_raid_inzen` (
   `info` int(11) NOT NULL default '0',
   `maxbosse` int(11) NOT NULL default '0',
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=32 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
 
 CREATE TABLE IF NOT EXISTS `prefix_raid_kalender` (
   `cid` smallint(6) NOT NULL default '0',
@@ -216,22 +189,6 @@ INSERT INTO `prefix_raid_klassen` (`id`, `klassen`, `s1b`, `s2b`, `s3b`, `aufnah
 (10, 'Druide', 'Gleichgewicht', 'Wilder Kampf', 'Wiederherstellung', 1),
 (11, 'Todesritter', 'Blut', 'Frost', 'Unheilig', 1);
 
-CREATE TABLE IF NOT EXISTS `prefix_raid_level` (
-  `id` int(11) NOT NULL auto_increment,
-  `level` varchar(7) NOT NULL default '',
-  PRIMARY KEY  (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
-
-INSERT INTO `prefix_raid_level` (`id`, `level`) VALUES
-(1, '80'),
-(2, '70+'),
-(3, '60+'),
-(4, '50+'),
-(5, '40+'),
-(6, '30+'),
-(7, '20+'),
-(8, '10+'),
-(9, '1+');
 
 CREATE TABLE IF NOT EXISTS `prefix_raid_loot` (
   `id` int(11) NOT NULL auto_increment,
@@ -366,6 +323,4 @@ CREATE TABLE IF NOT EXISTS `prefix_raid_zeitgruppen_chars` (
   `grpid` int(11) NOT NULL default '0',
   `charid` int(11) NOT NULL default '0',
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
-ALTER TABLE `prefix_raid_chars` CHANGE `s1` `s1` VARCHAR(255) NOT NULL, CHANGE `s2` `s2` VARCHAR(255) NOT NULL;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
