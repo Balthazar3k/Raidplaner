@@ -298,29 +298,15 @@ CREATE TABLE IF NOT EXISTS `prefix_raid_zeit` (
   `id` int(11) NOT NULL auto_increment,
   `zeit` varchar(5) NOT NULL default '0',
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=11 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3;
 
 INSERT INTO `prefix_raid_zeit` (`id`, `zeit`) VALUES
-(1, '15-16'),
-(2, '16-17'),
-(3, '17-18'),
-(4, '18-19'),
-(5, '19-20'),
-(6, '20-21'),
-(7, '21-22'),
-(8, '22-23'),
-(9, '23-0'),
-(10, '0-1');
+(1, 'Mo 15:00-16:00'),
+(2, 'Fr 16:00-22:00');
 
-CREATE TABLE IF NOT EXISTS `prefix_raid_zeitgruppen` (
-  `ID` int(11) NOT NULL auto_increment,
-  `Name` varchar(20) NOT NULL default '',
+CREATE TABLE IF NOT EXISTS `prefix_raid_zeiten` (
+  `id` int(11) NOT NULL auto_increment,
+  `uid` int(11) NOT NULL default 0,
+  `zid` int(11) NOT NULL default 0,
   PRIMARY KEY  (`ID`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
-CREATE TABLE IF NOT EXISTS `prefix_raid_zeitgruppen_chars` (
-  `id` int(11) NOT NULL auto_increment,
-  `grpid` int(11) NOT NULL default '0',
-  `charid` int(11) NOT NULL default '0',
-  PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
