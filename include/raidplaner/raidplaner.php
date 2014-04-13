@@ -93,6 +93,29 @@ class Charakter {
     public function setId($id){
         $this->_id = (int) $id;
     }
+    
+    public function save($data) {
+
+        $status = array();
+        
+        $ID = $this->raidplaner->db()->select('id')
+                ->from('raid_chars')
+                ->where(array('user' => $_SESSION['authid'], 'id' => $this->_id))
+                ->cell();
+        
+        if( $ID ){
+            $status[] = (bool) $this->raidplaner->db()->update('raid_chars')->fields($data)->where(array('id' => $this->_id ))->init();
+        } else {
+            $status[] = (bool) $this->raidplaner->db()->insert('raid_chars')->fields($data)->init();
+        }
+        
+
+        if(in_array( false, $status)){
+            return false;
+        } else {
+            return true;
+        }
+    }
 
     public function delete($cid) {
 
@@ -123,6 +146,40 @@ class Charakter {
                 ->from('raid_chars')
                 ->where(array('id' => $this->_id))
                 ->cell();
+    }
+    
+    public function get(){
+        $res = $this->raidplaner->db()
+                ->select('*')
+                ->from('raid_chars')
+                ->where(array('id' => $this->_id))
+                ->row();
+        
+        if( !$res ){
+            return array();
+        }
+        
+        return $res;
+    }
+    
+    public function form($title, $pfad, $charakter = array()){
+        global $allAr;
+        
+        $tpl = new tpl ('raid/CHARS_EDIT_CREAT.htm');
+        
+        $row['title'] = $title;
+        $row['pfad'] = $pfad;
+        
+        $row['name'] = $charakter['name'];
+        $row['level'] = $charakter['level'];
+        $row['rassen'] = drop_down_menu("prefix_raid_rassen" , "rassen", $charakter['rassen'], "");
+        $row['klassen'] = drop_down_menu("prefix_raid_klassen" , "klassen", $charakter['klassen'], "");
+        $row['spz'] = "Klasse w&auml;hlen!";
+        $row['skillgruppe'] = skillgruppe(1, $charakter['skillgruppe']);
+        $row['warum']  = $charakter['warum'];
+        $row['realm'] = $allgAr['realm'];
+
+        $tpl->set_ar_out( $row, 0 );
     }
 }
 
@@ -174,10 +231,19 @@ class Permission {
     
     protected $raidplaner;
     
+    protected $update;
     protected $delete;
     
     public function __construct($object) {
         $this->raidplaner = $object;
+        
+        /* Permissions for Deleting */
+        $this->update = array(
+            'charakter' => array(
+                'permission' => ( $_SESSION['charrang'] >= 13 || is_admin() ), 
+                'message' => 'Sie haben nicht die n&ouml;tigen Rechte!'
+            )
+        );
         
         /* Permissions for Deleting */
         $this->delete = array(
@@ -188,6 +254,11 @@ class Permission {
         );
         
         return $this;
+    }
+    
+    public function update($key, &$message = NULL) {
+        $message = $this->update[$key]['message'];
+        return $this->update[$key]['permission'];
     }
 
     public function delete($key, &$message = NULL) {

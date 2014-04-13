@@ -1,29 +1,16 @@
-<script>
-    $(document).ready(function()
-    {	
-        var $klasse = $("select[name=klassen]");
-        var $klassID = '';
-        $klasse.change(function()
-        { 	$klassID = $(this).val();
-                $.post("index.php?chars", "spz=1&kid=" + $klassID, function(data){ $("#spz").html(data); $("#spz select").fadeIn(); });
-        });
-
-    });
-</script>
-
-<form name="form1" method="post" action="{PFAD}">
+<form name="form" method="post" action="{pfad}">
     <table width="100%" border="0" cellspacing="1" cellpadding="2" class="border">
         <tr> 
-            <td colspan="2" class="Chead">Formular</td>
+            <td colspan="2" class="Chead">{title}</td>
         </tr>
         <tr class="Cnorm">
             <td nowrap="nowrap">Charakter Name:</td>
-            <td><input type="text" name="name" placeholder="Name" /></td>
+            <td><input type="text" name="name" placeholder="Name" value="{name}" /></td>
         </tr>
 
         <tr class="Cmite"> 
             <td nowrap="nowrap">Level</td>
-            <td><input type="text" name="name" placeholder="80" maxlength="2" /></td>
+            <td><input type="text" name="level" placeholder="80" maxlength="2" value="{level}" /></td>
         </tr>
         
         <tr class="Cnorm"> 
@@ -68,10 +55,9 @@
         
         <tr class="Cdark"> 
             <td>
-                <input name="id" type="hidden" id="id" value="{id}">
-                <input name="db" type="hidden" id="db" value="{db}">
+               
             </td>
-            <td><input type="submit" name="Submit" value="Abschicken"></td>
+            <td><input type="submit" value="Abschicken"></td>
         </tr>
     </table>
 </form>

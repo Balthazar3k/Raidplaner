@@ -93,7 +93,7 @@ class Construct
 {
     public static function select($data)
     {
-        $sql = 'SELECT '. implode(', ', self::getSelect($data->_select));
+        $sql = 'SELECT '. ( $data->_select[0] == '*' ? '*' : implode(', ', self::getSelect($data->_select)));
         $sql .= ' FROM '. $data->_from;
         $sql .= ( empty($data->_where) ? '':' WHERE '. implode(' AND ', self::getFields($data->_where)) ) ;
         $sql .= ';';

@@ -44,47 +44,41 @@ if( $cKlassen > 0 ){
 echo "<br />";
 
 switch($menu->get(1)){
-######################
-### SENDEN ###########
-######################
-    case "senden":
+    
+    case "form":
+        button("Zur&uuml;ck","",8);
+        echo "<br><br>";
+        if( loggedin() and !RaidRechte($allgAr['addchar']) or is_admin() ){
+            if( !RaidRechte($allgAr['addchar']) ){ echo "no Permission!"; $design->footer(); exit(); }
+            $raid->charakter()->form('Bewerbungs Formular', 'index.php?bewerbung-save');
+        }else{
+            echo bbcode(allgArInsert($allgAr['bewerbung']));
+        }
+    break;
+    
+    case "save":
+        
+        $res = $_POST;
+        
+        $bewerber = array(
+            'rang' => 1,
+            'user' => $_SESSION['authid']
+        );
+        
+        $bewerber = array_merge($res, $bewerber);
 
-        db_query("UPDATE prefix_user SET gebdatum='".$_POST['alter']."' WHERE id=".$_SESSION['authid']);
+        if( $raid->charakter()->save($bewerber) ){
 
-        $erg = db_query( 'INSERT INTO `prefix_raid_chars` (`id`, `user`, `name`, `klassen`, `rassen`, `level`, 
-        `s1`, `s2`, `s3`,  `rlname`, `mberuf`, `mskill`, `sberuf`, `sskill`, `warum`, `pvp`, `raiden`, `realm`, `teamspeak`, `regist`) 
-        VALUES (NULL, \''.$_SESSION['authid'].'\',
-         \''.escape($_POST['name'], 'string').'\',
-          \''.$_POST['klassen'].'\',
-           \''.$_POST['rassen'].'\',
-            \''.$_POST['level'].'\',
-             \''.$_POST['s1'].'\',
-              \''.$_POST['s2'].'\',
-               \''.$_POST['s3'].'\',
-                \''.$_POST['rlname'].'\',
-                 \''.$_POST['mberuf'].'\',
-                  \''.$_POST['mskill'].'\',
-                   \''.$_POST['sberuf'].'\',
-                    \''.$_POST['sskill'].'\',
-                     \''.escape($_POST['warum'], 'textarea').'\',
-                      \''.escape($_POST['pvp'], 'textarea').'\',
-                       \''.escape($_POST['raiden'], 'textarea').'\',
-                        \''.escape($allgAr['realm'], 'string').'\',
-                         \''.$_POST['teamspeak'].'\',
-                            CURRENT_TIMESTAMP);');
+            // Sendet eine PM an berechtigte
+            sendpm_2legitimate(
+                'Script: eine neue Bewerbung',
+                'Es hat sich '.$bewerber['name'].' Beworben!'
+            );
 
-                if( $erg ){
-
-                    // Sendet eine PM an berechtigte
-                    sendpm_2legitimate(
-                        'Script: eine neue Bewerbung',
-                        'Es hat sich jemand neues Beworben!'
-                    );
-
-                    wd("index.php?bewerbung","Du hast dich erfolgreich Beworben");
-                }else{
-                    wd("index.php?bewerbung","Du hast dich <b>nicht</b> erfolgreich Beworben " );
-                }
+            wd("index.php?bewerbung","Du hast dich erfolgreich Beworben", 3);
+        }else{
+            wd("index.php?bewerbung","Du hast dich <b>nicht</b> erfolgreich Beworben ", 3);
+        }
 
     break;
     case "sendKlassen":
@@ -134,7 +128,7 @@ switch($menu->get(1)){
 ######################
     default:
         $tpl = new tpl ("raid/BEWERBER_LISTE.htm");
-        button("Formular","index.php?bewerbung-formular", 0); 
+        button("Formular","index.php?bewerbung-form", 0); 
         print "<br><br>";
         $result = db_query( "
             SELECT
@@ -165,35 +159,6 @@ switch($menu->get(1)){
             $tpl->out(2);
         }
         $tpl->out(3);
-    break;
-######################
-### FORMULAR #########
-######################
-    case "formular":
-        button("Zur&uuml;ck","",8);
-        echo "<br><br>";
-        if( loggedin() and !RaidRechte($allgAr['addchar']) or is_admin() ){
-            if( !RaidRechte($allgAr['addchar']) ){ echo "no Permission!"; $design->footer(); exit(); }
-            $tpl = new tpl ('raid/CHARS_EDIT_CREAT.htm');
-            $row['PFAD'] = "index.php?chars-add";
-            $row['TITEL'] = "Neuer Char";
-            $row['name'] = ""; $row['ro'] = "";
-            $row['level'] = drop_down_menu("prefix_raid_level" , "level", $value, "");
-            $row['klassen'] = drop_down_menu("prefix_raid_klassen" , "klassen", $value, "");
-            $row['rassen'] = drop_down_menu("prefix_raid_rassen" , "rassen", $value, "");
-            $row['spz'] = "Klasse w&auml;hlen!";
-            $row['skillgruppe'] = skillgruppe(1,0);
-            $row['raiden'] = $row['pvp'] = $row['warum'] = $row['rlname'] = "";
-            $row['mskill'] = $row['sskill'] = "";
-            $row['mberuf'] = drop_down_menu("prefix_raid_berufe" , "mberuf",  "", "");
-            $row['sberuf'] = drop_down_menu("prefix_raid_berufe" , "sberuf",  "", "");
-            $row['realm'] = $allgAr['realm'];
-            $row['user'] = $_SESSION['authid'];
-            $row['db'] = "prefix_raid_chars";
-            $tpl->set_ar_out( $row, 0 );
-        }else{
-            echo bbcode(allgArInsert($allgAr['bewerbung']));
-        }
     break;
 }
 
