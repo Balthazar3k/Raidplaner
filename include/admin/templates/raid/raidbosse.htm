@@ -1,129 +1,113 @@
 <script type='text/javascript' src='include/includes/js/bbcode.js'></script>
-
-
-{EXPLODE}
-<!-- EXPLODE 01 -->
-<div class="col-lg-5">
+<table width="100%" border="0" cellspacing="5" cellpadding="0">
+  <tr>
+    <td width="40%" valign="top">
+    {EXPLODE}
     <form action="{pfad}" method="post" enctype="multipart/form-data" name="form">
-        <table class="table table-striped table-bordered">
-            <thead>
-                <tr>
-                    <td colspan="2"><strong>Instanz hinzuf&uuml;gen</strong></td>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td nowrap="nowrap">Name:</td>
-                    <td>
-                        <input name="bosse" type="text" id="bosse" value="{bosse}" size="30" />
-                        <input class="form-control" name="id" type="hidden" id="id" value="{id}" />
-                    </td>
-                </tr>
-                <tr>
-                    <td nowrap="nowrap">Bild:</td>
-                    <td>
-                        <label>
-                            {img}
-                            <input type="file" name="imgUp" id="imgUp" />
-                        </label>
-                    </td>
-                </tr>
-                <tr>
-                    <td>&nbsp;</td>
-                    <td>
-                        <input type="submit" name="button" id="button" value="Senden" />
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+      <table width="100%" border="0" cellspacing="1" cellpadding="2" class="border">
+        <tr>
+          <td colspan="2" class="Chead"><strong>Instanzen</strong></td>
+        </tr>
+        <tr class="Cnorm">
+          <td nowrap="nowrap">Name:</td>
+          <td><input name="bosse" type="text" id="bosse" value="{bosse}" size="30" />
+              <input name="id" type="hidden" id="id" value="{id}" /></td>
+        </tr>
+        <tr class="Cnorm">
+          <td nowrap="nowrap">Bild:</td>
+          <td><label> {img}
+            <input type="file" name="imgUp" id="imgUp" />
+          </label></td>
+        </tr>
+        
+        <tr class="Cnorm">
+          <td rowspan="2" valign="top">Taktik:</td>
+          <td><label>
+<!-- BB Code START -->
+              <a href="javascript:simple('b')"><img style="padding-left: 4%; float: left;" src="include/images/icons/button.bold.gif" alt="b" title="{_lang_bold}" border="0"></a> 
+              <a href="javascript:simple('i')"><img style="padding-left: 4%; float: left;" src="include/images/icons/button.italic.gif" alt="i" title="{_lang_italic}" border="0"></a> 
+              <a href="javascript:simple('u')"><img style="padding-left: 4%; float: left;" src="include/images/icons/button.underline.gif" alt="u" title="{_lang_underlined}" border="0"></a> 
+              <a href="javascript:simple('code')"><img style="padding-left: 4%; float: left;" src="include/images/icons/button.code.gif" alt="Code" title="{_lang_code}" border="0"></a> 
+              <a href="javascript:simple_liste()"><img style="padding-left: 4%; float: left;" src="include/images/icons/button.insertunorderedlist.gif" alt="{_lang_list}" title="{_lang_list}" border="0"></a> 
+              <a href="javascript:simple('url')"><img style="padding-left: 4%; float: left;" src="include/images/icons/button.link.gif" alt="Url" title="{_lang_link}" border="0"></a> 
+              <a href="javascript:simple('img')"><img style="padding-left: 4%; float: left;" src="include/images/icons/button.image.gif" alt="{_lang_picture}" title="{_lang_picture}" border="0"></a> 
+            <!-- BB Code ENDE -->
+          </label></td>
+        </tr>
+        <tr class="Cnorm">
+          <td><textarea name="txt" cols="80" rows="10" id="txt">{taktik}</textarea></td>
+        </tr>
+        <tr class="Cnorm">
+          <td>&nbsp;</td>
+          <td><input type="submit" name="button" id="button" value="Senden" /></td>
+        </tr>
+      </table>
     </form>
-
     {EXPLODE}
-    <!-- EXPLODE 02 -->
-
+    <table width="100%" border="0" cellspacing="1" cellpadding="2" class="border">
+      <tr class="Cmite">
+        <td>{msg}</td>
+      </tr>
+    </table>
+    <br />
+    {EXPLODE}<br />
+    <table width="100%" border="0" cellspacing="1" cellpadding="2" class="border">
+      <tr class="Chead">
+        <td nowrap="nowrap"><div align="left"><strong>Boss Images</strong> (&Oslash; : Können nicht Gelöscht werden, CHMOD)</div></td>
+        <td>&nbsp;</td>
+      </tr>
+      {EXPLODE}
+  <tr class="{class}">
+    <td width="99%" nowrap="nowrap"><div align="left">{img}</div></td>
+    <td width="1%">{del}</td>
+  </tr>
+      {EXPLODE}
+  <tr class="Cnorm">
+    <td colspan="2">{msg}</td>
+  </tr>
+      {EXPLODE}
+    </table>
+    {EXPLODE}</td>
+    <td width="20%" valign="top">
     {EXPLODE}
-    <!-- EXPLODE 03 -->
+    <table width="100%" border="0" cellspacing="1" cellpadding="2" class="border">
+      <tr class="Chead">
+        <td colspan="2"><strong>Inztanzen</strong></td>
+      </tr>
+      {EXPLODE}
+      <tr class="{class}">
+        <td width="1%" class="Cdark">{img}</td>
+        <td width="99%" nowrap="nowrap">{name}</td>
+      </tr>
+      {EXPLODE}
+      <tr class="Cmite">
+        <td colspan="2">{msg}</td>
+      </tr>
+      {EXPLODE}
+    </table>
+    {EXPLODE}
+    </td>
+    <td width="40%" valign="top">
+    {EXPLODE}
+    <table width="100%" border="0" cellspacing="1" cellpadding="2" class="border">
+      <tr class="Chead">
+        <td colspan="4"><strong>Bosse f&uuml;r die Instanze: {inzen}</strong></td>
+      </tr>
+      {EXPLODE}
+      <tr class="Cnorm">
+        <td width="50" height="50" class="Cdark">{img}</td>
+        <td width="98%" height="50"><strong>{bosse}</strong></td>
+        <td width="1%" height="50">{edit}</td>
+        <td width="1%" height="50">{del}</td>
+      </tr>
+      {EXPLODE}
+      <tr class="Cmite">
+        <td colspan="4">{msg}</td>
+      </tr>
+      {EXPLODE}
+    </table>
+    {EXPLODE}
+    </td>
+  </tr>
+</table>
 
-    <table class="table table-striped table-bordered">
-        <thead>
-            <tr>
-                <td nowrap="nowrap"><div align="left"><strong>Boss Images</strong> (&Oslash; : K&ouml;nnen nicht Gel&ouml;scht werden, CHMOD)</div></td>
-                <td>&nbsp;</td>
-            </tr>
-        </thead>
-        <tbody>
-            {EXPLODE}
-            <tr>
-                <td width="99%" nowrap="nowrap"><div align="left">{img}</div></td>
-                <td width="1%">{del}</td>
-            </tr>
-            {EXPLODE}
-            <tr>
-                <td colspan="2">{msg}</td>
-            </tr>
-            {EXPLODE}
-        </tbody>
-    </table>
-</div>
-{EXPLODE}
-<!-- EXPLODE 04 -->
-{EXPLODE}
-<!-- EXPLODE 05 -->
-<div class="col-lg-2">
-    <table class="table table-striped table-bordered">
-        <thead>
-            <tr>
-                <td colspan="2"><strong>Inztanzen</strong></td>
-            </tr>
-        </thead>
-        <tbody>
-            {EXPLODE}
-            <!-- EXPLODE 06 -->
-            <tr>
-                <td width="1%" class="Cdark">{img}</td>
-                <td width="99%" nowrap="nowrap">{name}</td>
-            </tr>
-            {EXPLODE}
-            <!-- EXPLODE 07 -->
-            <tr class="success">
-                <td colspan="2">{msg}</td>
-            </tr>
-            {EXPLODE}
-            <!-- EXPLODE 08 -->
-        </tbody>
-    </table>
-</div>
-{EXPLODE}
-<!-- EXPLODE 09 -->
-
-{EXPLODE}
-<!-- EXPLODE 10 -->
-<div class="col-lg-5">
-    <table class="table table-striped table-bordered">
-        <thead>
-            <tr>
-                <td colspan="4"><strong>Bosse f&uuml;r die Instanze: {inzen}</strong></td>
-            </tr>
-        </thead>
-        <tbody>
-        {EXPLODE}
-        <!-- EXPLODE 11 -->
-        <tr>
-            <td width="50" height="50" class="Cdark">{img}</td>
-            <td width="98%" height="50"><strong>{bosse}</strong></td>
-            <td width="1%" height="50">{edit}</td>
-            <td width="1%" height="50">{del}</td>
-        </tr>
-        {EXPLODE}
-        <!-- EXPLODE 12 -->
-        <tr>
-            <td colspan="4">{msg}</td>
-        </tr>
-        {EXPLODE}
-        <!-- EXPLODE 13 -->
-        </tbody>
-    </table>
-</div>
-{EXPLODE}
-<!-- EXPLODE 14 -->
-<br style="clear: both;">

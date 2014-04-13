@@ -34,18 +34,18 @@ if( $_POST['img'] == 'true' ){
 }
 
 switch($menu->get(2)){ 
-    case "new":				
-        if( $stat and db_query("INSERT INTO prefix_raid_bosse (inzen, bosse, img) 
-            VALUES('".
-                $menu->get(1)."','".
-                escape($_POST['bosse'], 'string')."','".
-                $imgName."'); ") 
-        ){
-                wd('admin.php?raidbosse-'.$menu->get(1),'Neuer eintrag war erfolgreich!');
-        }else{
-                wd('admin.php?raidbosse-'.$menu->get(1),'Neuer eintrag war <b>nicht</b> erfolgreich!', 10);
-        }
-    break;
+	case "new":				
+		if( $stat and db_query("INSERT INTO prefix_raid_bosse (inzen, bosse, taktik, img) 
+		VALUES('".
+		$menu->get(1)."','".
+		ascape($_POST['bosse'])."','".
+		ascape($_POST['taktik'])."','".
+		$imgName."'); ") ){
+			wd('admin.php?raidbosse-'.$menu->get(1),'Neuer eintrag war erfolgreich!');
+		}else{
+			wd('admin.php?raidbosse-'.$menu->get(1),'Neuer eintrag war <b>nicht</b> erfolgreich!', 10);
+		}
+	break;
 	case "edit":
 		
 		if( $stat and db_query("UPDATE prefix_raid_bosse SET
@@ -61,9 +61,9 @@ switch($menu->get(2)){
 	case "del":
 		if( $menu->get(3) == "TRUE" ){
 			if(	db_query("DELETE FROM prefix_raid_bosse WHERE id = '".$menu->get(4)."' LIMIT 1") ){
-				wd('admin.php?raidbosse-'.$menu->get(1),'Lï¿½schen war erfolgreich!');
+				wd('admin.php?raidbosse-'.$menu->get(1),'Löschen war erfolgreich!');
 			}else{
-				wd('admin.php?raidbosse-'.$menu->get(1),'Lï¿½schen war <b>nicht</b> erfolgreich!');
+				wd('admin.php?raidbosse-'.$menu->get(1),'Löschen war <b>nicht</b> erfolgreich!');
 			}
 		}else{
 			$delLink = "admin.php?raidbosse-".$menu->get(1)."-del-TRUE-".$menu->get(3);
@@ -74,14 +74,14 @@ switch($menu->get(2)){
 	break;
 	case "delImg":
 		if( @unlink( $imgPath.$_GET['img'] ) ){
-			wd('admin.php?raidbosse','Bild L&ouml;schen war erfolgreich!');
+			wd('admin.php?raidbosse','Bild Löschen war erfolgreich!');
 		}else{
-			wd('admin.php?raidbosse','Bild L&ouml;schen war <b>nicht</b> erfolgreich!');
+			wd('admin.php?raidbosse','Bild Löschen war <b>nicht</b> erfolgreich!');
 		}
 	break;
 	default:
 		$tpl->out(0); #Header
-
+		### FORMULAR
 		if( $menu->get(1) != '' ){
 			if( $menu->get(2) == '' ){
 				$out['pfad'] = "admin.php?raidbosse-".$menu->get(1)."-new";
@@ -97,41 +97,37 @@ switch($menu->get(2)){
 			
 			$tpl->set_ar_out( $out, 1 );
 		}else{
-			$tpl->set_out("msg","Bitte Instanze Ausw&auml;hlen in der Mitte!", 2);
+			$tpl->set_out("msg","Bitte Instanze Auswählen in der Mitte!", 2);
 		}
 		
 		$tpl->out(3);
 		$countFiles = CountFiles( $imgPath );
 		if( $countFiles != 0 ){
-                    $open = opendir( $imgPath );
-                    while( $img = readdir( $open ) ){
-                            if( $img != "." and $img != ".." ){
-                                    $del = ( @is_writeable($imgPath.$img ) ? aLink("<img src='include/images/icons/del.gif'>","raidbosse-".$menu->get(1)."-delImg&img=".$img,1) : '&Oslash;');
-                                    $tpl->set_ar_out( array( "class" => "Cnorm", "img" => aLink($img,$imgPath.$img,2), "del" => $del),4);
-                            }
-                    }
-                    closedir();
+			$open = opendir( $imgPath );
+			while( $img = readdir( $open ) ){
+				if( $img != "." and $img != ".." ){
+					$del = ( @is_writeable($imgPath.$img ) ? aLink("<img src='include/images/icons/del.gif'>","raidbosse-".$menu->get(1)."-delImg&img=".$img,1) : '&Oslash;');
+					$tpl->set_ar_out( array( "class" => "Cnorm", "img" => aLink($img,$imgPath.$img,2), "del" => $del),4);
+				}
+			}
+			closedir();
 		}else{
-                    $tpl->set_out( "msg", "Keine Boss Bilder Vorhanden!", 5 );
+			$tpl->set_out( "msg", "Keine Boss Bilder Vorhanden!", 5 );
 		}
-                
 		$tpl->out(6);
-		$tpl->out(7);
-                
+		$tpl->out(7); #Ende Erste Spalte
 		### Instanze Liste
 		$tpl->out(8);
 		
-		$res = db_query("
-                    SELECT 
-                        a.id, a.name, a.img, a.maxbosse, 
-                        b.id AS iid, b.info,
-                        COUNT(c.id) AS amaxbosse 
-                    FROM prefix_raid_inzen AS a 
-                        LEFT JOIN prefix_raid_info AS b ON a.info=b.id 
-                        LEFT JOIN prefix_raid_bosse AS c ON a.id=c.inzen 
-                    GROUP BY a.name 
-                    ORDER BY b.id ASC
-                ");
+		$res = db_query("SELECT 
+							a.id, a.name, a.img, a.maxbosse, 
+							b.id AS iid, b.info,
+							COUNT(c.id) AS amaxbosse 
+						FROM prefix_raid_inzen AS a 
+							LEFT JOIN prefix_raid_info AS b ON a.info=b.id 
+							LEFT JOIN prefix_raid_bosse AS c ON a.id=c.inzen 
+						GROUP BY a.name 
+						ORDER BY b.id ASC");
 						
 		if( db_num_rows( $res ) != 0 ){
 			while( $ini = db_fetch_object($res) ){
@@ -152,24 +148,23 @@ switch($menu->get(2)){
 		$tpl->out(11);
 		### Instanze Liste ENDE
 		$tpl->out(12); #Ende Zweiter Spalte
-                
 		### Boss Liste Anfang
 		$inzen = ( $menu->get(1) != NULL ? db_result(db_query("SELECT name FROM prefix_raid_inzen WHERE id=".$menu->get(1)." LIMIT 1" ), 0) : '');
 		$tpl->set_out("inzen", $inzen, 13);
 		if( $menu->get(1) != '' ){
-                    $res = db_query("SELECT id, bosse, img FROM prefix_raid_bosse WHERE inzen=".$menu->get(1) );
-                    if( db_num_rows( $res ) ){
-                        while( $boss = db_fetch_object($res) ){
-                            $boss->img = ( is_file( $imgPath.$boss->img ) ? "<img width='50' height='50' src='".$imgPath.$boss->img."'>" : "" );
-                            $boss->edit = "<a href='admin.php?raidbosse-".$menu->get(1)."-".$boss->id."'><img src='include/images/icons/edit.gif'></a>";
-                            $boss->del = "<a href='admin.php?raidbosse-".$menu->get(1)."-del-".$boss->id."'><img src='include/images/icons/del.gif'></a>";
-                            $tpl->set_ar_out( $boss, 14);
-                        }
-                    }else{
-                        $tpl->set_out("msg","Kein Boss f&uuml;r \"<b>".$inzen."</b>\" Gefunden!", 15);
-                    }
+			$res = db_query("SELECT id, bosse, img FROM prefix_raid_bosse WHERE inzen=".$menu->get(1) );
+			if( db_num_rows( $res ) ){
+				while( $boss = db_fetch_object($res) ){
+					$boss->img = ( is_file( $imgPath.$boss->img ) ? "<img width='50' height='50' src='".$imgPath.$boss->img."'>" : "" );
+					$boss->edit = "<a href='admin.php?raidbosse-".$menu->get(1)."-".$boss->id."'><img src='include/images/icons/edit.gif'></a>";
+					$boss->del = "<a href='admin.php?raidbosse-".$menu->get(1)."-del-".$boss->id."'><img src='include/images/icons/del.gif'></a>";
+					$tpl->set_ar_out( $boss, 14);
+				}
+			}else{
+				$tpl->set_out("msg","Kein Boss für \"<b>".$inzen."</b>\" Gefunden!", 15);
+			}
 		}else{
-                    $tpl->set_out("msg","Bitte Instanze Ausw&auml;hlen Mitte!", 15);
+			$tpl->set_out("msg","Bitte Instanze Auswählen Mitte!", 15);
 		}
 		$tpl->out(16);
 		### Boss Liste ENDE
