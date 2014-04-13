@@ -330,6 +330,7 @@ switch($menu->get(1)){
 		$tpl->set_ar_out($c, 5);
 		
 		$table->out(1); ## SCHLIEßT TD1 öffnet TD2
+                $stamm = (object) array();
 		$stamm->pfad = "admin.php?chars-addtostamm-".$menu->get(2);
 		$stamm->stammgrp = drop_down_menu("prefix_raid_stammgrp" , "stammgrp", "", "");
 		$tpl->set_ar_out($stamm,6);
