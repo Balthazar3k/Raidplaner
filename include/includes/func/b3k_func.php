@@ -686,10 +686,10 @@ function skillgruppe($opt=0,$checked=0){
 }
 ####
 function class_img($i){
-	$link = 'include/raidplaner/images/wowklein/'.$i.'.gif';
-	if( file_exists($link)){
-		return "<img src='".$link."'>";
-	}
+    $link = 'include/raidplaner/images/wowklein/'.$i.'.gif';
+    if( file_exists($link)){
+        return "<img src='".$link."'>";
+    }
 }
 ####
 function pz($a, $b, $c = 0){

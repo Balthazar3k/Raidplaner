@@ -21,7 +21,7 @@ if( RaidPermission( 0, TRUE ) ){
 
     $result = db_query("SELECT id, klassen FROM prefix_raid_klassen WHERE aufnahmestop=0");
     while( $row = db_fetch_object( $result )){
-        $aK .= aLink("<img src='include/images/wowklein/".$row->klassen.".gif' border=0>","bewerbung-updateKlassen-".$row->id."-1")." ";
+        $aK .= aLink(class_img($row->klassen), "bewerbung-updateKlassen-".$row->id."-1")." ";
     }
     $tpl->set_out("msg", "<b>Einstellungen, welche Klassen sucht ihr noch:</b><hr> ".$aK, 0 );
     echo "<br />";
@@ -32,9 +32,9 @@ $cKlassen = db_num_rows($result);
 if( $cKlassen > 0 ){
     while( $row = db_fetch_object($result) ){
         if( RaidPermission( 0, TRUE) ){
-            $kName .= aLink("<img src='include/images/wowklein/".$row->klassen.".gif' border=0>","bewerbung-updateKlassen-".$row->id."-0")." ";
+            $kName .= aLink(class_img($row->klassen),"bewerbung-updateKlassen-".$row->id."-0")." ";
         }else{
-            $kName .= "<img src='include/images/wowklein/".$row->klassen.".gif' title='".$row->klassen."'> \n";
+            $kName .= class_img($row->klassen);
         }
     }
     $tpl->set_out("msg", "<b>Wir Suchen noch Klassen:</b><hr> ".$kName, 0 );
@@ -149,7 +149,7 @@ switch($menu->get(1)){
             while( $row = db_fetch_assoc( $result ) ){
                 $i++;
                 $row['class'] = ( $row['class'] != 'Cmite' ? 'Cmite' : 'Cnorm' );
-                $row['img'] = "<img src='include/images/wowklein/".$row['klassen'].".gif'>";
+                $row['img'] = class_img($row['klassen']);
                 $row['name'] = $i.". ".aLink($row['name'], "chars-show-".$row['id']);
                 $row['skill'] = char_skill($row['s1'],$row['s2'],$row['s3'],$row['kid']);
                 $row['opt'] = ( is_admin() ? button("L&ouml;schen","index.php?bewerbung-del-".$row['id'], 2) : '');
