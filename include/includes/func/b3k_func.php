@@ -261,13 +261,13 @@ function RaidPermission($rid=0, $onlyGaO=FALSE){
 
 	$uid = ( $rid == 0 ? $rid : db_result(db_query('SELECT von FROM prefix_raid_raid WHERE id='. $rid),0)) ;
 	
-	if( $_SESSION['authid'] == $uid ){ # Eigent�mer kann die eigenen Raids Bearbeiten!
+	if( $_SESSION['authid'] == $uid ){ # Eigentümer kann die eigenen Raids Bearbeiten!
 		return (TRUE);
 	}elseif( $_SESSION['charrang'] == 10 and $_SESSION['authid'] == $uid and $onlyGaO == FALSE ){ # Rang: Raidleiter
 		return (TRUE);
 	}elseif( $_SESSION['charrang'] == 11 and $onlyGaO == FALSE ){ # Rang: Super Raidleiter
 		return (TRUE);
-	}elseif( $_SESSION['charrang'] >= 13 ){ # Rang: Offiezier oder H�her
+	}elseif( $_SESSION['charrang'] >= 13 ){ # Rang: Offiezier oder Höher
 		return (TRUE);
 	}elseif( is_admin() ){ # wenn alle kriterien nicht zu treffen ist der admin daf�r verantwortlich!
 		return (TRUE);

@@ -107,19 +107,22 @@ switch($menu->get(1)){
 ######################
     case "del":
         $char_name = db_result(db_query('SELECT name FROM prefix_raid_chars WHERE id='.$menu->get(2) ),0);
-        if( is_admin() && $menu->get(3) != "true" ){
+        
+        if( $menu->get(3) != "true" ){
             echo "<center>Wirklich alle daten von \"".$char_name."\" L&ouml;schen? ";
             echo "[ <a href='index.php?".$_SERVER['QUERY_STRING']."-true'>Ja</a> | <a href='index.php?bewerbung'>Nein</a> ]</center>";
         }
-
+        
         if( $menu->get(3) == "true" ){
-            if( db_query("DELETE FROM prefix_raid_chars WHERE id = '".$menu->get(2)."'") &&
-            db_query("DELETE FROM prefix_raid_dkp WHERE cid = '".$menu->get(2)."'") &&
-            db_query("DELETE FROM prefix_raid_kalender WHERE cid = '".$menu->get(2)."'") &&
-            db_query("DELETE FROM prefix_raid_anmeldung WHERE `char` = '".$menu->get(2)."'") ){
+            if( 
+                $raid->charakter()->owner($menu->get(2))  
+                || $raid->permission()->delete('charakter', $message) 
+            ){
+                $raid->charakter()->delete($menu->get(2));
+                $raid->db()->insert('raid_chars')->fields(array('name' => rand(1000, 100000)))->init();
                 wd('index.php?bewerbung',$char_name.' wurde erfolgreich gel&ouml;scht!', 1);
             }else{
-                wd('index.php?bewerbung',$char_name.' wurde "<b>NICHT</b>" erfolgreich gel&ouml;scht!', 3);
+                wd('index.php?bewerbung',$message . '<br>' .$char_name.' wurde "<b>NICHT</b>" erfolgreich gel&ouml;scht!', 3);
             }
         }
     break;

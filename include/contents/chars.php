@@ -30,24 +30,22 @@ $img_edit = "<img src='include/images/icons/edit.gif' border='0'>";
 
 $kalout .= $_SESSION['authid'] ."=". $uid_s;
 switch($menu->get(1)){
-	#### Char L�schen
+	#### Char Löschen
 	case "del":
-		$char_name = db_result(db_query('SELECT name FROM prefix_raid_chars WHERE id='.$menu->get(2) ),0);
-		if(   $menu->get(3) != "true" ){
-			echo "<center>Wirklich alle daten von \"".$char_name."\" L�schen? ";
-			echo "[ <a href='index.php?".$_SERVER['QUERY_STRING']."-true'>Ja</a> | <a href='index.php?chars'>Nein</a> ]</center>";
-		}
-		
-		if( is_admin() && $menu->get(3) == "true" ){
-			if( db_query("DELETE FROM prefix_raid_chars WHERE id = '".$menu->get(2)."' LIMIT 1") &&
-			db_query("DELETE FROM prefix_raid_dkp WHERE cid = '".$menu->get(2)."'") &&
-			db_query("DELETE FROM prefix_raid_kalender WHERE cid = '".$menu->get(2)."'") &&
-			db_query("DELETE FROM prefix_raid_anmeldung WHERE `char` = '".$menu->get(2)."'") ){
-				wd('index.php?chars',$char_name.' wurde erfolgreich gel&ouml;scht!', 1);
-			}else{
-				wd('index.php?chars',$char_name.' wurde "<b>NICHT</b>" erfolgreich gel&ouml;scht!', 3);
-			}
-		}
+            $char_name = db_result(db_query('SELECT name FROM prefix_raid_chars WHERE id='.$menu->get(2) ),0);
+            
+            if(   $menu->get(3) != "true" ){
+                echo "<center>Wirklich alle daten von \"".$char_name."\" L�schen? ";
+                echo "[ <a href='index.php?".$_SERVER['QUERY_STRING']."-true'>Ja</a> | <a href='index.php?chars'>Nein</a> ]</center>";
+            }
+
+            if( $menu->get(3) == "true" ){
+                if($raid->charakter()->delete($menu->get(2))){
+                        wd('index.php?chars',$char_name.' wurde erfolgreich gel&ouml;scht!', 1);
+                }else{
+                        wd('index.php?chars',$char_name.' wurde "<b>NICHT</b>" erfolgreich gel&ouml;scht!', 3);
+                }
+            }
 	break;
 	#### Neuen Charanlegen.
 	case "add":
@@ -77,7 +75,7 @@ switch($menu->get(1)){
 			 wd('index.php?chars',escape($_POST['name'], 'string').' wurde erstellt, warte Bitte 3sec!', 3);
 		}else{
 			echo arrDataCheck($_POST, "name=is,level=is,klassen=is,rassen=is",1)."<br>";
-			button("Zur�ck und die Daten erneut eingeben.","", 8);
+			button("Zur&uuml;ck und die Daten erneut eingeben.","", 8);
 		}
 				  
 	break;

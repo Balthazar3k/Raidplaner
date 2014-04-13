@@ -11,11 +11,17 @@ class Database {
     
     protected $_sql;
     
+    public $_select = array();
     public $_fields = array();
     public $_from;
     public $_where;
     public $_limit;
-
+    
+    public function from($from) 
+    {
+        $this->_from = (string) 'prefix_'.$from;
+        return $this;
+    }
 
     public function fields($param) 
     {
@@ -29,6 +35,12 @@ class Database {
         return $this;
     }
     
+    public function select()
+    {
+        $this->type = substr(strrchr(__METHOD__, ':'), 1);
+        $this->_select = (array) func_get_args();
+        return $this;
+    }
     
     public function update($from)
     {
@@ -44,13 +56,29 @@ class Database {
         return $this;
     }
     
+    public function delete($from)
+    {
+        $this->type = substr(strrchr(__METHOD__, ':'), 1);
+        $this->_from = (string) 'prefix_'.$from;
+        return $this;
+    }
+    
     public function init(){
         $this->maskedValues();
         if(!empty($this->type)) {
             $method = $this->type;
             $sql = Construct::$method($this);
-            db_query($sql);
+            return db_query($sql);
         }
+    }
+    
+    public function row(){
+       return db_fetch_assoc($this->init());
+    }
+    
+    public function cell($select = 0){
+        $res = $this->row();
+        return $res[$this->_select[$select]];
     }
     
     public function maskedValues(){
@@ -63,11 +91,21 @@ class Database {
 
 class Construct
 {
+    public static function select($data)
+    {
+        $sql = 'SELECT '. implode(', ', self::getSelect($data->_select));
+        $sql .= ' FROM '. $data->_from;
+        $sql .= ( empty($data->_where) ? '':' WHERE '. implode(' AND ', self::getFields($data->_where)) ) ;
+        $sql .= ';';
+        return $sql;
+                
+    }
+    
     public static function update($data)
     {
         $sql = 'UPDATE `'.$data->_from.'`';
         $sql .= ' SET '. implode(', ', self::getFields($data->_fields));
-        $sql .= ' WHERE '. implode('AND ', self::getFields($data->_where));
+        $sql .= ' WHERE '. implode(' AND ', self::getFields($data->_where));
         $sql .= ';';
         return $sql;
                 
@@ -81,6 +119,26 @@ class Construct
         $sql .= ';';
         return $sql;
                 
+    }
+    
+    public static function delete($data)
+    {
+        $sql = 'DELETE FROM `'.$data->_from.'`';
+        $sql .= ' WHERE '. implode(' AND ', self::getFields($data->_where));
+        $sql .= ';';
+        return $sql;
+                
+    }
+    
+    public static function getSelect($attributes)
+    {
+        if( is_array($attributes) && count($attributes) > 0 ){
+            $attr = array();
+            foreach( $attributes as $key => $value){
+                $attr[] = '`'.$value.'`';
+            }
+            return $attr;
+        }
     }
     
     public static function getFields($attributes)
