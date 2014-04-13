@@ -2,8 +2,12 @@
 ### b3k_func.php Copyright: 2007/2008 edit 2009, 2012, 2013 By: Balthazar3k.de
 #arrPrint($_SESSION); 
 #arrPrint($_POST);
+require_once 'include/raidplaner/raidplaner.php';
+
 
 CreatRaidSession();
+
+$raid = new Raidplaner();
 
 function copyright(){
  echo "<br><div align='center' class='smallfont'>[ Raidplaner &amp; DKP System v1.1 &copy; by <a href='http://Balthazar3k.funpic.de' target='_blank'>Balthazar3k.funpic.de</a> ]</div>\n";
