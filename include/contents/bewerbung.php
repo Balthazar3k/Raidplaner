@@ -106,23 +106,26 @@ switch($menu->get(1)){
 ### Char Löschen #####
 ######################
     case "del":
-        $char_name = db_result(db_query('SELECT name FROM prefix_raid_chars WHERE id='.$menu->get(2) ),0);
+        $name = $raid->charakter($menu->get(2))->name();
         
         if( $menu->get(3) != "true" ){
-            echo "<center>Wirklich alle daten von \"".$char_name."\" L&ouml;schen? ";
-            echo "[ <a href='index.php?".$_SERVER['QUERY_STRING']."-true'>Ja</a> | <a href='index.php?bewerbung'>Nein</a> ]</center>";
+            
+            echo $raid->confirm()
+                ->message("Wirklich alle daten von \"".$name."\" L&ouml;schen?")
+                ->onTrue('index.php?'.$_SERVER['QUERY_STRING'].'-true')
+                ->onFalse('index.php?bewerbung')
+                ->html('L&ouml;schen');
+            
         }
         
         if( $menu->get(3) == "true" ){
-            if( 
-                $raid->charakter()->owner($menu->get(2))  
-                || $raid->permission()->delete('charakter', $message) 
-            ){
+            if( $raid->charakter()->owner($menu->get(2)) || $raid->permission()->delete('charakter', $message) ){
+                
                 $raid->charakter()->delete($menu->get(2));
-                $raid->db()->insert('raid_chars')->fields(array('name' => rand(1000, 100000)))->init();
-                wd('index.php?bewerbung',$char_name.' wurde erfolgreich gel&ouml;scht!', 1);
+                
+                wd('index.php?bewerbung',$name.' wurde erfolgreich gel&ouml;scht!', 1);
             }else{
-                wd('index.php?bewerbung',$message . '<br>' .$char_name.' wurde "<b>NICHT</b>" erfolgreich gel&ouml;scht!', 3);
+                wd('index.php?bewerbung',$message . '<br>' .$name.' wurde "<b>nicht</b>" erfolgreich gel&ouml;scht!', 3);
             }
         }
     break;
@@ -169,42 +172,25 @@ switch($menu->get(1)){
     case "formular":
         button("Zur&uuml;ck","",8);
         echo "<br><br>";
-        $tpl = new tpl ("raid/BEWERBUNGS_FORMULAR.htm");
         if( loggedin() and !RaidRechte($allgAr['addchar']) or is_admin() ){
-            $tpl->out(0);
-            ### List menü Level
-            $abf = 'SELECT * FROM prefix_raid_level';
-            $erg = db_query($abf);
-            while($row = db_fetch_assoc($erg)) {
-              $liste .= $tpl->list_get( 'level', array ( $row['level'] ,$row['id'] ));
-            }
-            $tpl->set('level', $liste );
-            ### List menü Klassen
-            $abf = 'SELECT * FROM prefix_raid_klassen WHERE aufnahmestop=1';
-            $erg = db_query($abf);
-            $liste = "";
-            while($row = db_fetch_assoc($erg)) {
-              $liste .= $tpl->list_get( 'level', array ( $row['klassen'] ,$row['id'] ));
-            }
-            $tpl->set('klasse', $liste );
-            ### List menü Rassen
-            $abf = 'SELECT * FROM prefix_raid_rassen';
-            $erg = db_query($abf);
-            $liste = "";
-            while($row = db_fetch_assoc($erg)) {
-              $liste .= $tpl->list_get( 'rasse', array ( $row['rassen'] ,$row['id'] ));
-            }
-            $tpl->set('rasse', $liste );
-            ### List  menü Berufe
-            $abf = 'SELECT * FROM prefix_raid_berufe ORDER BY berufe';
-            $erg = db_query($abf);
-            $liste = "";
-            while($row = db_fetch_assoc($erg)) {
-              $liste .= $tpl->list_get( 'beruf', array ( $row['berufe'] ,$row['id'] ));
-            }
-            $tpl->set('beruf', $liste );
-
-            $tpl->out(1);
+            if( !RaidRechte($allgAr['addchar']) ){ echo "no Permission!"; $design->footer(); exit(); }
+            $tpl = new tpl ('raid/CHARS_EDIT_CREAT.htm');
+            $row['PFAD'] = "index.php?chars-add";
+            $row['TITEL'] = "Neuer Char";
+            $row['name'] = ""; $row['ro'] = "";
+            $row['level'] = drop_down_menu("prefix_raid_level" , "level", $value, "");
+            $row['klassen'] = drop_down_menu("prefix_raid_klassen" , "klassen", $value, "");
+            $row['rassen'] = drop_down_menu("prefix_raid_rassen" , "rassen", $value, "");
+            $row['spz'] = "Klasse w&auml;hlen!";
+            $row['skillgruppe'] = skillgruppe(1,0);
+            $row['raiden'] = $row['pvp'] = $row['warum'] = $row['rlname'] = "";
+            $row['mskill'] = $row['sskill'] = "";
+            $row['mberuf'] = drop_down_menu("prefix_raid_berufe" , "mberuf",  "", "");
+            $row['sberuf'] = drop_down_menu("prefix_raid_berufe" , "sberuf",  "", "");
+            $row['realm'] = $allgAr['realm'];
+            $row['user'] = $_SESSION['authid'];
+            $row['db'] = "prefix_raid_chars";
+            $tpl->set_ar_out( $row, 0 );
         }else{
             echo bbcode(allgArInsert($allgAr['bewerbung']));
         }

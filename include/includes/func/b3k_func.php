@@ -229,14 +229,16 @@ function isRaidSkillung($is=0){
 #setModulrightsForCharRang(65,'insert');
 function setModulrightsForCharRang($cid,$if){
 	
-	$res = db_query("SELECT 
-						a.user, 
-						b.module 
-					 FROM prefix_raid_chars AS a 
-						LEFT JOIN prefix_raid_rang AS b ON a.rang=b.id  
-					 WHERE 
-						a.id=".$cid." 
-					 LIMIT 1");
+	$res = db_query("
+            SELECT 
+                a.user, 
+                b.module 
+             FROM prefix_raid_chars AS a 
+                LEFT JOIN prefix_raid_rang AS b ON a.rang=b.id  
+             WHERE 
+                a.id=".$cid." 
+             LIMIT 1
+        ");
 					 
 	$char = db_fetch_object( $res );
 	
@@ -294,92 +296,7 @@ if( !function_exists( "DateFormat" ) )
 		return ($return);	
 	}
 }
-### Array Daten �berpr�fen! # s1=0<10,email=email,name=is :::::::::  ,61>-s2,61>-s3,s1+s2+s3|61|skillung|skillpunkten=sum
-#$arr = array( "s1" => "62", "s2" => "-9", "s3" => "-9" );
-#echo arrDataCheck($arr, "61>-s1,61>-s2,61>-s3,s1=plus,s2=plus,s3=plus,s1+s2+s3|61|skillung|skillpunkten=sum", 1);
 
-function arrDataCheck($arrValue, $chk, $fm=0){
-	$i = 0;
-	$SearchString = "^([0-9a-zA-Z][-]?)*[<>]([-]?[0-9a-zA-Z])*$";
-	$eMailSearch = "^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-.]?[0-9a-zA-Z])*\\.[a-zA-Z]{2,3}$";
-	$arrControl = explode( "," , $chk );
-	#arrPrint( $arrControl );
-	foreach( $arrControl as $val ){
-		$i++;
-		list( $feld, $check ) = explode("=", $val );
-		if( $check == 'is' ){
-			#echo $check . " 1";
-			$insert = ( $fm == 0 ? $i : 'Das Feld <b>"'.ucfirst($feld).'"</b> ist immer noch Leer! (id #'.$i.')');
-			$er[$insert] = ( !empty($arrValue[$feld]) ? TRUE : FALSE );
-		}elseif( $check == 'email' ){
-			#echo $check . " 2";
-			$insert = ( $fm == 0 ? $i : 'Das Feld <b>"eMail"</b> ist endweder Leer oder dies ist kein eMail Adresse!' );
-			$er[$insert] = ( eregi($eMailSearch, $arrValue[$feld]) ? TRUE : FALSE );
-		}elseif( eregi($SearchString, $val ) ){
-			#echo $check . " 3";
-			if( eregi(">-", $val) ){
-				#echo $check . " 4";
-				list( $a, $b ) = explode(">-", $val);
-				$insert = ( $fm == 0 ? $i : 'Die Zahl '.$a.' >= '.$arrValue[$b].' vom Feld "'.$b.'" und so mit Falsch (id #'.$i.')' );
-				$er[$insert] = ( $a >= $arrValue[$b] ? TRUE : FALSE );
-			}elseif( eregi("<-", $check) ){
-				#echo $check . " 5";
-				list( $a, $b ) = explode("<-", $val);
-				$insert = ( $fm == 0 ? $i : 'Die Zahl '.$a.' <= '.$arrValue[$b].' vom Feld "'.$b.'" und so mit Falsch (id #'.$i.')' );
-				$er[$insert] = ( $a <= $arrValue[$b] ? TRUE : FALSE );
-			}elseif( eregi("->", $check) ){
-				#echo $check . " 6";
-				list( $a, $b ) = explode("->", $val);
-				$insert = ( $fm == 0 ? $i : 'Die Zahl '.$arrValue[$a].' => '.$b.' vom Feld "'.$a.'" und so mit Falsch (id #'.$i.')' );
-				$er[$insert] = ( $arrValue[$a] >= $b ? TRUE : FALSE );
-			}elseif( eregi("-<", $check) ){
-				#echo $check . " 7";
-				list( $a, $b ) = explode("-<", $val);
-				$insert = ( $fm == 0 ? $i : 'Die Zahl '.$arrValue[$a].' =< '.$b.' vom Feld <b>"'.$a.'"</b> und so mit Falsch (id #'.$i.')' );
-				$er[$insert] = ( $arrValue[$a] <= $b ? TRUE : FALSE );
-			}
-		}elseif( $check == 'int' ){
-			#echo $check . " 8";
-			$insert = ( $fm == 0 ? $i : 'Das Feld <b>"'.ucfirst($feld).'"</b> hat einen Falschen Wert! (id #'.$i.')' );
-			$er[$insert] = ( $arrValue[$feld] > 0 ? TRUE : FALSE );
-		}elseif( $check == 'sum' ){
-			#echo $check . " 9";
-			# s1+s2+s3|61|skillung|skillpunkten=sum
-			list( $felder, $max, $feldname, $info) = explode( "|", $feld );
-			$split = explode("+", $felder );
-			$add = 0;
-			foreach( $split as $val ){
-				$add += $arrValue[$val];
-			}
-			$insert = ( $fm == 0 ? $i : 'Die Felder f�r die <b>"'.ucfirst($feldname).'"</b> haben einen Falschen wert! Du hast '.$add.' von '.$max.' m�glichen '.
-			ucfirst($info).' (id #'.$i.')');
-			$er[$insert] = ( $max >= $add ? TRUE : FALSE );
-		}elseif( $check == 'plus' ){
-			$insert = ( $fm == 0 ? $i : 'Der Wert vom Feld <b>"'.ucfirst($feld).'"</b> liegt unter Null und somit Falsch! (id #'.$i.')' );
-			$er[$insert] = ( $arrValue[$feld] >= 0 ? TRUE : FALSE );
-		}
-	}
-	
-	if( $fm == 0 ){
-		foreach( $er as $key => $value ){
-			if( $value == 1 ){
-				$return = TRUE;
-			}else{
-				$return = FALSE;
-				break;
-			}
-		}
-	}elseif( $fm == 1 ){
-		foreach( $er as $key => $val ){
-			$return .= ( $val ? '' : $key ."<br>\n" );
-		}
-		$return .= button("Zur�ck", "", 9 );
-	}else{
-		echo "FEHLER";
-	}
-	
-	return ($return);
-}
 ### allgAr Daten
 function allgArInsert( $string ){
 	global $allgAr;
@@ -391,49 +308,7 @@ function allgArInsert( $string ){
 	
 	return ($string);
 }
-### Bytes umrechnen.
-function btokbormb($size, $round = 2)
-{  
-    if ( $size < 1024 ){ 
-        return $size." B"; 
-    }elseif( $size < pow(1024,2) ){ 
-        $size_kb = $size/1024; 
-        $size_kb = round($size_kb,$round); 
-        return $size_kb." KB"; 
-    }elseif( $size < pow(1024,3) ){ 
-        $size_mb = $size/1024; 
-        $size_mb = $size_mb/1024; 
-        $size_mb = round($size_mb,$round); 
-        return $size_mb." MB"; 
-    }elseif( $size < pow(1024,4) ){
-		$size_gb = $size/1024;
-		$size_gb = $size_gb/1024;
-		$size_gb = $size_gb/1024;
-		$size_gb = round($size_gb,$round);
-		return $size_gb." GB";
-	}elseif( $size < pow(1024,5) ){
-		$size_tb = $size/1024;
-		$size_tb = $size_tb/1024;
-		$size_tb = $size_tb/1024;
-		$size_tb = $size_tb/1024;
-		$size_tb = round($size_tb,$round);
-		return $size_tb." TB";
-	}
-}
-##############################################
-function CountDirs( $pfad )
-{ 
- 	$open = @opendir( $pfad );
-	$i = 0;
- 	while( $dir = @readdir( $open )){
-		if( $dir != "." && $dir != ".." && is_dir( $pfad . $dir )){
-			$i++;
-		}
- 	}
-	@rewind($open);
- 	@closedir( $open );
-	return $i;
-}
+
 ##############################################
 function CountFiles( $pfad )
 { 
@@ -448,80 +323,7 @@ function CountFiles( $pfad )
  	@closedir( $open );
 	return $i;
 }
-##############################################
-function SizeDir( $pfad )
-{ 
- 	$open = @opendir( $pfad );
-	$i = 0;
- 	while( $files = @readdir( $open )){
-		if( is_file( $pfad . $files )){
-			$i = $i + filesize($pfad . $files);
-		}
- 	}
-	@rewind($open);
- 	@closedir( $open );
-	return $i;
-}
-##############################################
-function ServerSize($pfad = './'){
-	$aSize = 0;
-	$open = @opendir( $pfad ); 
-	while( $res = @readdir( $open )){
-		if( "." != $res && ".." != $res ){
-			$way = $pfad.$res."/";
-			if( is_dir( $way ) ){
-				$aSize += ServerSize($way);
-			}else{
-				$aSize += filesize($pfad.$res);
-			}
-		}
-	}
-	@closedir( $open );
-	return $aSize;
-}
-##############################################
-function FileRead( $pfad ){
-	if( file_exists( $pfad )){
-		if( $open = fopen( $pfad, 'r' )){
-			$size = filesize( $pfad );
-			$read = fread( $open, $size );
-			fclose($open);
-			return $read;
-		}else{
-			return "Datei kann nicht Gelesen Werden!";
-		}
-	}else{
-		return "Datei Exestiert nicht!";
-	}
-}
-##############################################
-function CreatFile( $pfad, $text )
-{
-	if($open = @fopen( $pfad, "w+" )){
-		@fputs( $open, $text );
-		@fclose( $open );
-		return true;
-	}else{
-		return false;
-	}
-}
-##############################################
-function arrServerStrucktur($pfad){
-	$open = @opendir( $pfad ); 
-	while( $res = @readdir( $open )){
-		if( "." != $res && ".." != $res ){
-			$way = $pfad.$res."/";
-			if( is_dir( $way ) ){
-				$arrDir[$res] = $way;
-				$arrDir[$res] = arrServerStrucktur($way);
-			}else{
-				$arrDir[$res] = $pfad.$res;
-			}
-		}
-	}
-	@closedir( $open );
-	return $arrDir;
-}
+
 ##############################################
 function is_img( $pfad ){
 	if( eregi('.jpg', $pfad) || eregi('.png', $pfad) || eregi('.gif', $pfad) || eregi('.bmp', $pfad) ){
@@ -576,44 +378,7 @@ function db_value( $db, $feld, $id, $and = "" ){
 		return "Fehler, id #0 Datenbank!";
 	}
 }
-###############################################
-function db_value_field( $db, $feld, $id, $from, $and = "" ){
-	$res = db_query("SELECT ".$feld." FROM ".$db." WHERE ".$from."='".$id."'".$and);
-	return db_result( $res, 0 );
-}
-###############################################
-function db_cfg( $key ){
-	$res = db_query("SELECT value FROM prefix_raid_cfg WHERE way='".$key."'");
-	return db_result( $res, 0 );
-}
-###############################################
-function drop_down_int( $von, $bis, $name, $format, $id = "" ){
-	#if( $id == 0 ){ $id = ""; }else{ $id = $id; }
-	$save = "<select name='".$name."'>\n";
-	$save .= "<option value='0'>".$format."</option>\n";
-	for( $i=$von; $i < $bis+1; $i++){
-		if( strlen( $i ) < 2 ){ $pi = 0; }else{ $pi = ""; }
-		$selected = ( $id == $i ? 'selected' : '');
-		$save .= "<option value='".$pi.$i."' ".$selected.">".$pi.$i."</option>\n";
-	}
-	$save .= "</select>";
-	return $save;
-}
-###############################################
-### Diese funktion sitzt noch an manschen stellen im Script, denn davor kannte ich mich noch nicht mit MySQL - SUM() aus ^^
-function dkp($cid, $gid){
-	$res = db_query("SELECT pm, dkp FROM prefix_raid_dkp WHERE dkpgrp = '".$gid."' AND cid='".$cid."'");
-	$dkp = 0;
-	while( $row = db_fetch_assoc( $res )){
-		$row['dkp'] = str_replace("-","", $row['dkp'] );
-		if( $row['pm'] == "+" ){
-			$dkp += $row['dkp'];
-		}elseif( $row['pm'] == "-" ){
-			$dkp -= $row['dkp'];
-		}
-	}
-	return $dkp;
-}
+
 ###############################################
 function bossinfos($ini, $rid){
 	$cssPfad = 'include/designs/'.$_SESSION['authgfx'].'/';
@@ -693,12 +458,11 @@ function class_img($i){
 }
 ####
 function pz($a, $b, $c = 0){
-	if( $a == 0 or $b == 0 ){
-		return (0);
-	}else{
-		return round( ( $a * 100 ) / $b , $c );
-	}
-	
+    if( $a == 0 or $b == 0 ){
+            return (0);
+    }else{
+            return round( ( $a * 100 ) / $b , $c );
+    }	
 }
 ####
 function pzVortschritsAnzeige($a, $b, $msg='', $r=0){
@@ -770,39 +534,7 @@ function ascape( $string ){
 	}
 	return escape( $string, $option );
 }
-#############
-##############
-# Ist ein Experiment
-# Suche noch immer eine Deutsche, Suchmuster Tabelle.
-function include_data( $search, $string ){
-	global $allgAr;
-	preg_match_all("/\{_".$search."_([^\{\}]+)\}/", $string, $array );
-	#print_r( $array );
-	$pfad = 'include/boxes/';
 
-	foreach( $array[1] as $key => $value ){
-		ob_start();
-		include($pfad.$value.".php");
-		$buffer[$key] = ob_get_contents();
-		ob_end_clean();
-		$string = str_replace($array[0][$key], $buffer[$key] ,$string);
-	}
-	return $string;
-}
-####
-function include_session( $string ){
-	preg_match_all("/\{_session_([^\{\}]+)\}/", $string, $array );
-	foreach( $array[1] as $key => $value ){
-		$string = str_replace($array[0][$key], $_SESSION[$array[1][$key]] ,$string);
-	}
-	return $string;
-}
-####
-function includer( $a ){
-	#$a = include_data( 'boxes', $a );
-	$a = include_session( $a );
-	return $a;
-}
 ### Automatische Tabelle Generieren ########################################################################################
 # F�r Kleine unaufwendige Tabellen, geignet.
 # Hinweise, um einen L�sch Icon hinzuzubekommen mus man in der SQL Abfrage beispiel das feld id as del umbenen, zudem muss

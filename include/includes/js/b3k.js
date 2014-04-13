@@ -1,6 +1,20 @@
 $(document).ready(function() {
 	$('.datepicker').datepicker({ dateFormat: "yy-mm-dd" });
 	$('.buttons').button();
+        
+        $( "#dialog-confirm" ).dialog({
+            resizable: false,
+            modal: true,
+            buttons: {
+                "Ja": function() {
+                  window.location.href = $(this).attr('data-true');
+                  
+                },
+                'Nein': function() {
+                    window.location.href = $(this).attr('data-false');
+                }
+            }
+        });
 });
 
 function button(a){
@@ -26,7 +40,7 @@ function alertmsg( msg ){
 }
 
 function adddir( action ){
-	var oname = prompt("Wie soll der Ordner Heißen?\nOrdner Namen die es Bereits gibt vermeiden!\nBitte keine Leerzeichen in den Namen", "");
+	var oname = prompt("Wie soll der Ordner Heiï¿½en?\nOrdner Namen die es Bereits gibt vermeiden!\nBitte keine Leerzeichen in den Namen", "");
 	if( oname != null ){
 		document.location.href= action + oname;
 	}

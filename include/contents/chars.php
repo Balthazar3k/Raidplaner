@@ -32,20 +32,28 @@ $kalout .= $_SESSION['authid'] ."=". $uid_s;
 switch($menu->get(1)){
 	#### Char Löschen
 	case "del":
-            $char_name = db_result(db_query('SELECT name FROM prefix_raid_chars WHERE id='.$menu->get(2) ),0);
-            
-            if(   $menu->get(3) != "true" ){
-                echo "<center>Wirklich alle daten von \"".$char_name."\" L�schen? ";
-                echo "[ <a href='index.php?".$_SERVER['QUERY_STRING']."-true'>Ja</a> | <a href='index.php?chars'>Nein</a> ]</center>";
-            }
+            $name = $raid->charakter($menu->get(2))->name();
+        
+            if( $menu->get(3) != "true" ){
 
+                echo $raid->confirm()
+                    ->message("Wirklich alle daten von \"".$name."\" L&ouml;schen?")
+                    ->onTrue('index.php?'.$_SERVER['QUERY_STRING'].'-true')
+                    ->onFalse('index.php?bewerbung')
+                    ->html('L&ouml;schen');
+
+            }
+        
             if( $menu->get(3) == "true" ){
-                if($raid->charakter()->delete($menu->get(2))){
-                        wd('index.php?chars',$char_name.' wurde erfolgreich gel&ouml;scht!', 1);
+                if( $raid->charakter()->owner($menu->get(2)) || $raid->permission()->delete('charakter', $message) ){
+                
+                    $raid->charakter()->delete($menu->get(2));
+                    wd('index.php?chars',$name.' wurde erfolgreich gel&ouml;scht!', 1);
                 }else{
-                        wd('index.php?chars',$char_name.' wurde "<b>NICHT</b>" erfolgreich gel&ouml;scht!', 3);
+                    wd('index.php?chars',$name.' wurde "<b>NICHT</b>" erfolgreich gel&ouml;scht!', 3);
                 }
             }
+            
 	break;
 	#### Neuen Charanlegen.
 	case "add":
@@ -111,24 +119,24 @@ switch($menu->get(1)){
 	break;
 	#### Neuer Char Formular
 	case "newchar":
-		if( !RaidRechte($allgAr['addchar']) ){ echo "no Permission!"; $design->footer(); exit(); }
-		$tpl = new tpl ('raid/CHARS_EDIT_CREAT.htm');
-		$row['PFAD'] = "index.php?chars-add";
-		$row['TITEL'] = "Neuer Char";
-		$row['name'] = ""; $row['ro'] = "";
-		$row['level'] = drop_down_menu("prefix_raid_level" , "level", $value, "");
-		$row['klassen'] = drop_down_menu("prefix_raid_klassen" , "klassen", $value, "");
-		$row['rassen'] = drop_down_menu("prefix_raid_rassen" , "rassen", $value, "");
-		$row['spz'] = "Klasse w&auml;hlen!";
-		$row['skillgruppe'] = skillgruppe(1,0);
-		$row['raiden'] = $row['pvp'] = $row['warum'] = $row['rlname'] = "";
-		$row['mskill'] = $row['sskill'] = "";
-		$row['mberuf'] = drop_down_menu("prefix_raid_berufe" , "mberuf",  "", "");
-		$row['sberuf'] = drop_down_menu("prefix_raid_berufe" , "sberuf",  "", "");
-		$row['realm'] = $allgAr['realm'];
-		$row['user'] = $_SESSION['authid'];
-		$row['db'] = "prefix_raid_chars";
-		$tpl->set_ar_out( $row, 0 );
+            if( !RaidRechte($allgAr['addchar']) ){ echo "no Permission!"; $design->footer(); exit(); }
+            $tpl = new tpl ('raid/CHARS_EDIT_CREAT.htm');
+            $row['PFAD'] = "index.php?chars-add";
+            $row['TITEL'] = "Neuer Char";
+            $row['name'] = ""; $row['ro'] = "";
+            $row['level'] = drop_down_menu("prefix_raid_level" , "level", $value, "");
+            $row['klassen'] = drop_down_menu("prefix_raid_klassen" , "klassen", $value, "");
+            $row['rassen'] = drop_down_menu("prefix_raid_rassen" , "rassen", $value, "");
+            $row['spz'] = "Klasse w&auml;hlen!";
+            $row['skillgruppe'] = skillgruppe(1,0);
+            $row['raiden'] = $row['pvp'] = $row['warum'] = $row['rlname'] = "";
+            $row['mskill'] = $row['sskill'] = "";
+            $row['mberuf'] = drop_down_menu("prefix_raid_berufe" , "mberuf",  "", "");
+            $row['sberuf'] = drop_down_menu("prefix_raid_berufe" , "sberuf",  "", "");
+            $row['realm'] = $allgAr['realm'];
+            $row['user'] = $_SESSION['authid'];
+            $row['db'] = "prefix_raid_chars";
+            $tpl->set_ar_out( $row, 0 );
 	break;
 	#### Bearbeiten Char Formular.
 	case "edit":

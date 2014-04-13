@@ -15,19 +15,67 @@ class Raidplaner {
     
     protected $permission;
     
+    protected $confirm;
+
+
     public function db(){
-        $this->db = new Database();
+        if(empty($this->db)){
+            $this->db = new Database();
+        }
+        
         return $this->db;
     }
     
-    public function charakter(){
-        $this->charakter = new Charakter($this);
-        return $this->charakter;
+    public function charakter($id = false){
+        if(empty($this->charakter)){
+            $this->charakter = new Charakter($this);
+        } 
+        
+        if( $id ){
+            $this->charakter->setId($id);
+        } else {
+            $this->charakter->setId(NULL);
+        }
+        
+        return $this->charakter;      
     }
     
     public function permission(){
-        $this->permission = new Permission($this);
+        if(empty($this->permission)){
+            $this->permission = new Permission($this);
+        }
+        
         return $this->permission;
+    }
+    
+    public function confirm(){
+        if(empty($this->confirm)){
+            $this->confirm = new Confirm($this);
+        }
+        
+        return $this->confirm;
+    }
+    
+    /**
+     * change the array to a HTML Atributes string
+     * 
+     * @param array $attributes
+     * @return string
+     */
+    
+    public function setAttr($attributes)
+    {
+        if( is_Array($attributes) && count($attributes) > 0 ){
+            $attr = array();
+            foreach( $attributes as $key => $value){
+                if( is_array($value) ){
+                    $attr[] = $key . '="'.$this->setCSS($value).'"';
+                } else {
+                    $attr[] = $key . '="'.$value.'"';
+                }
+            }
+            return implode(' ', $attr);
+        }
     }
 }
 
@@ -35,13 +83,15 @@ class Charakter {
     
     protected $raidplaner;
     
+    protected $_id;
+    
     public function __construct($object) {
         $this->raidplaner = $object;
         return $this;
     }
     
-    public function set(){
-        
+    public function setId($id){
+        $this->_id = (int) $id;
     }
 
     public function delete($cid) {
@@ -65,6 +115,58 @@ class Charakter {
                 ->from('raid_chars')
                 ->where(array('id' => $id, 'user' => $_SESSION['authid']))
                 ->cell();
+    }
+    
+    public function name(){
+        return $this->raidplaner->db()
+                ->select('name')
+                ->from('raid_chars')
+                ->where(array('id' => $this->_id))
+                ->cell();
+    }
+}
+
+class Confirm {
+    
+    protected $raidplaner;
+    
+    protected $_message;    
+    protected $_true;
+    protected $_false;
+    protected $_button;
+    
+    public function __construct($object) {
+        $this->raidplaner = $object;
+        return $this;
+    }
+    
+    public function message($message){
+        $this->_message = (string) $message;
+        return $this;
+    }
+    
+    public function onTrue($url) {
+        $this->_true = (string) $url;
+        return $this;
+    }
+    
+    public function onFalse($url){
+        $this->_false = (string) $url;
+        return $this;
+    }
+    
+    public function html($title = '') {
+
+        $attr = array(
+            'data-true' => $this->_true,
+            'data-false' => $this->_false,
+        );
+        
+        return '
+            <div id="dialog-confirm" title="'.$title.'" '. $this->raidplaner->setAttr($attr).'>
+                '.$this->_message.'
+            </div>
+        ';
     }
 }
 
