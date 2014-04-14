@@ -70,7 +70,7 @@ switch($menu->get(1)){
         if( $raid->charakter()->save($bewerber) ){
 
             // Sendet eine PM an berechtigte
-            sendpm_2legitimate(
+            sendpm_2_legitimate(
                 'Script: eine neue Bewerbung',
                 'Es hat sich '.$bewerber['name'].' Beworben!'
             );

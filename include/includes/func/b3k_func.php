@@ -722,7 +722,7 @@ function nuller( $i )
     return ( strlen( $i ) == 1 ? "0".$i : $i );
 }
 
-function sendpm_2legitimate($title, $text, $status = 0){
+function sendpm_2_legitimate($title, $text, $status = 0){
     $res = db_query('SELECT DISTINCT user FROM `prefix_raid_chars` WHERE rang < 6');
     
     while( $row = db_fetch_assoc($res) ){
