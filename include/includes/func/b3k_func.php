@@ -733,7 +733,7 @@ function sendpm_2_legitimate($title, $text, $status = 0){
 function classSpecialization($id, $selected_1 = NULL, $selected_2 = NULL){
     
     if( empty($id) )
-        return 'W&aumhlen Sie bitte eine Klasse aus!';
+        return 'W&auml;hlen Sie bitte eine Klasse aus!';
     
     $res = db_query("SELECT s1b, s2b, s3b FROM prefix_raid_klassen WHERE id=".$id."");
     $row = db_fetch_assoc( $res );

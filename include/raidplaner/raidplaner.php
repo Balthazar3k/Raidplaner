@@ -173,7 +173,7 @@ class Charakter {
     
     
     public function form($title, $pfad, $charakter = array()){
-        global $allAr;
+        global $allgAr;
         
         $tpl = new tpl ('raid/CHARS_EDIT_CREAT.htm');
         
