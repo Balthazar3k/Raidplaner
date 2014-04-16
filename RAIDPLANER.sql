@@ -88,7 +88,6 @@ CREATE TABLE IF NOT EXISTS `prefix_raid_chars` (
   `rang` int(11) NOT NULL default '1',
   `stammgrp` int(11) NOT NULL default '0',
   `realm` varchar(255) NOT NULL default 'Realm',
-  `teamspeak` int(11) NOT NULL default '0',
   `regist` timestamp NOT NULL default CURRENT_TIMESTAMP,
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
