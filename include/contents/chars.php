@@ -4,7 +4,7 @@ defined ('main') or die ( 'no direct access' );
 require_once("include/includes/func/b3k_func.php");
 
 if( isset( $_POST['kid'] ))
-{	exit(klassenSpz($_POST['kid']));
+{	exit(classSpecialization($_POST['kid']));
 }
 
 $title = $allgAr['title'].' :: Chars';
@@ -60,9 +60,9 @@ switch($menu->get(1)){
         $charakter = array_merge($_POST, $charakter);
 
         if( $raid->charakter($menu->get(2))->save($charakter) ){
-            wd("index.php?chars","Charakter ".$charakter['name']." wurde erfolgreich erstellet!", 3);
+            wd("index.php?chars","Charakter ".$charakter['name']." wurde erfolgreich gespeichert!", 3);
         }else{
-            wd("index.php?chars","Charakter ".$charakter['name']." wurde <b>nicht</b> erfolgreich erstellet!", 3);
+            wd("index.php?chars","Charakter ".$charakter['name']." wurde <b>nicht</b> erfolgreich gespeichert!", 3);
         }
 
     break;

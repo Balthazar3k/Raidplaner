@@ -240,22 +240,22 @@ function setModulrightsForCharRang($cid,$if){
              LIMIT 1
         ");
 					 
-	$char = db_fetch_object( $res );
+	$char = db_fetch_assoc( $res );
 	
-	$module = explode(",", $char->module );
+	$module = explode(",", $char['module'] );
 	
 	if( $if == 'insert' ){
-		foreach( $module as $mid ){
-			if( $mid != NULL ){
-				@db_query("INSERT INTO prefix_modulerights (uid, mid) VALUES(".$char->user.", ".$mid.");");
-			}
-		}
+            foreach( $module as $mid ){
+                if( $mid != NULL ){
+                    @db_query("INSERT INTO prefix_modulerights (uid, mid) VALUES(".$char['user'].", ".trim($mid).");");
+                }
+            }
 	}elseif( $if == 'remove'){
-		foreach( $module as $mid ){
-			if( $mid != NULL ){
-				@db_query("DELETE FROM prefix_modulerights WHERE uid=".$char->user." AND mid=".$mid);
-			}
-		}
+            foreach( $module as $mid ){
+                if( $mid != NULL ){
+                    @db_query("DELETE FROM prefix_modulerights WHERE uid=".$char['user']." AND mid=".trim($mid));
+                }
+            }
 	}
 }
 ##############################################
@@ -730,11 +730,32 @@ function sendpm_2_legitimate($title, $text, $status = 0){
     }
 }
 
-function klassenSpz($id){
+function classSpecialization($id, $selected_1 = NULL, $selected_2 = NULL){
+    
+    if( empty($id) )
+        return 'W&aumhlen Sie bitte eine Klasse aus!';
+    
     $res = db_query("SELECT s1b, s2b, s3b FROM prefix_raid_klassen WHERE id=".$id."");
     $row = db_fetch_assoc( $res );
-    $kspz = "<select style=\"display: none;\" name=\"s1\"><option></option><option value=\"".$row['s1b']."\">".$row['s1b']."</option><option value=\"".$row['s2b']."\">".$row['s2b']."</option><option value=\"".$row['s3b']."\">".$row['s3b']."</option></select> ";
-    $kspz .= "<select style=\"display: none;\" name=\"s2\"><option></option><option value=\"".$row['s1b']."\">".$row['s1b']."</option><option value=\"".$row['s2b']."\">".$row['s2b']."</option><option value=\"".$row['s3b']."\">".$row['s3b']."</option></select>";
+    
+    $specialization = array();
+    foreach( $row as $val ){
+        if( $selected_1 == $val ){
+            $specialization[1][] = sprintf('<option value="%s" selected="selected">%s</option>', $val, $val);
+        }else{
+            $specialization[1][] = sprintf('<option value="%s">%s</option>', $val, $val);
+        }
+        
+        if( $selected_2 == $val ){
+            $specialization[2][] = sprintf('<option value="%s" selected="selected">%s</option>', $val, $val);
+        }else{
+            $specialization[2][] = sprintf('<option value="%s">%s</option>', $val, $val);
+        }
+    }
+    
+    $kspz  = "<select name=\"s1\">".implode('\n', $specialization[1])."</select>";
+    $kspz .= "<select name=\"s2\">".implode('\n', $specialization[2])."</select>";
+    
     return $kspz;
 }
 ?>

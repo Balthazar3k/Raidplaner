@@ -148,6 +148,14 @@ class Charakter {
                 ->cell();
     }
     
+    public function rank(){
+        return $this->raidplaner->db()
+                ->select('rank')
+                ->from('raid_chars')
+                ->where(array('id' => $this->_id))
+                ->cell();
+    }
+    
     public function get(){
         $res = $this->raidplaner->db()
                 ->select('*')
@@ -162,6 +170,8 @@ class Charakter {
         return $res;
     }
     
+    
+    
     public function form($title, $pfad, $charakter = array()){
         global $allAr;
         
@@ -174,7 +184,7 @@ class Charakter {
         $row['level'] = $charakter['level'];
         $row['rassen'] = drop_down_menu("prefix_raid_rassen" , "rassen", $charakter['rassen'], "");
         $row['klassen'] = drop_down_menu("prefix_raid_klassen" , "klassen", $charakter['klassen'], "");
-        $row['spz'] = "Klasse w&auml;hlen!";
+        $row['spz'] = classSpecialization($charakter['klassen'], $charakter['s1'], $charakter['s2']);
         $row['skillgruppe'] = skillgruppe(1, $charakter['skillgruppe']);
         $row['warum']  = $charakter['warum'];
         $row['realm'] = $allgAr['realm'];
@@ -237,7 +247,7 @@ class Permission {
     public function __construct($object) {
         $this->raidplaner = $object;
         
-        /* Permissions for Deleting */
+        /* Permissions for Updateing */
         $this->update = array(
             'charakter' => array(
                 'permission' => ( $_SESSION['charrang'] >= 13 || is_admin() ), 

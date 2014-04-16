@@ -29,11 +29,6 @@ $(document).ready(function() {
             });
         });
         
-        $klasse.ready(function(){
-           if( $klassID ){
-               $klasse.trigger('change');
-           }
-        });
 });
 
 function button(a){
