@@ -83,17 +83,15 @@ switch($menu->get(1)){
 		$tpl = new tpl ('raid/CHARS_DETAILS.htm');
 		button("Zur&uuml;ck","",8);
 		$row = db_fetch_assoc(db_query("SELECT 
-                        a.name, a.teamspeak, a.mberuf, a.mskill, a.sberuf, a.sskill, a.raiden, a.warum, a.pvp, a.skillgruppe,
+                        a.name, a.teamspeak, a.mberuf, a.mskill, a.sberuf, a.sskill, a.raiden, a.warum, a.pvp, a.skillgruppe, a.level,
                         a.s1, a.s2, a.s3, a.realm, a.user, a.punkte, a.id, a.rlname, 
-                        b.id as klassenid, b.klassen,
-                        c.level,
+                        b.id as klassenid, b.klassen,  
                         d.id as rangid,
                         d.rang, 
                         f.name AS username, 
                         e.rassen
                  FROM prefix_raid_chars AS a 
                         LEFT JOIN prefix_raid_klassen AS b ON a.klassen = b.id 
-                        LEFT JOIN prefix_raid_level AS c ON a.level = c.id 
                         LEFT JOIN prefix_raid_rang AS d ON a.rang = d.id 
                         LEFT JOIN prefix_raid_rassen AS e ON a.rassen = e.id 
                         LEFT JOIN prefix_user AS f ON a.user = f.id 
@@ -105,8 +103,6 @@ switch($menu->get(1)){
 		$row['teamspeak'] = ( $row['teamspeak'] == 1 ? "Vorhanden" : "Kein Teamspeak" );
 		$row['sb'] = char_skill($row['s1'],$row['s2'],$row['s3'],$row['klassenid']);
 		$row['skillgruppe'] = skillgruppe(0,$row['skillgruppe']);
-		$row['mberuf'] = db_value( "prefix_raid_berufe", "berufe", $row['mberuf']);
-		$row['sberuf'] = db_value( "prefix_raid_berufe", "berufe", $row['sberuf']);
 		### Raidkalender
 		$wochentag = array( 0 => "So", 1 => "Mo", 2 => "Di", 3 => "Mi", 4 => "Do", 5 => "Fr", 6 => "Sa");
 		$ctd = count($wochentag); #--- Z�hele Spalten (td)
@@ -241,14 +237,12 @@ switch($menu->get(1)){
         $q = $_POST['search'];
         $res = db_query("
             SELECT 
-                a.name, a.rang AS rangid, a.s1, a.s2, a.s3, a.realm, a.user, a.punkte,a.id,
+                a.name, a.rang AS rangid, a.s1, a.s2, a.s3, a.realm, a.user, a.punkte, a.id, a.level, 
                 b.id as klassenid, b.klassen, 
-                c.level, 
                 d.rang, 
                 e.name AS username 
              FROM prefix_raid_chars AS a 
                 LEFT JOIN prefix_raid_klassen AS b ON a.klassen = b.id 
-                LEFT JOIN prefix_raid_level AS c ON a.level = c.id 
                 LEFT JOIN prefix_raid_rang AS d ON a.rang = d.id 
                 LEFT JOIN prefix_user AS e ON a.user = e.id 
              WHERE 

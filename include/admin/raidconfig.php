@@ -11,28 +11,29 @@ RaidErrorMsg();
 aRaidMenu();
 # 0 = Dropdown oder Normal
 # 1 = Felder mitund ohne Dropdown
-# 2 = Dropdown für einträge in der datenbank ohne prefix_raid_xxx
-$exten = array( "cfg" => "2",
-				"klassen" => "0", 
-				"rassen" => "0",
-				"berufe" => "0",
-				"loot" => "0",
-				"gruppen" => "0",
-				"level" => "0",
-				"grpsize" => "0",
-				"info" => "0",
-				"rang" => "0",
-				"inzen" => "1",
-				"chars" => "1",
-				"dkps" => "1",
-				"bosse" => "0",
-				"statusmsg" => "0",
-			    "user" => "2",
-				"grundrechte" => "2",
-				"stammgrp"=>"0");
+# 2 = Dropdown fï¿½r eintrï¿½ge in der datenbank ohne prefix_raid_xxx
+$exten = array( 
+    "cfg" => "2",
+    "klassen" => "0", 
+    "rassen" => "0",
+    "berufe" => "0",
+    "loot" => "0",
+    "gruppen" => "0",
+    "grpsize" => "0",
+    "info" => "0",
+    "rang" => "0",
+    "inzen" => "1",
+    "chars" => "1",
+    "dkps" => "1",
+    "bosse" => "0",
+    "statusmsg" => "0",
+    "user" => "2",
+    "grundrechte" => "2",
+    "stammgrp"=>"0"
+);
 
 $del_klasse = "-9";
-$del_img =	"<img src='include/images/b3kimg/loeschen.jpg' border='0'  title='Löschen'>";
+$del_img =	"<img src='include/images/b3kimg/loeschen.jpg' border='0'  title='Lï¿½schen'>";
 $page = "raidconfig-".$menu->get(1);
 
 switch($menu->get(2)){
@@ -77,7 +78,7 @@ $tpl = new tpl ( 'raid/raidconfig.htm',1 );
 $tpl->set_ar_out( array("0" => "0"), 0);
 ### Klassen ###################################################
 if( $menu->get(1) != "" ){
-	$neu = aLink("Neuen Zeile '".ucfirst($menu->get(1))."' Anfügen",$page."-new#ende",1);
+	$neu = aLink("Neuen Zeile '".ucfirst($menu->get(1))."' Anfï¿½gen",$page."-new#ende",1);
 	$tpl->set_ar_out( array("NAME" => $neu, "PFAD" => "admin.php?raidconfig-".$menu->get(1)."-addynamisch"), 4);
 	$res = db_query( 'SELECT * FROM `prefix_raid_'.$menu->get(1).'` ORDER BY `prefix_raid_'.$menu->get(1).'` . `id` ASC');
 	$feld = array();

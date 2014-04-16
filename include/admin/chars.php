@@ -154,16 +154,14 @@ switch($menu->get(1)){
 		
 		$tpl->out(1);
 		$sql = "SELECT 
-                        a.id, a.name, a.user, a.regist, a.s1, a.s2, a.s3, 
+                        a.id, a.name, a.user, a.regist, a.s1, a.s2, a.level, 
                         b.id as kid, b.klassen, 
                         c.id as rid, c.rang, 
-                        d.id as uid, d.name as uname, d.gebdatum, 
-                        e.level 
+                        d.id as uid, d.name as uname, d.gebdatum
                 FROM prefix_raid_chars AS a 
                         LEFT JOIN prefix_raid_klassen AS b ON a.klassen = b.id 
                         LEFT JOIN prefix_raid_rang AS c ON a.rang = c.id
                         LEFT JOIN prefix_user AS d ON a.user = d.id 
-                        LEFT JOIN prefix_raid_level AS e ON a.level = e.id 
                 ".$search."
                 ".( $_SESSION['authmod']['CharsEditKlassen'] == 1  ? 'WHERE b.id = '.$_SESSION['charklasse'].' ' : '' )."
                 ORDER BY c.id DESC, b.id DESC ";
