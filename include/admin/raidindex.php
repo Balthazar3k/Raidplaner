@@ -5,41 +5,81 @@ defined ('admin') or die ( 'only admin access' );
 $design = new design ( 'Admins Area', 'Admins Area', 2 );
 require_once("include/includes/func/b3k_func.php");
 
+
+
+$tpl = new tpl ('raid/raidindex.htm', 1);
+
+switch($menu->get(1)){
+    case 'saveTimes':
+        /* when you can creating time can 2 edit */
+        if( $raid->permission()->create('times', $message) ){
+            $raid->times()->save($_POST, $menu->get(2));
+            wd('admin.php?raidindex', 'Zeiten wurden erfolgreich ge&auml;ndert.', 5);
+            exit();
+        } else {
+            wd('admin.php?raidindex', $message, 5);
+            exit();
+        }
+    break;
+    
+    case 'editTimes':
+        $return = $raid->db()
+            ->select('id', 'weekday', 'start', 'inv', 'end')
+            ->from('raid_zeit')
+            ->where(array('id' => $menu->get(2)))
+            ->row();
+    break;
+
+    case 'deleteTimes':
+        if( $raid->permission()->delete('times', $message)){
+            $raid->times()->delete($menu->get(2));
+            wd('admin.php?raidindex', 'L&ouml;schen der Zeit war erfolgreich!', 3);
+            exit();
+        } else {
+            wd('admin.php?raidindex', $message, 5);
+            exit();
+        }
+    break;
+
+    default:
+        $return = array(
+            'id' => '',
+            'start' => '',
+            'inv' => '',
+            'end' => ''
+        );
+    break;
+}
+
 $design->header();
 
 aRaidMenu();
-$table = new tpl ( 'raid/2zeilen4spalten.htm',1 );
 
-function div($txt, $i=1, $width=100 )
-{	$width = "width: ". $width ."px; ";
-	if( $i == 0 ) return "<div class='aDIV01'>".$txt."</div>\n";
-	if( $i == 1 ) return "<div class='aDIV02' style='".$width."float: left;'>".$txt."</div>\n";
-	if( $i == 2 ) return "<div class='aDIV03' style='".$width."float: left;'>".$txt."</div><br style='clear: both;' />\n";
-	if( $i == 3 ) return "<div class='aDIV03' style='".$width."float: right;'>".$txt."</div><br style='clear: both;' />\n";
+$res = $raid->db()->select('*')->from('raid_zeit')->init();
+while( $row = db_fetch_assoc($res)){
+    $return['zeiten'] .= $tpl->list_get( 'zeiten', 
+        array ( 
+            $row['id'], 
+            $row['weekday'], 
+            $row['start'], 
+            $row['inv'], 
+            $row['end'], 
+            $row['options']
+        )
+    );
 }
 
-## Chars
-$id = 1;
-$res = db_query("SELECT 
-					a.id, a.name, a.regist, b.klassen, c.level,
-					a.s1, a.s2, a.s3, b.id AS kid
-				FROM prefix_raid_chars AS a 
-					LEFT JOIN prefix_raid_klassen AS b ON b.id = a.klassen
-					LEFT JOIN prefix_raid_level AS c ON c.id = a.level
-				WHERE rang <= 2 ORDER BY a.id DESC LIMIT 5");
+$_weekdays = array('Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag', 'Sonntag');
 
-if( db_num_rows( $res ) )
-{	echo div("<b style='color: red; font-size: 12px;'>Neue Chars/Bewerber</b>", 2, 632);
-	while( $row = db_fetch_assoc( $res ) )
-	{	$skill = char_skill($row['s1'],$row['s2'],$row['s3'],$row['kid']);
-		echo div( nuller($id++), 1, 20 ). 
-			 div( aLink( $row['name'], "chars-details-".$row['id'], 1)). 
-			 div($row['level']." ".$row['klassen']." ".$skill, 1, 250). 
-			 div( DateFormat("D d.m.Y H:i:s", $row['regist'])." ".agoTimeMsg( $row['regist'] ), 2, 250);
-	}
-}else
-{	$r['chars'];
+foreach( $_weekdays as $weekday ){
+    if( $return['weekday'] == $weekday ){
+        $return['weekdays'] .= $tpl->list_get( 'weekdays', array($weekday, 'selected="selected"'));
+    } else {
+        $return['weekdays'] .= $tpl->list_get( 'weekdays', array($weekday, ''));
+    }
 }
+
+$tpl->set_ar_out($return, 0);
 
 $design->footer();
 ?>

@@ -159,13 +159,13 @@ function aRaidMenu(){
     "R&auml;nge" => "raidrang",
     "DKP'S" => "raiddkps");
     
-    echo "<div class=\"Chead\" style='border: 1px solid #000; border-radius: 5px; padding: 5px; box-shadow: 0 3px 1px rgba( 0, 0, 0, 0.3);' align='center'>";
+    echo "<div class=\"Cnorm buttonset\" style='border-radius: 5px; padding: 5px; box-shadow: 0 3px 1px rgba( 0, 0, 0, 0.3);' align='center'>";
     
     foreach( $raidLinks as $name => $url )
     {
         if( isset( $_SESSION['authmod'][$url] ) && $_SESSION['authmod'][$url] == 1 || is_admin() )
         {
-            echo "<a href='admin.php?".$url."' class='buttons'>".$name."</a> ";
+            echo "<a href='admin.php?".$url."'>".$name."</a> ";
         }
     }
     

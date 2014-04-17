@@ -29,6 +29,8 @@ $(document).ready(function() {
             });
         });
         
+        $('.buttonset').buttonset();
+        
 });
 
 function button(a){

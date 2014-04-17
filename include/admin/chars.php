@@ -52,7 +52,7 @@ switch($menu->get(1)){
     case "save":
 
         if( $raid->charakter($menu->get(2))->save($_POST) ){
-            wd('admin.php?chars-details-'.$menu->get(2),"Charakter ".$charakter['name']." wurde erfolgreich gespeichert!", 3);
+            wd('admin.php?chars',"Charakter ".$charakter['name']." wurde erfolgreich gespeichert!", 3);
         }else{
             wd('admin.php?chars-details-'.$menu->get(2),"Charakter ".$charakter['name']." wurde <b>nicht</b> erfolgreich gespeichert!", 3);
         }

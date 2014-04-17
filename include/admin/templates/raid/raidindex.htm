@@ -1,0 +1,52 @@
+<form action="admin.php?raidindex-saveTimes-{id}" method="POST">    
+    <table class="border" cellspacing="1" cellpadding="3" width="40%">
+        <thead>
+            <tr class="Chead">
+                <th colspan="5">Raid Zeiten</th>
+            </tr>
+
+            <tr class="Cdark">
+                <th>Weekday</th>
+                <th>Start</th>
+                <th>Invite</th>
+                <th>Ende</th>
+                <th>Options</th>
+            </tr>
+        </thead>
+        <tbody>
+            {_list_zeiten@
+            <tr class="Cnorm" align="center">
+                <td>%2</td>
+                <td>%3</td>
+                <td>%4</td>
+                <td>%5</td>
+                <td class="buttonset" nowrap>
+                    <a href="admin.php?raidindex-deleteTimes-%1">L&ouml;schen</a>
+                    <a href="admin.php?raidindex-editTimes-%1">Bearbeiten</a>
+                </td>
+            </tr>
+            }
+            <tr class="Chead">
+                <th colspan="5">Neue Raidzeit</th>
+            </tr>
+
+            <tr class="Cmite" align="center">
+                <td>
+                    <select name="weekday" style="width: 100px;">
+                        {_list_weekdays@<option value="%1" %2>%1</option>}
+                    </select>                
+                </td>
+                <td><input name="start" type="time" value="{start}"></td>
+                <td><input name="inv" type="time"value="{inv}"></td>
+                <td><input name="end" type="time"value="{end}"></td>
+                <td><input type="submit" value="Speichern"></td>
+            </tr>
+
+            <tr class="Chead">
+                <th colspan="5">
+
+                </th>
+            </tr>
+        </tbody>
+    </table>
+</form>

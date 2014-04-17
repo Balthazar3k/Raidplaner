@@ -16,6 +16,8 @@ class Raidplaner {
     protected $permission;
     
     protected $confirm;
+    
+    protected $times;
 
 
     public function db(){
@@ -54,6 +56,14 @@ class Raidplaner {
         }
         
         return $this->confirm;
+    }
+    
+    public function times(){
+        if(empty($this->times)){
+            $this->times = new Times($this);
+        }
+        
+        return $this->times;
     }
     
     /**
@@ -193,6 +203,32 @@ class Charakter {
     }
 }
 
+class Times{
+    
+    protected $raidplaner;
+    
+    public function __construct($object) {
+        $this->raidplaner = $object;
+        return $this;
+    }
+    
+    public function get(){
+        return $raid->db()->select('*')->from('raid_zeit')->init();
+    }
+    
+    public function save($data, $id = false){
+        if( $id ){
+            $this->raidplaner->db()->update('raid_zeit')->fields($data)->where(array('id' => $id))->init();
+        } else {
+            $this->raidplaner->db()->insert('raid_zeit')->fields($data)->init();
+        }
+    }
+    
+    public function delete($id){
+        return $this->raidplaner->db()->delete('raid_zeit')->where(array('id' => $id))->init();
+    }
+}
+
 class Confirm {
     
     protected $raidplaner;
@@ -241,11 +277,20 @@ class Permission {
     
     protected $raidplaner;
     
+    protected $create;
     protected $update;
     protected $delete;
     
     public function __construct($object) {
         $this->raidplaner = $object;
+        
+        /* Permissions for Creating */
+        $this->create = array(
+            'times' => array(
+                'permission' => ( $_SESSION['charrang'] >= 13 || is_admin() ), 
+                'message' => 'Sie haben nicht die n&ouml;tigen Rechte um die Zeiten zu bearbeiten!'
+            )
+        );
         
         /* Permissions for Updateing */
         $this->update = array(
@@ -260,10 +305,19 @@ class Permission {
             'charakter' => array(
                 'permission' => ( $_SESSION['charrang'] >= 13 || is_admin() ), 
                 'message' => 'Sie haben nicht die n&ouml;tigen Rechte!'
+            ),
+            'times' => array(
+                'permission' => ( $_SESSION['charrang'] >= 13 || is_admin() ), 
+                'message' => 'Sie haben nicht die n&ouml;tigen Rechte um die Zeiten zu L&ouml;schen!'
             )
         );
         
         return $this;
+    }
+    
+    public function create($key, &$message = NULL) {
+        $message = $this->create[$key]['message'];
+        return $this->create[$key]['permission'];
     }
     
     public function update($key, &$message = NULL) {
