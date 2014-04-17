@@ -16,7 +16,7 @@ $(document).ready(function() {
             }
         });
         
-        var $klasse = $("select[name=klassen]");
+        var $klasse = $("select[id=klassen]");
         
         var $klassID = $klasse.val();
         

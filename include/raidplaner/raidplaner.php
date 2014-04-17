@@ -108,15 +108,25 @@ class Charakter {
 
         $status = array();
         
+        //arrPrint($data); exit();
+        
         $ID = $this->raidplaner->db()->select('id')
                 ->from('raid_chars')
                 ->where(array('user' => $_SESSION['authid'], 'id' => $this->_id))
                 ->cell();
         
         if( $ID ){
-            $status[] = (bool) $this->raidplaner->db()->update('raid_chars')->fields($data)->where(array('id' => $this->_id ))->init();
+            $status[] = (bool) $this->raidplaner->db()->update('raid_chars')->fields($data['charakter'])->where(array('id' => $this->_id ))->init();
+            $status[] = (bool) $this->raidplaner->db()->delete('raid_zeit_charakter')->where(array('cid' => $ID ))->init();
+            foreach( array_keys( $data['times']) as $timeID ){
+                $status[] = (bool) $this->raidplaner->db()->insert('raid_zeit_charakter')->fields(array('zid' => $timeID, 'cid' => $ID))->init();
+            }
         } else {
-            $status[] = (bool) $this->raidplaner->db()->insert('raid_chars')->fields($data)->init();
+            $status[] = (bool) $this->raidplaner->db()->insert('raid_chars')->fields($data['charakter'])->init();
+            $charakter_id = $this->raidplaner->db()->select('id')->from('raid_chars')->where(array('name' => $data['charakter']['name']))->cell();
+            foreach( array_keys( $data['times']) as $timeID ){
+               $status[] = (bool) $this->raidplaner->db()->insert('raid_zeit_charakter')->fields(array('zid' => $timeID, 'cid' => $charakter_id))->init();
+            }
         }
         
 
@@ -192,12 +202,33 @@ class Charakter {
         
         $row['name'] = $charakter['name'];
         $row['level'] = $charakter['level'];
-        $row['rassen'] = drop_down_menu("prefix_raid_rassen" , "rassen", $charakter['rassen'], "");
-        $row['klassen'] = drop_down_menu("prefix_raid_klassen" , "klassen", $charakter['klassen'], "");
+        $row['rassen'] = drop_down_menu("prefix_raid_rassen" , "charakter[rassen]", $charakter['rassen'], "");
+        
+        $res = $this->raidplaner->db()->select('*')->from('raid_klassen')->init();
+        while( $val = db_fetch_assoc($res)){ 
+            
+            $row['klassen'] .= $tpl->list_get('klassen', 
+                array(
+                    $val['id'], 
+                    $val['klassen'], 
+                    ($charakter['klassen'] == $val['id'] ? 'selected="selected"' : '')
+                )
+            );  
+        }
+        
         $row['spz'] = classSpecialization($charakter['klassen'], $charakter['s1'], $charakter['s2']);
         $row['skillgruppe'] = skillgruppe(1, $charakter['skillgruppe']);
         $row['warum']  = $charakter['warum'];
         $row['realm'] = $allgAr['realm'];
+        
+        $res = $this->raidplaner->times()->get();
+        while( $result = db_fetch_assoc($res)){
+            $row['times'] .= $tpl->list_get('times', array(
+                $result['id'],
+                $result['start'],
+                $result['end']
+            ));
+        }
 
         $tpl->set_ar_out( $row, 0 );
     }
@@ -213,7 +244,7 @@ class Times{
     }
     
     public function get(){
-        return $raid->db()->select('*')->from('raid_zeit')->init();
+        return $this->raidplaner->db()->select('*')->from('raid_zeit')->init();
     }
     
     public function save($data, $id = false){

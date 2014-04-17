@@ -437,17 +437,17 @@ function char_skill( $a, $b, $c, $d, $e = 11 ){ # a=skill 1 b=skill 2, c=skill 3
 }
 ### SKILLGRUPPE
 function skillgruppe($opt=0,$checked=0){
-	if( $opt == 0 ){
-		$gruppen = array( "0"=>"n/a", "1"=>"Tank", "2"=>"Healer", "3"=>"Damage Dealer" );
-		return ($gruppen[$checked]);
-	}elseif( $opt == 1 ){
-		$gruppen = array( "1"=>"Tank", "2"=>"Healer", "3"=>"Damage Dealer" );
-		foreach( $gruppen as $id => $value ){
-			$checkin = ( $checked == $id ? 'checked="checked"' : '' );
-			$return .= "<label><input type='radio' name='skillgruppe' value='".$id."' ".$checkin."> ".$value."</label><br>";
-		}
-		return ($return);
-	} 
+    if( $opt == 0 ){
+        $gruppen = array( "0"=>"n/a", "1"=>"Tank", "2"=>"Healer", "3"=>"Damage Dealer" );
+        return ($gruppen[$checked]);
+    }elseif( $opt == 1 ){
+        $gruppen = array( "1"=>"Tank", "2"=>"Healer", "3"=>"Damage Dealer" );
+        foreach( $gruppen as $id => $value ){
+            $checkin = ( $checked == $id ? 'checked="checked"' : '' );
+            $return .= "<label><input type='radio' name='charakter[skillgruppe]' value='".$id."' ".$checkin."> ".$value."</label><br>";
+        }
+        return ($return);
+    } 
 }
 ####
 function class_img($i){
@@ -753,8 +753,8 @@ function classSpecialization($id, $selected_1 = NULL, $selected_2 = NULL){
         }
     }
     
-    $kspz  = "<select name=\"s1\">".implode('\n', $specialization[1])."</select>";
-    $kspz .= "<select name=\"s2\">".implode('\n', $specialization[2])."</select>";
+    $kspz  = "<select name=\"charakter[s1]\">".implode('\n', $specialization[1])."</select>";
+    $kspz .= "<select name=\"charakter[s2]\">".implode('\n', $specialization[2])."</select>";
     
     return $kspz;
 }

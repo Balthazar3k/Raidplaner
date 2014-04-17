@@ -61,11 +61,13 @@ switch($menu->get(1)){
         $res = $_POST;
         
         $bewerber = array(
-            'rang' => 1,
-            'user' => $_SESSION['authid']
+            'charakter' => array(
+                'rang' => 1,
+                'user' => $_SESSION['authid']
+            )
         );
         
-        $bewerber = array_merge($res, $bewerber);
+        $bewerber = array_merge_recursive($res, $bewerber);
 
         if( $raid->charakter()->save($bewerber) ){
 
@@ -75,7 +77,7 @@ switch($menu->get(1)){
                 'Es hat sich '.$bewerber['name'].' Beworben!'
             );
 
-            wd("index.php?bewerbung","Du hast dich erfolgreich Beworben", 3);
+            //wd("index.php?bewerbung","Du hast dich erfolgreich Beworben", 3);
         }else{
             wd("index.php?bewerbung","Du hast dich <b>nicht</b> erfolgreich Beworben ", 3);
         }

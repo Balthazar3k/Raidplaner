@@ -53,11 +53,13 @@ switch($menu->get(1)){
     case "save":
 
         $charakter = array(
-            'rang' => 2,
-            'user' => $_SESSION['authid']
+            'charakter' => array(
+                'rang' => 2,
+                'user' => $_SESSION['authid']
+            )
         );
         
-        $charakter = array_merge($_POST, $charakter);
+        $charakter = array_merge_recursive($_POST, $charakter);
 
         if( $raid->charakter($menu->get(2))->save($charakter) ){
             wd("index.php?chars","Charakter ".$charakter['name']." wurde erfolgreich gespeichert!", 3);

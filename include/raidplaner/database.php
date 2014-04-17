@@ -68,7 +68,16 @@ class Database {
         if(!empty($this->type)) {
             $method = $this->type;
             $sql = Construct::$method($this);
+            $this->reset();
             return db_query($sql);
+        }
+    }
+    
+    public function getQuery(){
+        $this->maskedValues();
+        if(!empty($this->type)) {
+            $method = $this->type;
+            return Construct::$method($this);   
         }
     }
     
@@ -85,6 +94,14 @@ class Database {
         array_walk($this->_fields, function(&$field){
            $field = mysql_real_escape_string($field);
         });
+    }
+    
+    public function reset(){
+        $this->_select = array();
+        $this->_fields = array();
+        $this->_from = NULL;
+        $this->_where = NULL;
+        $this->_limit = NULL;
     }
     
 }
