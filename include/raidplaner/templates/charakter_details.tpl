@@ -42,7 +42,7 @@
     {foreach from=$times key=k item=val}
     <tr  class="Cdark">
         <td align="right" style="color: #FFF; {if in_array($val.id, $charakter.times)}background-color: darkgreen;{else}background-color: darkred;{/if}">
-            <input type="checkbox" disabled="disabled" {if in_array($val.id, $charakter.times)}checked="checked"{/if} />
+            {if in_array($val.id, $charakter.times)}<i class="fa fa-thumbs-up fa-1x"></i>{else}<i class="fa fa-thumbs-down fa-1x"></i>{/if}
         </td>
         
         <td>{$val.weekday} um {$val.start} bis {$val.end}</td>  

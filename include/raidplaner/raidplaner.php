@@ -17,6 +17,8 @@ class Raidplaner {
     
     protected $times;
     
+    protected $header;
+    
     protected $smarty;
 
 
@@ -67,6 +69,15 @@ class Raidplaner {
         }
         
         return $this->times;
+    }
+    
+    public function header(){
+        if(empty($this->header)){
+            include('include/raidplaner/libs/class/header.php');
+            $this->header = new Header();
+        }
+        
+        return $this->header;
     }
     
     public function smarty(){

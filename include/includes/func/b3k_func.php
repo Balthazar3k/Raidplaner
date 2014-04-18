@@ -13,14 +13,20 @@ function copyright(){
  echo "<br><div align='center' class='smallfont'>[ Raidplaner &amp; DKP System v1.1 &copy; by <a href='http://Balthazar3k.funpic.de' target='_blank'>Balthazar3k.funpic.de</a> ]</div>\n";
 }
 ###### RAIDPLANER HEADER
-$ILCH_HEADER_ADDITIONS .= "<!--RAIDPLANER HEADER-->\n\t";
-$ILCH_HEADER_ADDITIONS .= "<link rel=\"stylesheet\" type=\"text/css\" href=\"http://fonts.googleapis.com/css?family=Ubuntu:regular,bold&subset=Latin&effect=shadow-multiple|3d\">\n";
-$ILCH_HEADER_ADDITIONS .= '<link rel="stylesheet" type="text/css" href="/includes/css/raidplaner.css" />';
-$ILCH_HEADER_ADDITIONS .= "<script src='include/raidplaner/libs/jquery/js/jquery-1.10.2.js' type='text/javascript'></script>\n\t";
-$ILCH_HEADER_ADDITIONS .= "<script src='include/raidplaner/libs/jquery/js/jquery-ui-1.10.4.custom.min.js'></script>\n\t";
-$ILCH_HEADER_ADDITIONS .= "<link rel='stylesheet' type='text/css' href='include/raidplaner/libs/jquery/css/ui-darkness/jquery-ui-1.10.4.custom.min.css' />\n\t";
-$ILCH_HEADER_ADDITIONS .= "<script src='include/includes/js/b3k.js' type='text/javascript'></script>\n\t";
-$ILCH_HEADER_ADDITIONS .= "<!--RAIDPLANER HEADER END-->\n";
+
+$raid->header()->set('font-awesome/css/font-awesome.min.css');
+
+$raid->header()->set('jquery/js/jquery-1.10.2.js');
+$raid->header()->set('jquery/js/jquery-ui-1.10.4.custom.min.js');
+
+$raid->header()->set('jquery/css/ui-darkness/jquery-ui-1.10.4.custom.min.css');
+$raid->header()->set('jquery/js/jquery-1.10.2.js');
+$raid->header()->set('jquery/js/jquery-ui-1.10.4.custom.min.js');
+
+$raid->header()->set('bootstrap/css/bootstrap.min.css');
+$raid->header()->set('bootstrap/js/bootstrap.min.js');
+
+$raid->header()->get('font-awesome', 'jquery');
 
 ### Sessions der mainchars Generieren.
 function CreatRaidSession(){
