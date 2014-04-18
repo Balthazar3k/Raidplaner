@@ -76,7 +76,6 @@ class Raidplaner {
         if(empty($this->smarty)){
             require_once('include/raidplaner/libs/smarty/Smarty.class.php');
             $this->smarty = new Smarty();
-            $this->smarty->caching = true;
             $this->smarty
                 ->addTemplateDir('include/raidplaner/templates/')
                 ->addPluginsDir('include/raidplaner/libs/smarty/plugins/')
