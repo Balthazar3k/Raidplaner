@@ -7,17 +7,18 @@ $cssPfad = 'include/admin/templates/';
 $cssFile = 'style.css';
 
 function groupinfos($cid,$id){
-	$sql = "SELECT
-				a.id AS cid,
-				a.user AS uid,
-				c.id AS grid, 
-				b.stammgrp AS grname,
-				d.uid AS guid, d.gid AS ggid, d.fid AS gfid 
-			FROM prefix_raid_chars AS a 
-				LEFT JOIN prefix_raid_stammgrp AS b ON b.id='".$id."'
-				LEFT JOIN prefix_groups AS c ON b.stammgrp=c.name
-				LEFT JOIN prefix_groupusers AS d ON c.id=d.gid AND a.user=d.uid
-			WHERE a.id=".$cid
+	$sql = "
+            SELECT
+                a.id AS cid,
+                a.user AS uid,
+                c.id AS grid, 
+                b.stammgrp AS grname,
+                d.uid AS guid, d.gid AS ggid, d.fid AS gfid 
+            FROM prefix_raid_chars AS a 
+                LEFT JOIN prefix_raid_stammgrp AS b ON b.id='".$id."'
+                LEFT JOIN prefix_groups AS c ON b.stammgrp=c.name
+                LEFT JOIN prefix_groupusers AS d ON c.id=d.gid AND a.user=d.uid
+            WHERE a.id=".$cid
 			;
 	$res = db_query( $sql );
 	return db_fetch_object( $res );

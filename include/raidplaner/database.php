@@ -63,12 +63,21 @@ class Database {
         return $this;
     }
     
+    public function query($sql){
+        return db_query($sql);
+    }
+    
+    public function queryRows($sql){
+        $res = db_query($sql);
+        return $this->rows($res);
+    }
+
+
     public function init(){
         $this->maskedValues();
         if(!empty($this->type)) {
             $method = $this->type;
             $sql = Construct::$method($this);
-            $this->reset();
             return db_query($sql);
         }
     }
@@ -83,6 +92,29 @@ class Database {
     
     public function row(){
        return db_fetch_assoc($this->init());
+    }
+    
+    public function rows($res = null){
+        $rows = array();
+        
+        if( $res == null ){
+            $res = $this->init();
+        }
+        
+        while( $row = db_fetch_assoc($res) ){
+            $rows[] = $row;
+        }
+        
+        return $rows;
+    }
+    
+    public function key2int(){
+        $rows = array();
+        $res = $this->init();
+        while( $row = mysql_fetch_assoc($res) ){
+            $rows[] = $row[array_keys($row)[0]];
+        }
+        return $rows;
     }
     
     public function cell($select = 0){

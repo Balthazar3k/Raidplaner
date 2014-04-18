@@ -18,6 +18,8 @@ class Raidplaner {
     protected $confirm;
     
     protected $times;
+    
+    protected $smarty;
 
 
     public function db(){
@@ -25,6 +27,7 @@ class Raidplaner {
             $this->db = new Database();
         }
         
+        $this->db->reset();
         return $this->db;
     }
     
@@ -66,6 +69,17 @@ class Raidplaner {
         return $this->times;
     }
     
+    public function smarty(){
+        if(empty($this->smarty)){
+            require_once('include/raidplaner/libs/smarty/Smarty.class.php');
+            $this->smarty = new Smarty();
+            $this->smarty->addTemplateDir('include/raidplaner/templates/');
+            $this->smarty->addPluginsDir('include/raidplaner/libs/smarty/plugins/');
+        }
+        
+        return $this->smarty;
+    }
+    
     /**
      * change the array to a HTML Atributes string
      * 
@@ -94,7 +108,9 @@ class Charakter {
     protected $raidplaner;
     
     protected $_id;
-    
+    protected $_uid;
+
+
     public function __construct($object) {
         $this->raidplaner = $object;
         return $this;
@@ -177,60 +193,99 @@ class Charakter {
     }
     
     public function get(){
-        $res = $this->raidplaner->db()
-                ->select('*')
-                ->from('raid_chars')
-                ->where(array('id' => $this->_id))
-                ->row();
+        $res = $this->raidplaner->db()->query('
+            SELECT 
+                a.id, a.name, a.level, a.s1, a.s2, a.warum, a.skillgruppe, a.regist,
+                b.id as class_id, b.klassen as class_name,  
+                d.id as rank_id, d.rang as rank_name, 
+                f.id as user_id, f.name AS user_name, 
+                e.id as race_id, e.rassen as race_name
+             FROM prefix_raid_chars AS a 
+                LEFT JOIN prefix_raid_klassen AS b ON a.klassen = b.id 
+                LEFT JOIN prefix_raid_rang AS d ON a.rang = d.id 
+                LEFT JOIN prefix_raid_rassen AS e ON a.rassen = e.id 
+                LEFT JOIN prefix_user AS f ON a.user = f.id 
+             WHERE a.id = \''.$this->_id.'\'
+        ');
         
-        if( !$res ){
+        $charakter = db_fetch_assoc($res);
+        
+        $this->_uid = $charakter['user_id'];
+        
+        $charakter['times'] = $this->raidplaner->db()
+                ->select('zid')
+                ->from('raid_zeit_charakter')
+                ->where(array('cid' => $this->_id))
+                ->key2int();
+        
+        if( !$charakter ){
             return array();
         }
         
-        return $res;
+        return $charakter;
     }
     
-    
-    
+    public function own(){
+        return $this->raidplaner->db()->queryRows('
+            SELECT 
+                a.id, a.name, a.level, a.s1, a.s2,
+                b.id as class_id, b.klassen as class_name,  
+                d.id as rank_id, d.rang as rank_name,  
+                e.id as race_id, e.rassen as race_name
+             FROM prefix_raid_chars AS a 
+                LEFT JOIN prefix_raid_klassen AS b ON a.klassen = b.id 
+                LEFT JOIN prefix_raid_rang AS d ON a.rang = d.id 
+                LEFT JOIN prefix_raid_rassen AS e ON a.rassen = e.id 
+             WHERE a.user = \''.$this->_uid.'\'
+        '); 
+    }
+
+
     public function form($title, $pfad, $charakter = array()){
         global $allgAr;
         
-        $tpl = new tpl ('raid/CHARS_EDIT_CREAT.htm');
+        $tpl = $this->raidplaner->smarty();
         
         $row['title'] = $title;
-        $row['pfad'] = $pfad;
+        $row['path'] = $pfad;
         
         $row['name'] = $charakter['name'];
         $row['level'] = $charakter['level'];
-        $row['rassen'] = drop_down_menu("prefix_raid_rassen" , "charakter[rassen]", $charakter['rassen'], "");
+
+        $row['rassen'] = $this->raidplaner->db()
+                ->select('*')
+                ->from('raid_rassen')
+                ->rows();
         
-        $res = $this->raidplaner->db()->select('*')->from('raid_klassen')->init();
-        while( $val = db_fetch_assoc($res)){ 
-            
-            $row['klassen'] .= $tpl->list_get('klassen', 
-                array(
-                    $val['id'], 
-                    $val['klassen'], 
-                    ($charakter['klassen'] == $val['id'] ? 'selected="selected"' : '')
-                )
-            );  
-        }
+        $row['klassen'] = $this->raidplaner->db()
+                ->select('*')
+                ->from('raid_klassen')
+                ->rows();
         
-        $row['spz'] = classSpecialization($charakter['klassen'], $charakter['s1'], $charakter['s2']);
+        
+        $row['spz'] = classSpecialization($charakter['class_id'], $charakter['s1'], $charakter['s2']);
         $row['skillgruppe'] = skillgruppe(1, $charakter['skillgruppe']);
         $row['warum']  = $charakter['warum'];
         $row['realm'] = $allgAr['realm'];
         
-        $res = $this->raidplaner->times()->get();
-        while( $result = db_fetch_assoc($res)){
-            $row['times'] .= $tpl->list_get('times', array(
-                $result['id'],
-                $result['start'],
-                $result['end']
-            ));
-        }
+        $row['times'] = $this->raidplaner->db()
+                ->select('*')
+                ->from('raid_zeit')
+                ->rows();
 
-        $tpl->set_ar_out( $row, 0 );
+        $tpl->assign('data', $row);
+        $tpl->assign('charakter', $charakter);
+        $tpl->display('charakter_form.tpl');
+    }
+    
+    public function details(){
+        $charakter = $this->get();
+        
+        $tpl = $this->raidplaner->smarty();
+        $tpl->assign('charakter', $charakter);
+        $tpl->assign('ownCharakters', $this->own());
+        $tpl->assign('times', $this->raidplaner->times()->get());
+        $tpl->display('charakter_details.tpl');
     }
 }
 
@@ -244,7 +299,7 @@ class Times{
     }
     
     public function get(){
-        return $this->raidplaner->db()->select('*')->from('raid_zeit')->init();
+        return $this->raidplaner->db()->select('*')->from('raid_zeit')->rows();
     }
     
     public function save($data, $id = false){
