@@ -189,8 +189,6 @@ class Charakter {
         $tpl->assign('ownCharakters', $this->own());
         $tpl->assign('times', $this->raidplaner->times()->get());
         $tpl->display('charakter_details.tpl');
-        
-        arrPrint($this->own());
     }
 }
 ?>
