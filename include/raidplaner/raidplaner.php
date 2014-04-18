@@ -38,10 +38,7 @@ class Raidplaner {
         
         if( $id ){
             $this->charakter->setId($id);
-        } else {
-            $this->charakter->setId(NULL);
         }
-        
         return $this->charakter;      
     }
     

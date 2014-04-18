@@ -8,7 +8,7 @@ if( isset( $_POST['kid'] ))
 }
 
 $title = $allgAr['title'].' :: Chars';
-$hmenu = 'Chars';
+$hmenu = 'Charaktere';
 $design = new design ( $title , $hmenu );
 $design->header();
 
@@ -82,7 +82,8 @@ switch($menu->get(1)){
 		wd('index.php?chars--show-'.$menu->get(2),'Raidtage wurde ge�ndert');
 	break;
     case "details":
-        $raid->charakter($menu->get(2))->details();
+        $raid->charakter($menu->get(2))->name();
+        $raid->charakter()->details();
     break;
 	
     default:
