@@ -100,7 +100,7 @@ switch( $menu->get(3) ){
 	break;
 	case "del":
 		db_query("DELETE FROM prefix_raid_dkp WHERE id='".$menu->get(4)."'");
-		wd("admin.php?dkp-".$menu->get(1)."-".$menu->get(2),'DKP Löschen war erfolgreich!');
+		wd("admin.php?dkp-".$menu->get(1)."-".$menu->get(2),'DKP Lï¿½schen war erfolgreich!');
 	break;
 	case "addchar":
 		$id = db_result(db_query("SELECT user FROM prefix_raid_chars WHERE id='".$_POST['chars']."'"), 0);
@@ -126,11 +126,11 @@ switch( $menu->get(3) ){
 	break;
 	case "oben":
 		db_query("UPDATE prefix_raid_raid SET statusmsg='1' WHERE id='".$menu->get(1)."'");
-		wd("admin.php?dkp-".$menu->get(1)."-".$menu->get(2),'Raid wurde Geöffnet!');
+		wd("admin.php?dkp-".$menu->get(1)."-".$menu->get(2),'Raid wurde Geï¿½ffnet!');
 	break;
 	case "ADel":
 		db_query("DELETE FROM prefix_raid_anmeldung WHERE id=".$menu->get(4) );
-		echo "<b>Löschen war erfolgreich!</b>";
+		echo "<b>Lï¿½schen war erfolgreich!</b>";
 	break;
 }
 
@@ -145,7 +145,7 @@ $normal = "&#8226; [ <a href='admin.php?dkp-".$menu->get(1)."-".$menu->get(2)."'
 
 $dkps['auswahl'] = ( $menu->get(3) == 'strafe' ? $normal : $strafe );
 $dkps['count_chars'] = db_result( db_query("SELECT COUNT(id) FROM prefix_raid_anmeldung WHERE rid='".$menu->get(1)."' AND stat='".$showStat."'"), 0);
-### User in Option Einfügen
+### User in Option Einfï¿½gen
 $res = db_query("SELECT  
 					a.char,
 					a.user,
@@ -196,13 +196,13 @@ while( $row = db_fetch_assoc( $res )){
 	$dkps['BOSSE'] .= "<option id='".$row['bossid']."' value='".$value."' style='background-color: red; color: #FFFFFF;'>".$row['bossname']."</option>\n";
 }
 
-### Links zum Raid Schließen und Öffnen
+### Links zum Raid Schlieï¿½en und ï¿½ffnen
 $dkps['PFAD'] = "admin.php?dkp-".$menu->get(1)."-".$menu->get(2)."-dkp";
 $stat_msg = db_result(db_query("SELECT statusmsg FROM prefix_raid_raid WHERE id='".$menu->get(1)."'"), 0);
 if( $stat_msg != 2 ){
 	$dkps['ENDE'] = "[ <a href='admin.php?dkp-".$menu->get(1)."-".$menu->get(2)."-beenden'>Raid beenden</a> ]";
 }else{
-	$dkps['ENDE'] = "[ <a href='admin.php?dkp-".$menu->get(1)."-".$menu->get(2)."-oben'>Raid öffnen</a> ]";
+	$dkps['ENDE'] = "[ <a href='admin.php?dkp-".$menu->get(1)."-".$menu->get(2)."-oben'>Raid ï¿½ffnen</a> ]";
 }
 $tpl->set_ar_out( $dkps, 0);
 ###VERLAUF
@@ -253,7 +253,7 @@ $sql = "SELECT
 			a.id as aid, a.user, a.stat as status, a.rid,  a.kom, a.timestamp,
 			b.id as cid, b.name, 
 			c.statusmsg,  c.color, 
-			b.s1, b.s2, b.s3, 
+			b.s1, b.s2, 
 			d.id as klassenid, d.klassen, 
 			(SELECT SUM(e.dkp) FROM prefix_raid_dkp AS e WHERE e.cid=b.id AND e.dkpgrp=a.grp) AS dkp  
 		FROM prefix_raid_anmeldung AS a 

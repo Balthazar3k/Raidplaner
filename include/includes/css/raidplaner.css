@@ -1,50 +1,15 @@
-@charset "utf-8";
-/* CSS Document */
-
-.ui-button-text{
-	color: #FFF;
-	font-family: Ubuntu!important;
-	font-size: 13px!important;
-	font-weight: bold;
-	text-shadow: -1px -1px 0 rgba( 0, 0, 0, 0.4);
-}
-
-.ui-button-text:hover{
-	color: #333;
-	text-shadow: 1px 1px 0 rgba( 255, 255, 255, 0.4);
-}
-
-select {
-	border: 1px solid #000000;
-}
-.menu {
-	display: none;
-	visibility: hidden;
-}
-
-.hoverme:hover + .menu {
-	display: block;
-	visibility: visible;
-	position: absolute;
-}
-		
-.menu:hover {
-	display: block;
-	visibility: visible;
-	position: absolute;
-}
-
-.aDIV01, .aDIV02, .aDIV03, .aDIV04{
-	font-family: Tahoma;
-	font-size: 12px;
-	height: 18px;
-	line-height: 18px;
-	border-bottom: 1px dotted black;
-	background-color: #FFFFFF;
-	padding-left: 2px;
-	padding-right: 2px;
-}
-
-i{
+i, th{
+    
     text-shadow: -1px -1px 0 #000;
+}
+
+th{
+    font-family: Calibri;
+    font-size: 15px;
+}
+
+select, input {
+    height: 25px;
+    padding-left: 5px;
+    border-radius: 5px;
 }

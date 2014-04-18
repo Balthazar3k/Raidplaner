@@ -390,7 +390,7 @@ switch($menu->get(1)){
 		$row['ende'] = date("H:i", $row['ende']);
 		### Text
 		$row['statusmsg'] = "<font color='".$row['color']."'><b>".$row['statusmsg']."</b></font>";
-		$row['txt'] = "<b>Mitteilung:</b> ".includer(bbcode($row['txt']));
+		$row['txt'] = "<b>Mitteilung:</b> ".bbcode($row['txt']);
 		$regeln = ( $row['regeln'] != "" ? '<br><a href="index.php?raidlist-'.$menu->get(1).'-'.$menu->get(2).'-regeln">Regeln</a>' : "" );
 		$row['regeln'] = ( $menu->get(3)=='regeln' ? "<br><b><a href='javascript:history.back()'>Gruppen Regel</a>: </b>".bbcode($row['regeln']) : $regeln);
 		### Datenausgabe
