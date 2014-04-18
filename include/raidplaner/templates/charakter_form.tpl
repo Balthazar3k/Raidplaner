@@ -1,7 +1,7 @@
 <form name="form" method="post" action="{$data.path}">
     <table width="100%" border="0" cellspacing="1" cellpadding="5" class="border">
         <tr> 
-            <td colspan="2" class="Chead">{$data.title}</td>
+            <th colspan="2" class="Chead"><i class="fa fa-user fa-lg"></i> {$data.title}</th>
         </tr>
         <tr class="Cnorm">
             <td nowrap="nowrap">Charakter Name:</td>
@@ -60,7 +60,7 @@
         </tr>
         
         <tr> 
-            <td colspan="2" class="Chead">Raidzeiten</td>
+            <th colspan="2" class="Chead"><i class="fa fa-clock-o fa-lg"></i> Raidzeiten</th>
         </tr>
         
         {foreach from=$data.times key=k item=val}
@@ -77,4 +77,4 @@
             <td><input type="submit" value="Abschicken"></td>
         </tr>
     </table>
-</form>{debug}
+</form>

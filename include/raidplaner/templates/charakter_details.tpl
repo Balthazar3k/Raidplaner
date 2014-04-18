@@ -1,8 +1,8 @@
-<h1 align="center">{$charakter.name} {$charakter.level}</h1>
+<h1 align="center">{$charakter.name} | {$charakter.level}</h1>
 
 <table width="100%" cellpadding="5" cellspacing="1" class="border">
     <tr class="Chead">
-        <th colspan="2">Charakter Details</th>
+        <th colspan="2"><i class="fa fa-user fa-lg"></i> Charakter Details</th>
     </tr>
     
     <tr class="Cnorm">
@@ -36,13 +36,13 @@
     </tr>
     
     <tr class="Chead">
-        <th colspan="2">Raid Zeiten</th>
+        <th colspan="2"><i class="fa fa-clock-o fa-lg"></i> Raid Zeiten</th>
     </tr>
     
     {foreach from=$times key=k item=val}
     <tr  class="Cdark">
         <td align="right" style="color: #FFF; {if in_array($val.id, $charakter.times)}background-color: darkgreen;{else}background-color: darkred;{/if}">
-            {if in_array($val.id, $charakter.times)}<i class="fa fa-thumbs-up fa-1x"></i>{else}<i class="fa fa-thumbs-down fa-1x"></i>{/if}
+            {if in_array($val.id, $charakter.times)}<i class="fa fa-thumbs-up"></i>{else}<i class="fa fa-thumbs-down fa-1x"></i>{/if}
         </td>
         
         <td>{$val.weekday} um {$val.start} bis {$val.end}</td>  
@@ -50,7 +50,7 @@
     {/foreach}
     
     <tr class="Chead">
-        <th colspan="2">Weitere Charaktere</th>
+        <th colspan="2"><i class="fa fa-group fa-lg"></i> Weitere Charaktere</th>
     </tr>
     
     {foreach from=$ownCharakters key=k item=val}
