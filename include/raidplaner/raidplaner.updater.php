@@ -3,6 +3,10 @@
 # 2013 by Balthazar3k (GNU)
 # auf basis von ilch.de
 
+/*
+ * a filename must be (version.sql)
+ */
+
 class updater
 {
 	var $updateSuccess = array();
@@ -42,6 +46,7 @@ class updater
 	private function checkVersion(){
 		$version = $this->getVersion();
 		$dir = scandir( $this->updatePath );
+                
 		sort( $dir );
 		
 		foreach( $dir as $k => $file_name ){
@@ -50,22 +55,23 @@ class updater
 			if( in_array( $file_name, $ignore ) ){
 				continue;
 			}
-				
+                        
 			## Überprüfe auf Updates
 			if( $version < escape($file_name, 'integer') ){
 				$this->updateFiles[escape($file_name, 'integer')] = $this->updatePath . $file_name;
 			}else{
-				if( !@unlink( $this->updatePath . $file_name ) ){
+				/*if( !@unlink( $this->updatePath . $file_name ) ){
 					$this->updateErrors[] = "Update Datei \"". $updateFile ."\" konnte <b>nicht</b> gel&ouml;scht werden!";
-				}
+				}*/
 			}
 		}
 	}
 	
 	public function nowUpdate(){
+                
 		# Überprüfe ob Updates vorhanden sind!
 		$this->checkVersion();
-		
+                
 		foreach( $this->updateFiles as $version => $updateFile ){
 			var_dump( $updateFile );
 			if( $sql = file_get_contents( $updateFile ) ){

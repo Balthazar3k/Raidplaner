@@ -1,0 +1,1 @@
+SELECT * FROM prefix_raid_chars

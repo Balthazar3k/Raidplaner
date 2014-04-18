@@ -3,7 +3,6 @@ class Header{
     
     protected $parse;
 
-
     protected $headers_html = array(
         'css' => '<link  type="text/css" href="include/raidplaner/libs/%s" rel="stylesheet" />',
         'js' => '<script type="text/javascript" src="include/raidplaner/libs/%s" ></script>'
