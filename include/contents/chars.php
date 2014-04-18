@@ -48,7 +48,7 @@ switch($menu->get(1)){
     case "form":
         button("Zur&uuml;ck","",8);
         echo '<br /><br />';
-        $raid->charakter()->form('Charakter Formular', 'index.php?chars-save-'.$menu->get(2), $raid->charakter($menu->get(2))->get()); 
+        $raid->charakter()->form('Charakter Formular', 'index.php?chars-save-'.$menu->get(2), $menu->get(2));
     break;
     
     case "save":
@@ -163,7 +163,6 @@ switch($menu->get(1)){
         $tpl->out(4);
     break;
 }
-
 copyright();
 $design->footer();
 ?>

@@ -641,11 +641,15 @@ if( !function_exists( "Alter" ) )
 	}
 	
 */
-function arrPrint( $arr ){
-	echo "<pre>";
-	print_r( $arr );
+function arrPrint(){
+	
+    foreach( func_get_args() as $val ){
+        echo "<pre>";
+	print_r( $val );
 	echo "</pre>";
+    }
 }
+
 if( !function_exists( "DateFormate" ) )
 {	function DateFormate( $key )
 	{	$formate = array(

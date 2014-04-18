@@ -10,7 +10,7 @@ class Database {
     protected $type;
     
     protected $_sql;
-    
+
     public $_select = array();
     public $_fields = array();
     public $_from;
@@ -63,23 +63,31 @@ class Database {
         return $this;
     }
     
-    public function query($sql){
-        return db_query($sql);
-    }
-    
-    public function queryRows($sql){
-        $res = db_query($sql);
-        return $this->rows($res);
-    }
-
-
     public function init(){
         $this->maskedValues();
         if(!empty($this->type)) {
             $method = $this->type;
             $sql = Construct::$method($this);
+            $this->_sql[] = $sql;
             return db_query($sql);
         }
+    }
+    
+    public function query($sql){
+        $this->_sql[] = $sql;
+        return db_query($sql);
+    }
+    
+    public function queryRows($sql){
+        $this->_sql[] = $sql;
+        $res = db_query($sql);
+        return $this->rows($res);
+    }
+
+    public function queryRow($sql){
+        $this->_sql[] = $sql;
+        $res = db_query($sql);
+        return $this->row($res);
     }
     
     public function getQuery(){
@@ -90,8 +98,14 @@ class Database {
         }
     }
     
-    public function row(){
-       return db_fetch_assoc($this->init());
+    public function row($res = null){
+        if( $res == null ){
+            $res = $this->init();
+        }
+        
+        $return = db_fetch_assoc($res);
+        $this->_sql[] = $return;
+        return $return;
     }
     
     public function rows($res = null){
@@ -105,6 +119,8 @@ class Database {
             $rows[] = $row;
         }
         
+        $this->_sql[] = $rows;
+        
         return $rows;
     }
     
@@ -114,12 +130,15 @@ class Database {
         while( $row = mysql_fetch_assoc($res) ){
             $rows[] = $row[array_keys($row)[0]];
         }
+        $this->_sql[] = $rows;
         return $rows;
     }
     
     public function cell($select = 0){
         $res = $this->row();
-        return $res[$this->_select[$select]];
+        $return = $res[$this->_select[$select]];
+        $this->_sql[] = $return;
+        return $return;
     }
     
     public function maskedValues(){
@@ -134,6 +153,10 @@ class Database {
         $this->_from = NULL;
         $this->_where = NULL;
         $this->_limit = NULL;
+    }
+    
+    public function getSql(){
+        arrPrint($this->_sql);
     }
     
 }

@@ -1,4 +1,3 @@
-{debug}
 <h1 align="center">{$charakter.name} {$charakter.level}</h1>
 
 <table width="100%" cellpadding="5" cellspacing="1" class="border">
@@ -19,7 +18,7 @@
     <tr class="Cnorm">
         <td align="right">Rasse:</td>
         <td>{$charakter.race_name}</td>
-    </tr class="Cnorm">
+    </tr>
     
     <tr class="Cnorm">
         <td align="right">1. Skillung:</td>
@@ -54,7 +53,7 @@
         <th colspan="2">Weitere Charaktere</th>
     </tr>
     
-    {foreach from=$ownCharakters item=val}
+    {foreach from=$ownCharakters key=k item=val}
         {if $val.id != $charakter.id}
         <tr class="Cnorm">
             <td align="right"><a href="index.php?chars-details-{$val.id}"><b>{$val.name}</b></a> {$val.level}</td>

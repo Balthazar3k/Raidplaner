@@ -3,89 +3,90 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Raidplaner Installation</title>
-	<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Ubuntu:regular,bold&subset=Latin&effect=shadow-multiple|3d">
-	<link rel='stylesheet' type='text/css' href='include/designs/ilchClan/style.css' />
-	<link rel='stylesheet' type='text/css' href='include/includes/css/raidplaner.css' />
-	<script src='include/includes/libs/jquery-ui-1.10.3.custom/js/jquery-1.9.1.js' type='text/javascript'></script>
-	<script src='include/includes/libs/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js'></script>
-	<link rel='stylesheet' type='text/css' href='include/includes/libs/jquery-ui-1.10.3.custom/css/start/jquery-ui-1.10.3.custom.min.css' />
-	<script src='include/includes/js/b3k.js' type='text/javascript'></script>
-	<script type='text/javascript'>
-		$(document).ready(function() {
-			$( "#dialog" ).dialog({
-				autoOpen: true,
-				resizable: false,
-				modal: true,
-				width: 500
-			});
-			
-			$("#dialog[step=1]").dialog({
-				buttons: {					
-					"System Testen": function() {
-						window.location.href = "?step="+ $(this).attr("step");
-					},
-					"Abbrechen": function(){
-						window.close();
-					}
-				}
-			});
-			
-			$("#dialog[step=2]").dialog({
-				buttons: {					
-					"Reload": function() {
-						window.location.href = "?step=1";
-					},
-					"Abbrechen": function(){
-						window.close();
-					}
-				}
-			});
-			
-			$("#dialog[step=3]").dialog({
-				buttons: {					
-					"Installieren": function() {
-						window.location.href = "?step="+ $(this).attr("step");
-					},
-					"Abbrechen": function(){
-						window.close();
-					}
-				}
-			});
-			
-			$("#dialog[step=4]").dialog({
-				buttons: {					
-					"Fertig": function(){
-						window.location.href = "index.php";
-					}
-				}
-			});
-			
-			$("#dialog[step=5]").dialog({
-				buttons: {					
-					"Dialog schliessen um Fehlermeldung zu sehen!": function(){
-						$(this).dialog('close');
-					},
-					"zur Seite": function(){
-						window.location.href = "index.php";
-					}
-				}
-			});
-		});
-	</script>
-	<style type="text/css">
-		body { 
-			color: #FFF;
-			text-align: left!important;
-		}
-		
-		head, body, div {
-			font-family: Ubuntu!important;
-			font-size: 14px!important;
-		}
-		
-		
-		
-	</style>
+    <!--RAIDPLANER HEADER-->
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Ubuntu:regular,bold&subset=Latin&effect=shadow-multiple|3d">
+    <link rel='stylesheet' type='text/css' href='include/includes/css/raidplaner.css' />
+    <script src='include/raidplaner/libs/jquery/js/jquery-1.10.2.js' type='text/javascript'></script>
+    <script src='include/raidplaner/libs/jquery/js/jquery-ui-1.10.4.custom.min.js'></script>
+    <link rel='stylesheet' type='text/css' href='include/raidplaner/libs/jquery/css/ui-darkness/jquery-ui-1.10.4.custom.min.css' />
+    <script src='include/includes/js/b3k.js' type='text/javascript'></script>
+    <!--RAIDPLANER HEADER END-->
+    <script type='text/javascript'>
+            $(document).ready(function() {
+                    $( "#dialog" ).dialog({
+                            autoOpen: true,
+                            resizable: false,
+                            modal: true,
+                            width: 500
+                    });
+
+                    $("#dialog[step=1]").dialog({
+                            buttons: {					
+                                    "System Testen": function() {
+                                            window.location.href = "?step="+ $(this).attr("step");
+                                    },
+                                    "Abbrechen": function(){
+                                            window.close();
+                                    }
+                            }
+                    });
+
+                    $("#dialog[step=2]").dialog({
+                            buttons: {					
+                                    "Reload": function() {
+                                            window.location.href = "?step=1";
+                                    },
+                                    "Abbrechen": function(){
+                                            window.close();
+                                    }
+                            }
+                    });
+
+                    $("#dialog[step=3]").dialog({
+                            buttons: {					
+                                    "Installieren": function() {
+                                            window.location.href = "?step="+ $(this).attr("step");
+                                    },
+                                    "Abbrechen": function(){
+                                            window.close();
+                                    }
+                            }
+                    });
+
+                    $("#dialog[step=4]").dialog({
+                            buttons: {					
+                                    "Fertig": function(){
+                                            window.location.href = "index.php";
+                                    }
+                            }
+                    });
+
+                    $("#dialog[step=5]").dialog({
+                            buttons: {					
+                                    "Dialog schliessen um Fehlermeldung zu sehen!": function(){
+                                            $(this).dialog('close');
+                                    },
+                                    "zur Seite": function(){
+                                            window.location.href = "index.php";
+                                    }
+                            }
+                    });
+            });
+    </script>
+    <style type="text/css">
+            body { 
+                    color: #FFF;
+                    text-align: left!important;
+            }
+
+            head, body, div {
+                    font-family: Ubuntu!important;
+                    font-size: 14px!important;
+            }
+
+
+
+    </style>
 </head>
 <body>
 <?php
@@ -105,16 +106,17 @@ $install_file = "RAIDPLANER.sql";
 
 switch( $_GET['step'] ){
 	default:
-		dialog( 1, $title, "Bevor Sie den Raidplaner Installieren k&ouml;nnen m&uuml;ssen einige Einstellungen getestet werden.");
+            dialog( 1, $title, "Bevor Sie den Raidplaner Installieren k&ouml;nnen m&uuml;ssen einige Einstellungen getestet werden.");
 	break;
 	case 1:
 		# Ordner die Schreibrechte Brauchen
 		$chmod = array(
-			"include/raidplaner/",
-			"include/raidplaner/update/",
-			"include/raidplaner/images/bosse/",
-			"include/raidplaner/images/dungeon/",
-			"include/raidplaner/images/raidgruppen/"
+                    "include/raidplaner/",
+                    "include/raidplaner/cache/",
+                    "include/raidplaner/update/",
+                    "include/raidplaner/images/bosse/",
+                    "include/raidplaner/images/dungeon/",
+                    "include/raidplaner/images/raidgruppen/"
 		);
 		
 		$res = $error = array();

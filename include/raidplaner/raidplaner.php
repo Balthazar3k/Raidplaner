@@ -5,8 +5,6 @@
  * Modue: Raidplaner 1.1
  */
 
-require_once('include/raidplaner/database.php');
-
 class Raidplaner {
     
     protected $db;
@@ -24,6 +22,7 @@ class Raidplaner {
 
     public function db(){
         if(empty($this->db)){
+            include('include/raidplaner/database.php');
             $this->db = new Database();
         }
         
@@ -33,6 +32,7 @@ class Raidplaner {
     
     public function charakter($id = false){
         if(empty($this->charakter)){
+            include('include/raidplaner/libs/class/charakter.php');
             $this->charakter = new Charakter($this);
         } 
         
@@ -47,6 +47,7 @@ class Raidplaner {
     
     public function permission(){
         if(empty($this->permission)){
+            include('include/raidplaner/libs/class/permission.php');
             $this->permission = new Permission($this);
         }
         
@@ -55,6 +56,7 @@ class Raidplaner {
     
     public function confirm(){
         if(empty($this->confirm)){
+            include('include/raidplaner/libs/class/confirm.php');
             $this->confirm = new Confirm($this);
         }
         
@@ -63,6 +65,7 @@ class Raidplaner {
     
     public function times(){
         if(empty($this->times)){
+            include('include/raidplaner/libs/class/times.php');
             $this->times = new Times($this);
         }
         
@@ -73,8 +76,12 @@ class Raidplaner {
         if(empty($this->smarty)){
             require_once('include/raidplaner/libs/smarty/Smarty.class.php');
             $this->smarty = new Smarty();
-            $this->smarty->addTemplateDir('include/raidplaner/templates/');
-            $this->smarty->addPluginsDir('include/raidplaner/libs/smarty/plugins/');
+            $this->smarty->caching = true;
+            $this->smarty
+                ->addTemplateDir('include/raidplaner/templates/')
+                ->addPluginsDir('include/raidplaner/libs/smarty/plugins/')
+                ->setCompileDir('include/raidplaner/cache/templates_c')
+                ->setCacheDir('.include/raidplaner/cache');
         }
         
         return $this->smarty;
@@ -101,320 +108,5 @@ class Raidplaner {
             return implode(' ', $attr);
         }
     }
-}
-
-class Charakter {
-    
-    protected $raidplaner;
-    
-    protected $_id;
-    protected $_uid;
-
-
-    public function __construct($object) {
-        $this->raidplaner = $object;
-        return $this;
-    }
-    
-    public function setId($id){
-        $this->_id = (int) $id;
-    }
-    
-    public function save($data) {
-
-        $status = array();
-        
-        //arrPrint($data); exit();
-        
-        $ID = $this->raidplaner->db()->select('id')
-                ->from('raid_chars')
-                ->where(array('user' => $_SESSION['authid'], 'id' => $this->_id))
-                ->cell();
-        
-        if( $ID ){
-            $status[] = (bool) $this->raidplaner->db()->update('raid_chars')->fields($data['charakter'])->where(array('id' => $this->_id ))->init();
-            $status[] = (bool) $this->raidplaner->db()->delete('raid_zeit_charakter')->where(array('cid' => $ID ))->init();
-            foreach( array_keys( $data['times']) as $timeID ){
-                $status[] = (bool) $this->raidplaner->db()->insert('raid_zeit_charakter')->fields(array('zid' => $timeID, 'cid' => $ID))->init();
-            }
-        } else {
-            $status[] = (bool) $this->raidplaner->db()->insert('raid_chars')->fields($data['charakter'])->init();
-            $charakter_id = $this->raidplaner->db()->select('id')->from('raid_chars')->where(array('name' => $data['charakter']['name']))->cell();
-            foreach( array_keys( $data['times']) as $timeID ){
-               $status[] = (bool) $this->raidplaner->db()->insert('raid_zeit_charakter')->fields(array('zid' => $timeID, 'cid' => $charakter_id))->init();
-            }
-        }
-        
-
-        if(in_array( false, $status)){
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    public function delete($cid) {
-
-        $status = array();
-        $status[] = (bool) $this->raidplaner->db()->delete('raid_chars')->where(array('id' => $cid))->init();
-        $status[] = (bool) $this->raidplaner->db()->delete('raid_dkp')->where(array('cid' => $cid))->init();
-        $status[] = (bool) $this->raidplaner->db()->delete('raid_kalender')->where(array('cid' => $cid))->init();
-        $status[] = (bool) $this->raidplaner->db()->delete('raid_anmeldung')->where(array('char' => $cid))->init();
-
-        if(in_array( false, $status)){
-            return false;
-        } else {
-            return true;
-        }
-    }
-    
-    public function owner($id){
-        return $this->raidplaner->db()
-                ->select('id')
-                ->from('raid_chars')
-                ->where(array('id' => $id, 'user' => $_SESSION['authid']))
-                ->cell();
-    }
-    
-    public function name(){
-        return $this->raidplaner->db()
-                ->select('name')
-                ->from('raid_chars')
-                ->where(array('id' => $this->_id))
-                ->cell();
-    }
-    
-    public function rank(){
-        return $this->raidplaner->db()
-                ->select('rank')
-                ->from('raid_chars')
-                ->where(array('id' => $this->_id))
-                ->cell();
-    }
-    
-    public function get(){
-        $res = $this->raidplaner->db()->query('
-            SELECT 
-                a.id, a.name, a.level, a.s1, a.s2, a.warum, a.skillgruppe, a.regist,
-                b.id as class_id, b.klassen as class_name,  
-                d.id as rank_id, d.rang as rank_name, 
-                f.id as user_id, f.name AS user_name, 
-                e.id as race_id, e.rassen as race_name
-             FROM prefix_raid_chars AS a 
-                LEFT JOIN prefix_raid_klassen AS b ON a.klassen = b.id 
-                LEFT JOIN prefix_raid_rang AS d ON a.rang = d.id 
-                LEFT JOIN prefix_raid_rassen AS e ON a.rassen = e.id 
-                LEFT JOIN prefix_user AS f ON a.user = f.id 
-             WHERE a.id = \''.$this->_id.'\'
-        ');
-        
-        $charakter = db_fetch_assoc($res);
-        
-        $this->_uid = $charakter['user_id'];
-        
-        $charakter['times'] = $this->raidplaner->db()
-                ->select('zid')
-                ->from('raid_zeit_charakter')
-                ->where(array('cid' => $this->_id))
-                ->key2int();
-        
-        if( !$charakter ){
-            return array();
-        }
-        
-        return $charakter;
-    }
-    
-    public function own(){
-        return $this->raidplaner->db()->queryRows('
-            SELECT 
-                a.id, a.name, a.level, a.s1, a.s2,
-                b.id as class_id, b.klassen as class_name,  
-                d.id as rank_id, d.rang as rank_name,  
-                e.id as race_id, e.rassen as race_name
-             FROM prefix_raid_chars AS a 
-                LEFT JOIN prefix_raid_klassen AS b ON a.klassen = b.id 
-                LEFT JOIN prefix_raid_rang AS d ON a.rang = d.id 
-                LEFT JOIN prefix_raid_rassen AS e ON a.rassen = e.id 
-             WHERE a.user = \''.$this->_uid.'\'
-        '); 
-    }
-
-
-    public function form($title, $pfad, $charakter = array()){
-        global $allgAr;
-        
-        $tpl = $this->raidplaner->smarty();
-        
-        $row['title'] = $title;
-        $row['path'] = $pfad;
-        
-        $row['name'] = $charakter['name'];
-        $row['level'] = $charakter['level'];
-
-        $row['rassen'] = $this->raidplaner->db()
-                ->select('*')
-                ->from('raid_rassen')
-                ->rows();
-        
-        $row['klassen'] = $this->raidplaner->db()
-                ->select('*')
-                ->from('raid_klassen')
-                ->rows();
-        
-        
-        $row['spz'] = classSpecialization($charakter['class_id'], $charakter['s1'], $charakter['s2']);
-        $row['skillgruppe'] = skillgruppe(1, $charakter['skillgruppe']);
-        $row['warum']  = $charakter['warum'];
-        $row['realm'] = $allgAr['realm'];
-        
-        $row['times'] = $this->raidplaner->db()
-                ->select('*')
-                ->from('raid_zeit')
-                ->rows();
-
-        $tpl->assign('data', $row);
-        $tpl->assign('charakter', $charakter);
-        $tpl->display('charakter_form.tpl');
-    }
-    
-    public function details(){
-        $charakter = $this->get();
-        
-        $tpl = $this->raidplaner->smarty();
-        $tpl->assign('charakter', $charakter);
-        $tpl->assign('ownCharakters', $this->own());
-        $tpl->assign('times', $this->raidplaner->times()->get());
-        $tpl->display('charakter_details.tpl');
-    }
-}
-
-class Times{
-    
-    protected $raidplaner;
-    
-    public function __construct($object) {
-        $this->raidplaner = $object;
-        return $this;
-    }
-    
-    public function get(){
-        return $this->raidplaner->db()->select('*')->from('raid_zeit')->rows();
-    }
-    
-    public function save($data, $id = false){
-        if( $id ){
-            $this->raidplaner->db()->update('raid_zeit')->fields($data)->where(array('id' => $id))->init();
-        } else {
-            $this->raidplaner->db()->insert('raid_zeit')->fields($data)->init();
-        }
-    }
-    
-    public function delete($id){
-        return $this->raidplaner->db()->delete('raid_zeit')->where(array('id' => $id))->init();
-    }
-}
-
-class Confirm {
-    
-    protected $raidplaner;
-    
-    protected $_message;    
-    protected $_true;
-    protected $_false;
-    protected $_button;
-    
-    public function __construct($object) {
-        $this->raidplaner = $object;
-        return $this;
-    }
-    
-    public function message($message){
-        $this->_message = (string) $message;
-        return $this;
-    }
-    
-    public function onTrue($url) {
-        $this->_true = (string) $url;
-        return $this;
-    }
-    
-    public function onFalse($url){
-        $this->_false = (string) $url;
-        return $this;
-    }
-    
-    public function html($title = '') {
-
-        $attr = array(
-            'data-true' => $this->_true,
-            'data-false' => $this->_false,
-        );
-        
-        return '
-            <div id="dialog-confirm" title="'.$title.'" '. $this->raidplaner->setAttr($attr).'>
-                '.$this->_message.'
-            </div>
-        ';
-    }
-}
-
-class Permission {
-    
-    protected $raidplaner;
-    
-    protected $create;
-    protected $update;
-    protected $delete;
-    
-    public function __construct($object) {
-        $this->raidplaner = $object;
-        
-        /* Permissions for Creating */
-        $this->create = array(
-            'times' => array(
-                'permission' => ( $_SESSION['charrang'] >= 13 || is_admin() ), 
-                'message' => 'Sie haben nicht die n&ouml;tigen Rechte um die Zeiten zu bearbeiten!'
-            )
-        );
-        
-        /* Permissions for Updateing */
-        $this->update = array(
-            'charakter' => array(
-                'permission' => ( $_SESSION['charrang'] >= 13 || is_admin() ), 
-                'message' => 'Sie haben nicht die n&ouml;tigen Rechte!'
-            )
-        );
-        
-        /* Permissions for Deleting */
-        $this->delete = array(
-            'charakter' => array(
-                'permission' => ( $_SESSION['charrang'] >= 13 || is_admin() ), 
-                'message' => 'Sie haben nicht die n&ouml;tigen Rechte!'
-            ),
-            'times' => array(
-                'permission' => ( $_SESSION['charrang'] >= 13 || is_admin() ), 
-                'message' => 'Sie haben nicht die n&ouml;tigen Rechte um die Zeiten zu L&ouml;schen!'
-            )
-        );
-        
-        return $this;
-    }
-    
-    public function create($key, &$message = NULL) {
-        $message = $this->create[$key]['message'];
-        return $this->create[$key]['permission'];
-    }
-    
-    public function update($key, &$message = NULL) {
-        $message = $this->update[$key]['message'];
-        return $this->update[$key]['permission'];
-    }
-
-    public function delete($key, &$message = NULL) {
-        $message = $this->delete[$key]['message'];
-        return $this->delete[$key]['permission'];
-    }
-    
 }
 ?>

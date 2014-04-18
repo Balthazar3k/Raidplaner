@@ -65,7 +65,7 @@
         
         {foreach from=$data.times key=k item=val}
         <tr class="Cnorm">
-            <td align="right"><input name="times[{$val.id}]" type="checkbox" {if in_array($val.id, $charakter.times)}checked="checked"{/if}></td>
+            <td align="right"><input name="times[{$val.id}]" type="checkbox" {if isset($charakter.times) && in_array($val.id, $charakter.times)}checked="checked"{/if}></td>
             <td>von {$val.start} bis {$val.end} kann ich Raiden</td>
         </tr>
         {/foreach}
@@ -77,4 +77,4 @@
             <td><input type="submit" value="Abschicken"></td>
         </tr>
     </table>
-</form>
+</form>{debug}
