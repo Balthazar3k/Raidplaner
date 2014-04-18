@@ -1,16 +1,18 @@
 <?php
 class Header{
     
+    protected $i = 0;
     protected $parse;
 
     protected $headers_html = array(
-        'css' => '<link  type="text/css" href="include/raidplaner/libs/%s" rel="stylesheet" />',
-        'js' => '<script type="text/javascript" src="include/raidplaner/libs/%s" ></script>'
+        'css' => '<link id="%s" type="text/css" href="include/raidplaner/libs/%s" rel="stylesheet" />',
+        'js' => '<script id="%s" type="text/javascript" src="include/raidplaner/libs/%s" ></script>'
     );
     
     public function set($string){
+        $this->i++;
         preg_match('/\.(css|js)/', $string, $res);
-        $this->parse[strstr($string,'/', true)][] = sprintf($this->headers_html[$res[1]], $string);
+        $this->parse[strstr($string,'/', true)][] = sprintf($this->headers_html[$res[1]], $this->i, $string);
     }
     
     public function get(){

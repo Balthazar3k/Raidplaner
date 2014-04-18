@@ -10,7 +10,7 @@ CreatRaidSession();
 $raid = new Raidplaner();
 
 function copyright(){
- echo "<br><div align='center' class='smallfont'>[ Raidplaner &amp; DKP System v1.1 &copy; by <a href='http://Balthazar3k.funpic.de' target='_blank'>Balthazar3k.funpic.de</a> ]</div>\n";
+ echo "<br><div align='center' class='smallfont'>[ Raidplaner &amp; DKP System v1.2 &copy; by <a href='http://Balthazar3k.funpic.de' target='_blank'>Balthazar3k.funpic.de</a> ]</div>\n";
 }
 ###### RAIDPLANER HEADER
 
@@ -26,7 +26,10 @@ $raid->header()->set('jquery/js/jquery-ui-1.10.4.custom.min.js');
 $raid->header()->set('bootstrap/css/bootstrap.min.css');
 $raid->header()->set('bootstrap/js/bootstrap.min.js');
 
-$raid->header()->get('font-awesome', 'jquery');
+$raid->header()->set('../../includes/css/raidplaner.css');
+$raid->header()->set('../../includes/js/b3k.js');
+
+$raid->header()->get('font-awesome', 'jquery', '..');
 
 ### Sessions der mainchars Generieren.
 function CreatRaidSession(){

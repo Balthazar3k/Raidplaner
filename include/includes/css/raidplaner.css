@@ -44,3 +44,7 @@ select {
 	padding-left: 2px;
 	padding-right: 2px;
 }
+
+i{
+    text-shadow: -1px -1px 0 #000;
+}
