@@ -47,7 +47,7 @@ switch($menu->get(1)){
 	
     case "form":
         button("Zur&uuml;ck","",8);
-        $raid->charakter()->form('Charakter Formular', 'index.php?chars-save-'.$menu->get(2), $raid->charakter($menu->get(2))->get()); 
+        $raid->charakter()->form('Charakter Formular', 'index.php?chars-save-'.$menu->get(2), $menu->get(2));
     break;
     
     case "save":

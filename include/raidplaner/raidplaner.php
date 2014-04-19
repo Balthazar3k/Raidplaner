@@ -24,7 +24,7 @@ class Raidplaner {
 
     public function db(){
         if(empty($this->db)){
-            include('include/raidplaner/database.php');
+            include('include/raidplaner/libs/class/database.php');
             $this->db = new Database();
         }
         

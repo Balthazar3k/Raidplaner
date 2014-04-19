@@ -8,14 +8,59 @@
 class Database {
     
     protected $type;
+    protected $duplicate = false;
     
     protected $_sql;
 
-    public $_select = array();
-    public $_fields = array();
+    public $_select;
+    public $_fields;
     public $_from;
     public $_where;
     public $_limit;
+    
+    public function status(){
+        $status = array(
+            'Type' => $this->type,
+            'DuplicateSwitch' => $this->duplicate,
+            'Select' => $this->_select,
+            'From' => $this->_from,
+            'Fields' => $this->_fields,
+            'Where' => $this->_where
+        );
+        
+        arrPrint($status);
+    }
+    
+    public function singel(){
+        $this->duplicate = true;        
+        return $this;
+    }
+    
+    private function setDuplicate($sql){
+        if( $this->duplicate ){
+            $hash = md5($sql);
+            $_SESSION['db'][$hash] = 1;
+        }
+    }
+    
+    private function isDuplicate($sql){
+        if( $this->duplicate ){
+            if( isset($_SESSION['db'][md5($sql)]) ){
+                return false;
+            } else {
+                return true;
+            }
+        } else {
+            return true;
+        }
+    }
+    
+    private function db_query($sql){
+        if( $this->isDuplicate($sql) ) {
+           $this->setDuplicate($sql);
+           return db_query($sql);
+        }
+    }
     
     public function from($from) 
     {
@@ -69,24 +114,24 @@ class Database {
             $method = $this->type;
             $sql = Construct::$method($this);
             $this->_sql[] = $sql;
-            return db_query($sql);
+            return $this->db_query($sql);
         }
     }
     
     public function query($sql){
         $this->_sql[] = $sql;
-        return db_query($sql);
+        return $this->db_query($sql);
     }
     
     public function queryRows($sql){
         $this->_sql[] = $sql;
-        $res = db_query($sql);
+        $res = $this->db_query($sql);
         return $this->rows($res);
     }
 
     public function queryRow($sql){
         $this->_sql[] = $sql;
-        $res = db_query($sql);
+        $res = $this->db_query($sql);
         return $this->row($res);
     }
     
@@ -148,6 +193,7 @@ class Database {
     }
     
     public function reset(){
+        $this->duplicate = false;
         $this->_select = array();
         $this->_fields = array();
         $this->_from = NULL;

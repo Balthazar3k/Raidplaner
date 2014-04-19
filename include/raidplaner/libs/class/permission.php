@@ -35,6 +35,10 @@ class Permission {
             'times' => array(
                 'permission' => ( $_SESSION['charrang'] >= 13 || is_admin() ), 
                 'message' => 'Sie haben nicht die n&ouml;tigen Rechte um die Zeiten zu L&ouml;schen!'
+            ),
+            'fast' => array(
+                'permission' => ( is_admin() ), 
+                'message' => 'Sie haben nicht die n&ouml;tigen Rechte um die Zeiten zu L&ouml;schen!'
             )
         );
         

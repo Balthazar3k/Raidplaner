@@ -33,7 +33,7 @@ class Charakter {
                 $status[] = (bool) $this->raidplaner->db()->insert('raid_zeit_charakter')->fields(array('zid' => $timeID, 'cid' => $ID))->init();
             }
         } else {
-            $status[] = (bool) $this->raidplaner->db()->insert('raid_chars')->fields($data['charakter'])->init();
+            $status[] = (bool) $this->raidplaner->db(1)->insert('raid_chars')->fields($data['charakter'])->init();
             $charakter_id = $this->raidplaner->db()->select('id')->from('raid_chars')->where(array('name' => $data['charakter']['name']))->cell();
             foreach( array_keys( $data['times']) as $timeID ){
                $status[] = (bool) $this->raidplaner->db()->insert('raid_zeit_charakter')->fields(array('zid' => $timeID, 'cid' => $charakter_id))->init();
@@ -93,7 +93,7 @@ class Charakter {
             trigger_error('need Charakter id');
         }
         
-        $charakter = $this->raidplaner->db()->queryRow('
+        $charakter = $this->raidplaner->db(0)->queryRow('
             SELECT 
                 a.id, a.name, a.level, a.s1, a.s2, a.warum, a.skillgruppe, a.regist,
                 b.id as class_id, b.klassen as class_name,  
