@@ -1,5 +1,4 @@
-<?php #print_r($_SESSION); 
-#print_r($_POST);
+<?php 
 defined ('main') or die ( 'no direct access' );
 defined ('admin') or die ( 'only admin access' );
 
@@ -19,52 +18,40 @@ $imgPath = "include/raidplaner/images/dungeon/";
 $tpl = new tpl ( 'raid/raidinzen.htm',1 );
 
 if( $_POST['img'] == 'true' ){
-	if( $_FILES['imgUp']['size'] > 0 ){
-		$imgName = ascape(str_replace(" ", "", $_FILES['imgUp']['name']));
-		$stat = @move_uploaded_file($_FILES['imgUp']['tmp_name'], $imgPath.$imgName);
-	}else{
-		$stat = FALSE;
-	}
+    if( $_FILES['imgUp']['size'] > 0 ){
+        $_POST['img'] = ascape(str_replace(" ", "", $_FILES['imgUp']['name']));
+        $stat = @move_uploaded_file($_FILES['imgUp']['tmp_name'], $imgPath.$_POST['img']);
+    }else{
+        $stat = FALSE;
+    }
 }else{
-	$stat = TRUE;
-	$imgName = $_POST['img'];
+    $stat = TRUE;
 }
 
-switch($menu->get(1)){ # `id`, `name`, `level`, `grpsize`, `img`, `info`, `maxbosse`
-	case "new":				
-		if( $stat and db_query("INSERT INTO prefix_raid_inzen (name, level, grpsize, img, info, maxbosse) 
-		VALUES('".
-		ascape($_POST['name'])."','".
-		ascape($_POST['level'])."','".
-		ascape($_POST['grpsize'])."','".
-		$imgName."','".
-		ascape($_POST['info'])."','".
-		ascape($_POST['maxbosse'])."'); ") ){
-			wd('admin.php?raidinzen','Neuer eintrag war erfolgreich!');
-		}else{
-			wd('admin.php?raidinzen','Neuer eintrag war <b>nicht</b> erfolgreich!', 10);
-		}
-	break;
-	case "edit":
-		
-		if( $stat and db_query("UPDATE prefix_raid_inzen SET
-		 name='".ascape($_POST['name'])."', 
-		 level='".ascape($_POST['level'])."', 
-		 grpsize='".ascape($_POST['grpsize'])."',
-		 img='".$imgName."', 
-		 info='".ascape($_POST['info'])."',
-		 maxbosse='".ascape($_POST['maxbosse'])."' WHERE id=".$_POST['id'] )){
-			wd('admin.php?raidinzen','Update war erfolgreich!');
-		}else{
-			wd('admin.php?raidinzen','Update war <b>nicht</b> erfolgreich!', 10);
-		}
-	break;
+switch($menu->get(1)){
+    
+    case "new":
+        unset($_POST['id']);
+        if(  $raid->db()->insert('raid_inzen')->fields($_POST)->init() ){
+            wd('admin.php?raidinzen','Neuer eintrag war erfolgreich!');
+        }else{
+            wd('admin.php?raidinzen','Neuer eintrag war <b>nicht</b> erfolgreich!', 10);
+        }
+    break;
+    
+    case "edit":
+        if( $stat and $raid->db()->update('raid_inzen')->where(array('id' => getPost('id')))->fields($_POST)->init() ){
+            wd('admin.php?raidinzen','Update war erfolgreich!');
+        }else{
+            wd('admin.php?raidinzen','Update war <b>nicht</b> erfolgreich!', 10);
+        }
+    break;
 	case "del":
 		if( $menu->get(3) == "TRUE" ){
 			if(	db_query("DELETE FROM prefix_raid_inzen WHERE id = '".$menu->get(2)."' LIMIT 1") ){
-				wd('admin.php?raidinzen','Löschen war erfolgreich!');
+				wd('admin.php?raidinzen','Lï¿½schen war erfolgreich!');
 			}else{
-				wd('admin.php?raidinzen','Löschen war <b>nicht</b> erfolgreich!');
+				wd('admin.php?raidinzen','Lï¿½schen war <b>nicht</b> erfolgreich!');
 			}
 		}else{
 			$delLink = "admin.php?raidinzen-del-".$menu->get(2)."-TRUE";
@@ -75,45 +62,44 @@ switch($menu->get(1)){ # `id`, `name`, `level`, `grpsize`, `img`, `info`, `maxbo
 	break;
 	case "delImg":
 		if( @unlink( $imgPath.$_GET['img'] ) ){
-			wd('admin.php?raidinzen','Bild Löschen war erfolgreich!');
+			wd('admin.php?raidinzen','Bild Lï¿½schen war erfolgreich!');
 		}else{
-			wd('admin.php?raidinzen','Bild Löschen war <b>nicht</b> erfolgreich!');
+			wd('admin.php?raidinzen','Bild Lï¿½schen war <b>nicht</b> erfolgreich!');
 		}
 	break;
 	default:
 		if( $menu->get(1) == '' ){
-			$out['pfad'] = "admin.php?raidinzen-new";
-			$out['name'] = $out['maxbosse'] = "";
-			$out['level'] = drop_down_menu("prefix_raid_level" , "level", "", "");
-			$out['info'] = drop_down_menu("prefix_raid_info" , "info", "", "");
-			$out['grpsize'] = drop_down_menu("prefix_raid_grpsize" , "grpsize", "", "");
-			$out['img'] = img_popup( $imgPath, 'img');
-			$out['regeln'] = "";
-			
+                    $out['pfad'] = "admin.php?raidinzen-new";
+                    $out['name'] = $out['maxbosse'] = $out['small'] = "";
+                    $out['level'] = drop_down_menu("prefix_raid_level" , "level", "", "");
+                    $out['info'] = drop_down_menu("prefix_raid_info" , "info", "", "");
+                    $out['grpsize'] = drop_down_menu("prefix_raid_grpsize" , "grpsize", "", "");
+                    $out['img'] = img_popup( $imgPath, 'img');
+                    $out['regeln'] = "";			
 		}else{
-			$res = db_query("SELECT * FROM prefix_raid_inzen WHERE id=".$menu->get(1)." LIMIT 1" );
-			$out = db_fetch_object( $res );
-			$out->pfad = "admin.php?raidinzen-edit";
-			$out->level = drop_down_menu("prefix_raid_level" , "level", $out->level, "");
-			$out->info = drop_down_menu("prefix_raid_info" , "info", $out->info, "");
-			$out->grpsize = drop_down_menu("prefix_raid_grpsize" , "grpsize", $out->grpsize, "");
-			$out->img = img_popup( $imgPath, 'img', $out->img);
+                    $res = db_query("SELECT * FROM prefix_raid_inzen WHERE id=".$menu->get(1)." LIMIT 1" );
+                    $out = db_fetch_object( $res );
+                    $out->pfad = "admin.php?raidinzen-edit";
+                    $out->level = drop_down_menu("prefix_raid_level" , "level", $out->level, "");
+                    $out->info = drop_down_menu("prefix_raid_info" , "info", $out->info, "");
+                    $out->grpsize = drop_down_menu("prefix_raid_grpsize" , "grpsize", $out->grpsize, "");
+                    $out->img = img_popup( $imgPath, 'img', $out->img);
 		}
 		
 		$tpl->set_ar_out( $out, 0 );
 		
-		# `id`, `name`, `level`, `grpsize`, `img`, `info`, `maxbosse`
 		$res = db_query("
-		SELECT 
-			a.id, a.name, a.img, a.maxbosse, 
-			b.level, 
-			c.grpsize, 
-			d.id AS iid, d.info  
-		FROM prefix_raid_inzen AS a
-			LEFT JOIN prefix_raid_level AS b ON a.level=b.id 
-			LEFT JOIN prefix_raid_grpsize AS c ON a.grpsize=c.id 
-			LEFT JOIN prefix_raid_info AS d ON a.info=d.id
-		ORDER BY iid ASC, b.level DESC");
+                    SELECT 
+                        a.id, a.small, a.name, a.img, a.maxbosse, 
+                        b.level, 
+                        c.grpsize, 
+                        d.id AS iid, d.info  
+                    FROM prefix_raid_inzen AS a
+                        LEFT JOIN prefix_raid_level AS b ON a.level=b.id 
+                        LEFT JOIN prefix_raid_grpsize AS c ON a.grpsize=c.id 
+                        LEFT JOIN prefix_raid_info AS d ON a.info=d.id
+                    ORDER BY iid ASC, b.level DESC
+                ");
 		
 		if( db_num_rows( $res ) ){
 			while( $row = db_fetch_object( $res ) ){

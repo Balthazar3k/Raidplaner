@@ -770,4 +770,10 @@ function classSpecialization($id, $selected_1 = NULL, $selected_2 = NULL){
     
     return $kspz;
 }
+
+function getPost($key){
+    $val = $_POST[$key];
+    unset($_POST[$key]);
+    return $val;
+}
 ?>

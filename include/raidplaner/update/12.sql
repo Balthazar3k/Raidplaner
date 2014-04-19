@@ -16,6 +16,8 @@ ALTER TABLE `prefix_raid_chars`
 ALTER TABLE `prefix_raid_dkps`
   DROP `pm`;
 
+ALTER TABLE `prefix_raid_inzen` ADD `small` VARCHAR(10) NOT NULL AFTER `id`;
+
 INSERT INTO `prefix_raid_dkps` (`inzen`, `name`, `dkp`) VALUES
 (0, 'Anwesenheit', 125),
 (0, 'Raid Start', 50),

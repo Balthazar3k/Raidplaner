@@ -1,47 +1,49 @@
 <script type='text/javascript' src='include/includes/js/bbcode.js'></script>
 <table width="100%" border="0" cellspacing="5" cellpadding="0">
   <tr>
-    <td width="30%" valign="top"><form action="{pfad}" method="post" enctype="multipart/form-data" name="form">
-      <table width="100%" border="0" cellspacing="1" cellpadding="2" class="border">
-        <tr>
-          <td colspan="2" class="Chead"><strong>Instanzen</strong></td>
-        </tr>
-        <tr class="Cnorm">
-          <td nowrap="nowrap">Name:</td>
-          <td><input name="name" type="text" id="name" value="{name}" />
-              <input name="id" type="hidden" id="id" value="{id}" /></td>
-        </tr>
-        <tr class="Cnorm">
-          <td nowrap="nowrap">Level:</td>
-          <td>{level}</td>
-        </tr>
-        <tr class="Cnorm">
-          <td nowrap="nowrap">Info:</td>
-          <td>{info}</td>
-        </tr>
-        <tr class="Cnorm">
-          <td nowrap="nowrap">Gruppengr&ouml;&szlig;e:</td>
-          <td>{grpsize}</td>
-        </tr>
-        <tr class="Cnorm">
-          <td nowrap="nowrap">Anzahl der Bosse:</td>
-          <td><input name="maxbosse" type="text" id="maxbosse" value="{maxbosse}" size="2" maxlength="2" /></td>
-        </tr>
-        <tr class="Cnorm">
-          <td nowrap="nowrap">Bild:</td>
-          <td nowrap="nowrap"><label> {img}
-            <input type="file" name="imgUp" id="imgUp" />
-          </label></td>
-        </tr>
-        
-        <tr class="Cnorm">
-          <td>&nbsp;</td>
-          <td><label>
-            <input type="submit" name="button" id="button" value="Senden" />
-          </label></td>
-        </tr>
-      </table>
-    </form></td>
+    <td width="30%" valign="top">
+        <form action="{pfad}" method="post" enctype="multipart/form-data" name="form">
+            <input name="id" type="hidden" id="id" value="{id}" />
+            <table width="100%" border="0" cellspacing="1" cellpadding="2" class="border">
+                <tr>
+                    <td colspan="2" class="Chead"><strong>Instanzen</strong></td>
+                </tr>
+                <tr class="Cnorm">
+                    <td nowrap="nowrap">Name kurz:</td>
+                    <td><input name="small" type="text" value="{small}" size="10" maxlength="10" placeholder="MC"/></td>
+                </tr>
+                <tr class="Cnorm">
+                    <td nowrap="nowrap">Name:</td>
+                    <td><input name="name" type="text" id="name" value="{name}" placeholder="Molten Core" /></td>
+                </tr>
+                <tr class="Cnorm">
+                    <td nowrap="nowrap">Level:</td>
+                    <td>{level}</td>
+                </tr>
+                <tr class="Cnorm">
+                    <td nowrap="nowrap">Info:</td>
+                    <td>{info}</td>
+                </tr>
+                <tr class="Cnorm">
+                    <td nowrap="nowrap">Gruppengr&ouml;&szlig;e:</td>
+                    <td>{grpsize}</td>
+                </tr>
+                <tr class="Cnorm">
+                    <td nowrap="nowrap">Anzahl der Bosse:</td>
+                    <td><input name="maxbosse" type="number" id="maxbosse" value="{maxbosse}" size="2" maxlength="2" /></td>
+                </tr>
+                <tr class="Cnorm">
+                    <td nowrap="nowrap">Bild:</td>
+                    <td nowrap="nowrap"><label> {img} <input type="file" name="imgUp" id="imgUp" /></label></td>
+                </tr>
+
+                <tr class="Cnorm">
+                  <td>&nbsp;</td>
+                  <td><input type="submit" value="Senden" /></td>
+                </tr> 
+            </table>
+        </form>
+    </td>
     <td width="70%" valign="top"><div align="center">
       <table width="100%" border="0" cellspacing="1" cellpadding="2" class="border">
         <tr class="Chead">
