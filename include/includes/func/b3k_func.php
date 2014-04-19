@@ -11,15 +11,12 @@ function copyright(){
 }
 ###### RAIDPLANER HEADER
 
-$raid->header()->set('font-awesome/css/font-awesome.min.css');
-
 $raid->header()
+    ->set('font-awesome/css/font-awesome.min.css')
+        
     ->set('jquery/js/jquery-1.10.2.js')
     ->set('jquery/js/jquery-ui-1.10.4.custom.min.js')
-
     ->set('jquery/css/ui-darkness/jquery-ui-1.10.4.custom.min.css')
-    ->set('jquery/js/jquery-1.10.2.js')
-    ->set('jquery/js/jquery-ui-1.10.4.custom.min.js')
 
     ->set('../../includes/css/raidplaner.css')
     ->set('../../includes/js/b3k.js');
