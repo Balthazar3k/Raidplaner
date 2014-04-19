@@ -23,6 +23,10 @@ class Permission {
             'charakter' => array(
                 'permission' => ( $_SESSION['charrang'] >= 13 || is_admin() ), 
                 'message' => 'Sie haben nicht die n&ouml;tigen Rechte!'
+            ),
+            'Dungeons' => array(
+                'permission' => ( $_SESSION['charrang'] >= 13 || is_admin() ), 
+                'message' => 'Sie haben nicht die n&ouml;tigen Rechte, um an den Dungeons &auml;nderungen vorzunehmen!'
             )
         );
         
@@ -38,7 +42,7 @@ class Permission {
             ),
             'fast' => array(
                 'permission' => ( is_admin() ), 
-                'message' => 'Sie haben nicht die n&ouml;tigen Rechte um die Zeiten zu L&ouml;schen!'
+                'message' => ''
             )
         );
         
@@ -58,6 +62,15 @@ class Permission {
     public function delete($key, &$message = NULL) {
         $message = $this->delete[$key]['message'];
         return $this->delete[$key]['permission'];
+    }
+    
+    public function stay($mode, $key){
+        global $design;
+        if( !$this->$mode($key, $message) ){
+            echo $message;
+            $design->footer();
+            exit();
+        }
     }
     
 }

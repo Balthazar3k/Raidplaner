@@ -1,14 +1,12 @@
 <?php 
 defined ('main') or die ( 'no direct access' );
 defined ('admin') or die ( 'only admin access' );
-
-$design = new design ( 'Admins Area', 'Admins Area', 2 );
 require_once("include/includes/func/b3k_func.php");
 
+$design = new design ( 'Admins Area', 'Admins Area', 2 );
 $design->header();
 
-echo "<br>";
-if( !RaidPermission(0, TRUE) ){ echo "don't Permission"; $design->footer(); exit(); }
+$raid->permission()->stay('update', 'Dungeons');
 
 RaidErrorMsg();
 aRaidMenu();

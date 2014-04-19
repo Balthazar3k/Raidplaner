@@ -1,7 +1,4 @@
 <?php
-### b3k_func.php Copyright: 2007/2008 edit 2009, 2012, 2013, 2014 By: Balthazar3k.de
-#arrPrint($_SESSION); 
-//arrPrint($_POST);
 require_once 'include/raidplaner/raidplaner.php';
 
 
@@ -16,64 +13,62 @@ function copyright(){
 
 $raid->header()->set('font-awesome/css/font-awesome.min.css');
 
-$raid->header()->set('jquery/js/jquery-1.10.2.js');
-$raid->header()->set('jquery/js/jquery-ui-1.10.4.custom.min.js');
+$raid->header()
+    ->set('jquery/js/jquery-1.10.2.js')
+    ->set('jquery/js/jquery-ui-1.10.4.custom.min.js')
 
-$raid->header()->set('jquery/css/ui-darkness/jquery-ui-1.10.4.custom.min.css');
-$raid->header()->set('jquery/js/jquery-1.10.2.js');
-$raid->header()->set('jquery/js/jquery-ui-1.10.4.custom.min.js');
+    ->set('jquery/css/ui-darkness/jquery-ui-1.10.4.custom.min.css')
+    ->set('jquery/js/jquery-1.10.2.js')
+    ->set('jquery/js/jquery-ui-1.10.4.custom.min.js')
 
-$raid->header()->set('bootstrap/css/bootstrap.min.css');
-$raid->header()->set('bootstrap/js/bootstrap.min.js');
-
-$raid->header()->set('../../includes/css/raidplaner.css');
-$raid->header()->set('../../includes/js/b3k.js');
+    ->set('../../includes/css/raidplaner.css')
+    ->set('../../includes/js/b3k.js');
 
 $raid->header()->get('font-awesome', 'jquery', '..');
 
 ### Sessions der mainchars Generieren.
 function CreatRaidSession(){
-	$arr = array('charname', 'charid', 'charrang','charklasse','stammgrp');
-	foreach( $arr as $a ){
-		if( !loggedin() ){
-			$_SESSION[$a] = '';
-		}
+	if( !loggedin() ){
+            $arr = array('charname', 'charid', 'charrang','charklasse','stammgrp');
+            foreach( $arr as $a ){
+		$_SESSION[$a] = '';
+            }
 	}
 	
 	if( loggedin() ){
-		$ses = db_query( "SELECT id, name, rang, klassen FROM prefix_raid_chars WHERE user='".$_SESSION['authid']."' ORDER BY id LIMIT 1" );
-		$my = db_fetch_assoc($ses);
-		$_SESSION['charname'] = $my['name'];
-		$_SESSION['charid'] = $my['id'];
-		$_SESSION['charrang'] = $my['rang'];
-		$_SESSION['charklasse'] = $my['klassen'];
-			
-		$_SESSION['stammgrp'][0] = 1;
-		
-		if( !empty( $_SESSION['charid'] ) ){			
-			$res = db_query("SELECT sid FROM prefix_raid_stammrechte WHERE cid=".$my['id']);
-			while( $row = db_fetch_object( $res )){
-				$_SESSION['stammgrp'][$row->sid] = 1;
-			}
-		}
-		
-		### adminaccess neu mit 1.1p
-		$perm = db_query( "
-			SELECT 
-				a.uid, a.mid, b.url 
-			FROM prefix_modulerights AS a
-				LEFT JOIN prefix_modules AS b ON a.mid = b.id
-			WHERE 
-				a.uid = ".$_SESSION['authid']."
-				AND b.name LIKE 'R:%'
-		");
-		
-		while( $row = db_fetch_assoc( $perm ) ){
-			$_SESSION['adminaccess'][$row['url']] = true;
-		}
+            $ses = db_query( "SELECT id, name, rang, klassen FROM prefix_raid_chars WHERE user='".$_SESSION['authid']."' ORDER BY id LIMIT 1" );
+            $my = db_fetch_assoc($ses);
+            $_SESSION['charname'] = $my['name'];
+            $_SESSION['charid'] = $my['id'];
+            $_SESSION['charrang'] = $my['rang'];
+            $_SESSION['charklasse'] = $my['klassen'];
+
+            $_SESSION['stammgrp'][0] = 1;
+
+            if( !empty( $_SESSION['charid'] ) ){			
+                $res = db_query("SELECT sid FROM prefix_raid_stammrechte WHERE cid=".$my['id']);
+                while( $row = db_fetch_object( $res )){
+                    $_SESSION['stammgrp'][$row->sid] = 1;
+                }
+            }
+
+            ### adminaccess neu mit 1.1p
+            $perm = db_query( "
+                SELECT 
+                    a.uid, a.mid, b.url 
+                FROM prefix_modulerights AS a
+                    LEFT JOIN prefix_modules AS b ON a.mid = b.id
+                WHERE 
+                    a.uid = ".$_SESSION['authid']."
+                    AND b.name LIKE 'R:%'
+            ");
+
+            while( $row = db_fetch_assoc( $perm ) ){
+                $_SESSION['adminaccess'][$row['url']] = true;
+            }
 		
 	}else{
-		$_SESSION['charname'] = $_SESSION['charid'] = $_SESSION['charrang'] = $_SESSION['charklasse'] = 0;
+            $_SESSION['charname'] = $_SESSION['charid'] = $_SESSION['charrang'] = $_SESSION['charklasse'] = 0;
 	}
 }
 ### Raid Errors ##############################################
@@ -157,7 +152,7 @@ function aRaidMenu(){
     $raidLinks = array(
         "Index" => "raidindex",
         "Raidplaner" => "raid",
-        "Chars" => "chars",
+        "Charaktere" => "chars",
         "Config" => "raidconfig",
         "DKP Gruppen" => "raidgruppen",
         "Stammgruppen" => "raidstammgrp",
@@ -167,13 +162,13 @@ function aRaidMenu(){
         "Punkte (DKP)" => "raiddkps-0"
     );
     
-    echo "<div class=\"Cnorm buttonset\" style='border-radius: 5px; padding: 5px; box-shadow: 0 3px 1px rgba( 0, 0, 0, 0.3);' align='center'>";
+    echo "<div class=\"Cnorm buttonset btn-group\" style='border-radius: 5px; padding: 5px; box-shadow: 0 3px 1px rgba( 0, 0, 0, 0.3);' align='center'>";
     
     foreach( $raidLinks as $name => $url )
     {
         if( isset( $_SESSION['authmod'][$url] ) && $_SESSION['authmod'][$url] == 1 || is_admin() )
         {
-            echo "<a href='admin.php?".$url."'>".$name."</a> ";
+            echo "<a class=\"btn btn-primary\" href='admin.php?".$url."'>".$name."</a> ";
         }
     }
     

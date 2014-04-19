@@ -13,6 +13,7 @@ class Header{
         $this->i++;
         preg_match('/\.(css|js)/', $string, $res);
         $this->parse[strstr($string,'/', true)][] = sprintf($this->headers_html[$res[1]], $this->i, $string);
+        return $this;
     }
     
     public function get(){
