@@ -46,20 +46,22 @@ switch($menu->get(1)){
             wd('admin.php?raidinzen','Update war <b>nicht</b> erfolgreich!', 10);
         }
     break;
-	case "del":
-		if( $menu->get(3) == "TRUE" ){
-			if(	db_query("DELETE FROM prefix_raid_inzen WHERE id = '".$menu->get(2)."' LIMIT 1") ){
-				wd('admin.php?raidinzen','L&ouml;schen war erfolgreich!');
-			}else{
-				wd('admin.php?raidinzen','L&ouml;schen war <b>nicht</b> erfolgreich!');
-			}
-		}else{
-			$delLink = "admin.php?raidinzen-del-".$menu->get(2)."-TRUE";
-			$inze = db_result(db_query("SELECT name FROM prefix_raid_inzen WHERE id=".$menu->get(2) ),0);
-			echo "<center><font color=red><b>Die Instanze \"".$inze."\" wirklich L&ouml;schen?"
-			."<br /><form name='form' method='post' action='".$delLink."'><input name='submit' type='submit' value='L&ouml;schen' /></form></b></font></center>";
-		}
-	break;
+    case "del":
+        if( $menu->get(3) == "TRUE" ){
+            if( $raid->db()->delete('raid_inzen')->where(array('id' => $menu->get(2)))->init() ){
+                wd('admin.php?raidinzen','L&ouml;schen war erfolgreich!');
+            }else{
+                wd('admin.php?raidinzen','L&ouml;schen war <b>nicht</b> erfolgreich!');
+            }
+        }else if( $menu->get(3) == "" ){
+            $inze = $raid->db()->select('name')->from('raid_inzen')->where(array('id' => $menu->get(2)))->cell();
+            echo $raid->confirm()
+                ->message("Den Dungeon \"".$inze."\" wirklich L&ouml;schen?")
+                ->onTrue("admin.php?raidinzen-del-".$menu->get(2)."-TRUE")
+                ->onFalse("admin.php?raidinzen")
+                ->html('L&ouml;schen');
+        }
+    break;
 	case "delImg":
 		if( @unlink( $imgPath.$_GET['img'] ) ){
 			wd('admin.php?raidinzen','Bild L&ouml;schen war erfolgreich!');
