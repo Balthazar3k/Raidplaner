@@ -49,9 +49,9 @@ switch($menu->get(1)){
 	case "del":
 		if( $menu->get(3) == "TRUE" ){
 			if(	db_query("DELETE FROM prefix_raid_inzen WHERE id = '".$menu->get(2)."' LIMIT 1") ){
-				wd('admin.php?raidinzen','L�schen war erfolgreich!');
+				wd('admin.php?raidinzen','L&ouml;schen war erfolgreich!');
 			}else{
-				wd('admin.php?raidinzen','L�schen war <b>nicht</b> erfolgreich!');
+				wd('admin.php?raidinzen','L&ouml;schen war <b>nicht</b> erfolgreich!');
 			}
 		}else{
 			$delLink = "admin.php?raidinzen-del-".$menu->get(2)."-TRUE";
@@ -62,9 +62,9 @@ switch($menu->get(1)){
 	break;
 	case "delImg":
 		if( @unlink( $imgPath.$_GET['img'] ) ){
-			wd('admin.php?raidinzen','Bild L�schen war erfolgreich!');
+			wd('admin.php?raidinzen','Bild L&ouml;schen war erfolgreich!');
 		}else{
-			wd('admin.php?raidinzen','Bild L�schen war <b>nicht</b> erfolgreich!');
+			wd('admin.php?raidinzen','Bild L&ouml;schen war <b>nicht</b> erfolgreich!');
 		}
 	break;
 	default:
