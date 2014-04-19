@@ -13,6 +13,17 @@ ALTER TABLE `prefix_raid_chars`
   DROP `punkte`,
   DROP `teamspeak`;
 
+ALTER TABLE `prefix_raid_dkps`
+  DROP `pm`;
+
+INSERT INTO `prefix_raid_dkps` (`inzen`, `name`, `dkp`) VALUES
+(0, 'Anwesenheit', 125),
+(0, 'Raid Start', 50),
+(0, 'Bosskill', 50),
+(0, 'Bosskill, first Try', 75),
+(0, 'Raid Ende', 125),
+(0, 'Item', -350);
+
 CREATE TABLE IF NOT EXISTS `prefix_raid_zeit` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `weekday` varchar(15) NOT NULL,

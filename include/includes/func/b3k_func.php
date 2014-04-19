@@ -80,76 +80,74 @@ function CreatRaidSession(){
 ##############################################################
 function RaidErrorMsg(){
 	global $allgAr;
-	### Raids auf G�ltigkeit �berpr�fen
+	### Raids auf Gültigkeit �berpr�fen
 	$res = db_query("SELECT id, ende FROM prefix_raid_raid WHERE statusmsg=1 AND ende<=".(time()-7200) );
 	while( $row = db_fetch_assoc( $res )){
 		db_query("UPDATE prefix_raid_raid SET statusmsg=17 WHERE id=".$row['id'] );
 	}
-	### Fehler nur f�r Admins
+        
+	### Fehler nur für Admins
 	if( is_admin() ){
-		
-		### Updates �berpr�fen
-		include("include/raidplaner/raidplaner.updater.php");
-		$ru = new updater();
-		
-		$isRaidGrp = db_result(db_query('SELECT COUNT(id) FROM prefix_raid_gruppen'),0);
-		$error['isRaidGrp'] = ( $isRaidGrp == 0 ? 'Raidplaner: Es m&uuml;ssen DKP Gruppen angelegt werden, '.aLink('Anlegen','raidgruppen',1).'!' : '');
-		
-		$isInzen = db_result(db_query('SELECT COUNT(id) FROM prefix_raid_inzen'),0);
-		$error['isInzen'] = ( $isInzen == 0 ? 'Raidplaner: Es m&uuml;ssen Instanzen angelegt werden, '.aLink('Anlegen','raidinzen',1).'!' : '');
-		
-		$isDkps = db_result(db_query('SELECT COUNT(id) FROM prefix_raid_dkps'),0);
-		$error['isDkps'] = ( $isDkps == 0 ? 'Raidplaner: Es m&uuml;ssen DKP Definiert werden, '.aLink('Definieren','raiddkps',1).'!' : '');
-		
-		
+            include("include/raidplaner/raidplaner.updater.php");
+            $updater = new updater();
+
+            $isRaidGrp = db_result(db_query('SELECT COUNT(id) FROM prefix_raid_gruppen'),0);
+            $error['isRaidGrp'] = ( $isRaidGrp == 0 ? 'Raidplaner: Es m&uuml;ssen DKP Gruppen angelegt werden, '.aLink('Anlegen','raidgruppen',1).'!' : '');
+
+            $isInzen = db_result(db_query('SELECT COUNT(id) FROM prefix_raid_inzen'),0);
+            $error['isInzen'] = ( $isInzen == 0 ? 'Raidplaner: Es m&uuml;ssen Instanzen angelegt werden, '.aLink('Anlegen','raidinzen',1).'!' : '');		
 	}
+        
 	### Fehler f�r Raidleiter, Super Raidleiter, Offizer, Gildenmeister & Admins
 	if( RaidPermission() ){
-		### Wenn's ausstehende Raids gibt wird man Informiert.
-		$res = db_query("SELECT id, inv FROM prefix_raid_raid WHERE statusmsg=17");
-		while( $row = db_fetch_assoc( $res )){
-			$error['chkRaids'] .= "<div align='center'>";
-			$error['chkRaids'] .= "ERROR: Ausstehender Raid vom: <a href='admin.php?raid-edit-".$row['id']."'>". DateFormat("D d.m.Y H:i", $row['inv'])."</a> ";
-			$error['chkRaids'] .= "(Status �ndern!)";
-			$error['chkRaids'] .= "</div>";
-		}
+            ### Wenn's ausstehende Raids gibt wird man Informiert.
+            $res = db_query("SELECT id, inv FROM prefix_raid_raid WHERE statusmsg=17");
+            while( $row = db_fetch_assoc( $res )){
+                $error['chkRaids'] .= "<div align='center'>";
+                $error['chkRaids'] .= "ERROR: Ausstehender Raid vom: <a href='admin.php?raid-edit-".$row['id']."'>". DateFormat("D d.m.Y H:i", $row['inv'])."</a> ";
+                $error['chkRaids'] .= "(Status �ndern!)";
+                $error['chkRaids'] .= "</div>";
+            }
 	}
+        
 	### Ab Rang Super Raidleiter Anzeigen!
 	if( $_SESSION['charrang'] >= 6 ){
-		$cBewerber = db_result(db_query("SELECT COUNT(id) FROM prefix_raid_chars WHERE rang=1"),0);
-		if( $cBewerber == 1 ){
-			$error['cBewerber'] = "Es liegt eine Bewerbung vor, ".alink("Ansehen","bewerbung")."!";
-		}elseif( $cBewerber > 1 ){
-			$error['cBewerber'] = "Es liegen ".$cBewerber." Bewerbungen vor, ".alink("Ansehen","bewerbung")."!";
-		}
+            $cBewerber = db_result(db_query("SELECT COUNT(id) FROM prefix_raid_chars WHERE rang=1"),0);
+            if( $cBewerber == 1 ){
+                $error['cBewerber'] = "Es liegt eine Bewerbung vor, ".alink("Ansehen","bewerbung")."!";
+            }elseif( $cBewerber > 1 ){
+                $error['cBewerber'] = "Es liegen ".$cBewerber." Bewerbungen vor, ".alink("Ansehen","bewerbung")."!";
+            }
 	}
-	### Char �berpr�fen!
+        
+	### Charakter überprüfen!
 	$error['exRaidChar'] = exRaidChar(1);
 	$error['isRaidKalender'] = ( $allgAr['isRaidKalender'] == 0 ? '' : isRaidKalender(1) );
 	
-	### �berpr�fe ob es Errors gibt!
+	### Überprüfe ob es Errors gibt!
 	$redwindow = FALSE;
 	foreach( $error as $key => $value ){
 		if( !empty($error[$key]) or $error[$key] ){
 			$redwindow = TRUE;
 		}
 	}
+        
 	### Errors Ausgeben wenn vorhanden
 	if( $redwindow ){
-		$i=0;
-		echo '
-			<div class="Cnorm" style="text-shadow: 1px 1px 0 #FFF; padding: 5px; border-radius: 10px; border: 5px solid red; margin-bottom: 5px;">
-				<h3 style="margin-top: 0;">Folgende Fehler sind aufgetreten!</h3>
-				<ol>
-		';
-		foreach( $error as $value ){
-			if( !empty( $value ) ){
-				$br = ( $i > 0 ? '<br>' : '' );
-				echo "<li style='font-weight: bold; color: darkred;'>".$value."</li>";
-				$i++;
-			}
-		}
-		echo '</ol></div>';
+            $i=0;
+            echo '
+                <div class="Cnorm" style="text-shadow: 1px 1px 0 #FFF; padding: 5px; border-radius: 10px; border: 5px solid red; margin-bottom: 5px;">
+                    <h3 style="margin-top: 0;">Folgende Fehler sind aufgetreten!</h3>
+                    <ol>
+            ';
+            foreach( $error as $value ){
+                if( !empty( $value ) ){
+                    $br = ( $i > 0 ? '<br>' : '' );
+                    echo "<li style='font-weight: bold; color: darkred;'>".$value."</li>";
+                    $i++;
+                }
+            }
+            echo '</ol></div>';
 	}
 }
 ### Raidplaner Menu Leiste
@@ -157,16 +155,17 @@ function aRaidMenu(){
     global $menu;
         
     $raidLinks = array(
-    "Index" => "raidindex",
-    "Raidplaner" => "raid",
-    "Chars" => "chars",
-    "Config" => "raidconfig",
-    "DKP Gruppen" => "raidgruppen",
-    "Stammgruppen" => "raidstammgrp",
-    "Instanzen" => "raidinzen",
-    "Bosse" => "raidbosse",
-    "R&auml;nge" => "raidrang",
-    "DKP'S" => "raiddkps");
+        "Index" => "raidindex",
+        "Raidplaner" => "raid",
+        "Chars" => "chars",
+        "Config" => "raidconfig",
+        "DKP Gruppen" => "raidgruppen",
+        "Stammgruppen" => "raidstammgrp",
+        "Instanzen" => "raidinzen",
+        "Bosse" => "raidbosse",
+        "R&auml;nge" => "raidrang",
+        "Punkte (DKP)" => "raiddkps-0"
+    );
     
     echo "<div class=\"Cnorm buttonset\" style='border-radius: 5px; padding: 5px; box-shadow: 0 3px 1px rgba( 0, 0, 0, 0.3);' align='center'>";
     
