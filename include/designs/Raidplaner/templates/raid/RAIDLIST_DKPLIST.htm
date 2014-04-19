@@ -1,0 +1,69 @@
+<script type="text/javascript">
+<!--
+function MM_jumpMenu(targ,selObj,restore){ //v3.0
+  eval(targ+".location='"+selObj.options[selObj.selectedIndex].value+"'");
+  if (restore) selObj.selectedIndex=0;
+}
+//-->
+</script>
+<br /><br>
+<table width="100%" border="0" cellspacing="1" cellpadding="0" class="border">
+  <tr class="Cnorm">
+    <td><table width="100%" border="0" cellspacing="1" cellpadding="0">
+      <tr>
+        <td width="21%" nowrap="nowrap">DKP Gruppe:</td>
+        <td width="79%" nowrap="nowrap"><strong>{gruppen}</strong></td>
+      </tr>
+      <tr>
+        <td nowrap="nowrap">Anzahl der Raids:</td>
+        <td nowrap="nowrap"><strong>{maxraids}</strong></td>
+      </tr>
+      <tr>
+        <td nowrap="nowrap">Beendete Raids:</td>
+        <td nowrap="nowrap"><strong>{endraids}</strong></td>
+      </tr>
+
+      <tr>
+        <td nowrap="nowrap">Bosskills:</td>
+        <td nowrap="nowrap"><p><strong>{bosskill}</strong></p></td>
+      </tr>
+      <tr>
+        <td nowrap="nowrap">Gesamt DKP</td>
+        <td nowrap="nowrap"><strong>{gdkp}</strong></td>
+      </tr>
+      <tr>
+        <td colspan="2" nowrap="nowrap">{erfraid}</td>
+        </tr>
+    </table></td>
+  </tr>
+</table>
+<br />
+        <select name="jumpMenu" id="jumpMenu" onchange="MM_jumpMenu('parent',this,0)">
+          <option>Filtern</option>
+          {list_klassen_dkp}
+        </select>
+        <br />
+        <br />
+<table width="100%" border="0" cellspacing="1" cellpadding="2" class="border">
+  <tr class="Chead">
+    <td><span class="Stil5"></span></td>
+    <td colspan="2"><span class="Stil5"><em><strong>Name</strong></em></span></td>
+    <td>
+      <div align="center" class="Stil5"><em><strong>DKP</strong></em></div>
+    </td>
+    <td width="64%"><span class="Stil5"><em><strong>Raidbeteiligung</strong></em></span></td>
+  </tr>
+  {EXPLODE}
+  <tr class="{CLASS}">
+    <td width="3%" class="Cdark"><div align="center">{img}</div></td>
+    <td width="2%">
+      <div align="right">{nr}.</div>
+    </td>
+    <td width="14%">{name}</td>
+    <td width="17%">
+      <div align="center">{adkp} </div>
+    </td>
+    <td>{pz}</td>
+  </tr>
+  {EXPLODE}
+</table>

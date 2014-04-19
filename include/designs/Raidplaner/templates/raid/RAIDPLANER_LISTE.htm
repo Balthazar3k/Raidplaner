@@ -1,0 +1,58 @@
+<script type="text/javascript">
+<!--
+function MM_jumpMenu(targ,selObj,restore){ //v3.0
+  eval(targ+".location=\'"+selObj.options[selObj.selectedIndex].value+"\'");
+  if (restore) selObj.selectedIndex=0;
+}
+//-->
+</script>
+<select name="jumpMenu" id="jumpMenu" onchange="MM_jumpMenu(\'parent\',this,0)">
+<option value="admin.php?raid">Filtern</option>
+
+            {listgrp}
+          
+</select>
+<br />
+<br />
+<table width="100%" border="0" cellspacing="1" cellpadding="2" class="border">
+<tr class="Chead">
+<td>id</td>
+<td> </td>
+<td>
+<div align="center"><strong>Spieler</strong></div>
+</td>
+<td><strong>Datum/Zeit</strong></td>
+<td><strong>Inze</strong></td>
+<td><strong>DKP Gruppe</strong></td>
+<td><strong>Status</strong></td>
+<td width="0%"> </td>
+<td width="0%"> </td>
+</tr>
+{EXPLODE}
+<tr class="{CLASS}">
+<td width="0%" nowrap>{id}</td>
+<td width="0%" nowrap>{img}</td>
+<td width="0%" nowrap>
+<div align="center"><font size="1">{ply}</font></div>
+</td>
+<td nowrap><font size="1">{inv}</font></td>
+<td nowrap><font size="1">{inzen}</font></td>
+<td nowrap><font size="1">{gruppen}</font></td>
+<td nowrap bgcolor="{color}">
+<div align="center" class="Stil1"><font size="1">{statusmsg}</font></div>
+</td>
+<td nowrap>
+<div align="center"><font size="1">{edit}</font></div>
+</td>
+<td nowrap>
+<div align="center"><font size="1">{del}</font></div>
+</td>
+</tr>
+{EXPLODE}
+<tr class="Cdark">
+<td colspan="9" nowrap>{MPL}</td>
+</tr>
+</table>
+<div align="center"><br>
+<img src=\'include/images/icons/online.gif\'> Heute ist der Raid!</div>
+</div>

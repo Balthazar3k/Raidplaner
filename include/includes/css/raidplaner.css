@@ -7,10 +7,7 @@ th{
     font-size: 15px;
 }
 
-select, input, fieldset, form-round {
-    padding: 5px;
-    border-radius: 5px;
-}
+
 
 fieldset{
     margin: 5px;

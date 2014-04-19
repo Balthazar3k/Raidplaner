@@ -1,0 +1,22 @@
+.Chead {
+    color: #FFF;
+    background-color: #729FCF;
+    padding: 6px!important;
+}
+
+.Cnorm {
+    background-color: #DEDEDE;
+}
+
+.Cmite {
+    background-color: #DCDCDC;
+}
+
+.Cdark {
+    background-color: #f5f5f5;
+}
+
+.border {
+    background-color: #000;
+    border-spacing: 5px;
+}

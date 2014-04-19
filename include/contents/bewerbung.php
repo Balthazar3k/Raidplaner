@@ -13,7 +13,10 @@ require_once("include/includes/func/b3k_func.php");
 
 $design->header();
 
-$tpl = new tpl ("raid/LEERE_BOX.htm");
+$tpl = $raid->smarty();
+
+$array = array();
+
 if( RaidPermission( 0, TRUE ) ){
     if( $menu->get(1) == 'updateKlassen' ){
         db_query("UPDATE prefix_raid_klassen SET aufnahmestop=".$menu->get(3)." WHERE id=".$menu->get(2) );
@@ -21,25 +24,41 @@ if( RaidPermission( 0, TRUE ) ){
 
     $result = db_query("SELECT id, klassen FROM prefix_raid_klassen WHERE aufnahmestop=0");
     while( $row = db_fetch_object( $result )){
-        $aK .= aLink(class_img($row->klassen), "bewerbung-updateKlassen-".$row->id."-1")." ";
+        $array[] = aLink(class_img($row->klassen), "bewerbung-updateKlassen-".$row->id."-1")." ";
     }
-    $tpl->set_out("msg", "<b>Einstellungen, welche Klassen sucht ihr noch:</b><hr> ".$aK, 0 );
-    echo "<br />";
+
+    $tpl->assign('panel', array(
+        'title' => 'Einstellungen, welche Klassen suchen wir noch',
+        'content' => '<div class="btn-group">'. implode('', $array) .'</div>'
+    ));
+    
+    $tpl->display('panel.tpl');
+    
 }
 
+$array = array();
 $result = db_query("SELECT id, klassen FROM prefix_raid_klassen WHERE aufnahmestop=1");
 $cKlassen = db_num_rows($result);
 if( $cKlassen > 0 ){
     while( $row = db_fetch_object($result) ){
         if( RaidPermission( 0, TRUE) ){
-            $kName .= aLink(class_img($row->klassen),"bewerbung-updateKlassen-".$row->id."-0")." ";
+            $array[] = aLink(class_img($row->klassen),"bewerbung-updateKlassen-".$row->id."-0")." ";
         }else{
-            $kName .= class_img($row->klassen);
+            $array[] = class_img($row->klassen);
         }
     }
-    $tpl->set_out("msg", "<b>Wir Suchen noch Klassen:</b><hr> ".$kName, 0 );
+    
+    $tpl->assign('panel', array(
+        'title' => 'Klassen die wir Suchen',
+        'content' => '<div class="btn-group">'. implode('', $array) .'</div>'
+    ));
+    $tpl->display('panel.tpl');
 }else{
-    $tpl->set_out("msg", "Zur Zeit suchen wir keine Klassen mehr!", 0 );
+    $tpl->assign('panel', array(
+        'title' => '<i class="fa fa-search"></i> Klassen die wir Suchen',
+        'content' => 'Momentan suchen wir keine weiteren Spieler'
+    ));
+    $tpl->display('panel.tpl');
 }
 echo "<br />";
 
