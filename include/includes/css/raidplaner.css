@@ -1,4 +1,5 @@
-i, .Chead th{
+
+.Chead th{
     text-shadow: -1px -1px 0 #000;
 }
 
@@ -26,3 +27,83 @@ fieldset legend{
     font-weight: bold;
     text-spacing: 20px;
 }
+
+clear {
+    clear: both;
+}
+
+/*
+.list-group{
+    list-style: var(listStyle);
+    
+    padding: 0;
+    margin: 0;
+    
+    border: 0.1em solid black;
+    border-radius: 0.5em;
+}
+
+.list-group li{
+    padding: 0.5em;
+    border-bottom: 1px solid black;
+}
+
+.list-group li:last-child{
+    border-bottom: 0px;
+}
+
+.btn-group{
+    margin: 1em 0 1em 0;
+}
+
+.btn-group a{
+    font-size: 1em;
+    font-family: Arial;
+    font-weight: bold;
+
+    text-decoration: none;
+    margin: 0 0 0 -0.4em;
+    padding: 0.6em;
+    
+    border-top: 0.1em solid black;
+    border-left: 0.1em solid black;
+    border-bottom: 0.1em solid black;
+}
+
+.btn-group a:first-child{
+    border-radius: 0.5em 0 0 0.5em;  
+}
+
+.btn-group a:last-child{ 
+    border-radius: 0 0.5em 0.5em 0;
+    border-top: 0.1em solid black;
+    border-right: 0.1em solid black;
+    border-bottom: 0.1em solid black;
+}
+
+
+
+.btn-success{
+    color: #FFF;
+    background-color: #419641;
+    text-shadow: -0.1em -0.1em 0 rgba(0, 0, 0, 0.3);
+}
+
+.btn-success:hover{
+    color: #FFF;
+    background-color: #398439;
+    text-shadow: -0.1em -0.1em 0 rgba(0, 0, 0, 0.3);
+}
+
+.btn-primary{
+    color: #FFF;
+    background-color: #3276b1;
+    text-shadow: -0.1em -0.1em 0 rgba(0, 0, 0, 0.3);
+}
+
+.btn-primary:hover{
+    color: #FFF;
+    background-color: #285e8e;
+    text-shadow: -0.1em -0.1em 0 rgba(0, 0, 0, 0.3);
+}
+*/

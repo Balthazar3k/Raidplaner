@@ -86,6 +86,7 @@ class Raidplaner {
             $this->smarty = new Smarty();
             $this->smarty
                 ->addTemplateDir('include/raidplaner/templates/')
+                ->addTemplateDir('include/templates/raid/')
                 ->addPluginsDir('include/raidplaner/libs/smarty/plugins/')
                 ->setCompileDir('include/raidplaner/cache/templates_c')
                 ->setCacheDir('.include/raidplaner/cache');

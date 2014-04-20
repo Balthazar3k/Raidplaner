@@ -27,6 +27,14 @@ class Permission {
             'Dungeons' => array(
                 'permission' => ( $_SESSION['charrang'] >= 13 || is_admin() ), 
                 'message' => 'Sie haben nicht die n&ouml;tigen Rechte, um an den Dungeons &auml;nderungen vorzunehmen!'
+            ),
+            'Classes' => array(
+                'permission' => ( $_SESSION['charrang'] >= 13 || is_admin() ), 
+                'message' => 'Sie haben nicht die n&ouml;tigen Rechte, um an den Klassen &auml;nderungen vorzunehmen!'
+            ),
+            'application_class' => array(
+                'permission' => ( $_SESSION['charrang'] >= 10 || is_admin() ), 
+                'message' => 'Sie haben nicht die n&ouml;tigen Rechte, um an den Dungeons &auml;nderungen vorzunehmen!'
             )
         );
         

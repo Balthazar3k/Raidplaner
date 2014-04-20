@@ -13,27 +13,21 @@ require_once("include/includes/func/b3k_func.php");
 
 $design->header();
 
-$tpl = $raid->smarty();
 
-$array = array();
 
-if( RaidPermission( 0, TRUE ) ){
-    if( $menu->get(1) == 'updateKlassen' ){
-        db_query("UPDATE prefix_raid_klassen SET aufnahmestop=".$menu->get(3)." WHERE id=".$menu->get(2) );
-    }
 
-    $result = db_query("SELECT id, klassen FROM prefix_raid_klassen WHERE aufnahmestop=0");
-    while( $row = db_fetch_object( $result )){
-        $array[] = aLink(class_img($row->klassen), "bewerbung-updateKlassen-".$row->id."-1")." ";
-    }
-
-    $tpl->assign('panel', array(
-        'title' => 'Einstellungen, welche Klassen suchen wir noch',
-        'content' => '<div class="btn-group">'. implode('', $array) .'</div>'
-    ));
+if( $raid->permission()->update('application_class') ){
+    $array = array();
     
-    $tpl->display('panel.tpl');
+    if( $menu->get(1) == 'application_class' ){
+        $raid->db()
+            ->update('raid_klassen')
+            ->fields(array('aufnahmestop' => $menu->get(3)))
+            ->where(array('id' => $menu->get(2)))
+            ->init();
+    }
     
+   
 }
 
 $array = array();
@@ -48,30 +42,18 @@ if( $cKlassen > 0 ){
         }
     }
     
-    $tpl->assign('panel', array(
-        'title' => 'Klassen die wir Suchen',
-        'content' => '<div class="btn-group">'. implode('', $array) .'</div>'
-    ));
-    $tpl->display('panel.tpl');
+
 }else{
-    $tpl->assign('panel', array(
-        'title' => '<i class="fa fa-search"></i> Klassen die wir Suchen',
-        'content' => 'Momentan suchen wir keine weiteren Spieler'
-    ));
-    $tpl->display('panel.tpl');
+
 }
-echo "<br />";
 
 switch($menu->get(1)){
     
     case "form":
-        button("Zur&uuml;ck","",8);
-        echo "<br><br>";
-        if( loggedin() and !RaidRechte($allgAr['addchar']) or is_admin() ){
-            if( !RaidRechte($allgAr['addchar']) ){ echo "no Permission!"; $design->footer(); exit(); }
+        if( loggedin() or is_admin() ){
             $raid->charakter()->form('Bewerbungs Formular', 'index.php?bewerbung-save');
         }else{
-            echo bbcode(allgArInsert($allgAr['bewerbung']));
+            wd('index.php?user-regist', 'Sie m&uuml;ssen sich erst Regestrieren', 3);
         }
     break;
     
@@ -148,38 +130,31 @@ switch($menu->get(1)){
 ### BEWERBER ######### 
 ######################
     default:
-        $tpl = new tpl ("raid/BEWERBER_LISTE.htm");
-        button("Formular","index.php?bewerbung-form", 0); 
-        print "<br><br>";
-        $result = db_query( "
+        
+        $data = array();
+        
+        $data['application'] = nl2br($allgAr['bewerbung']);
+        
+        $data['class'] = $raid->db()
+            ->select('*')
+            ->from('raid_klassen')
+            ->where(array('aufnahmestop' => 1))
+            ->rows();
+ 
+        $data['candidate'] = $raid->db()->queryRows("
             SELECT
-                a.id, a.name, a.s1, a.s2, a.s3, 
-                b.id as kid, b.klassen, c.level,
-                DATE_FORMAT(a.regist,'%d.%m.%y %H:%i') as datum 
+                a.id, a.name, a.s1, a.s2, a.level, a.regist,
+                b.id as class_id, b.klassen as class_name
                 FROM prefix_raid_chars AS a 
-                LEFT JOIN prefix_raid_klassen AS b ON a.klassen = b.id 
-                LEFT JOIN prefix_raid_level AS c ON a.level = c.id  
+                LEFT JOIN prefix_raid_klassen AS b ON a.klassen = b.id  
              WHERE 
                 a.rang = 1 
-             ORDER BY datum ASC" ,0
+             ORDER BY regist ASC" ,0
         );
-
-        $tpl->out(0);				 
-        if( db_num_rows( $result ) > 0 ){
-            $i = 0;
-            while( $row = db_fetch_assoc( $result ) ){
-                $i++;
-                $row['class'] = ( $row['class'] != 'Cmite' ? 'Cmite' : 'Cnorm' );
-                $row['img'] = class_img($row['klassen']);
-                $row['name'] = $i.". ".aLink($row['name'], "chars-show-".$row['id']);
-                $row['skill'] = char_skill($row['s1'],$row['s2'],$row['s3'],$row['kid']);
-                $row['opt'] = ( is_admin() ? button("L&ouml;schen","index.php?bewerbung-del-".$row['id'], 2) : '');
-                $tpl->set_ar_out( $row, 1 );
-            }
-        }else{
-            $tpl->out(2);
-        }
-        $tpl->out(3);
+        
+        $tpl = $raid->smarty();
+        $tpl->assign('data', $data);
+        $tpl->display('application.tpl');
     break;
 }
 

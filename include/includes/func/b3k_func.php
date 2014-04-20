@@ -150,6 +150,7 @@ function aRaidMenu(){
         "Index" => "raidindex",
         "Raidplaner" => "raid",
         "Charaktere" => "chars",
+        "Klassen" => "raidclasses",
         "Config" => "raidconfig",
         "DKP Gruppen" => "raidgruppen",
         "Stammgruppen" => "raidstammgrp",

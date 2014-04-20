@@ -13,6 +13,12 @@ ALTER TABLE `prefix_raid_chars`
   DROP `punkte`,
   DROP `teamspeak`;
 
+ALTER TABLE `prefix_raid_klassen`
+  DROP `s1b`,
+  DROP `s2b`,
+  DROP `s3b`,
+  DROP `aufnahmestop`;
+
 ALTER TABLE `prefix_raid_dkps`
   DROP `pm`;
 
@@ -44,6 +50,14 @@ CREATE TABLE IF NOT EXISTS `prefix_raid_zeit_charakter` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
+CREATE TABLE IF NOT EXISTS `prefix_raid_classification` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `class_id` int(11) NOT NULL,
+  `name` varchar(64) NOT NULL,
+  `search` int(2) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
 UPDATE `prefix_config` SET `frage`='Bilder in der Gruppen übersicht anzeigen?' WHERE `schl` = 'show_img_raidgruppen';
 UPDATE `prefix_config` SET `frage`='Details der Gruppen anzeigen (raidlist.php)' WHERE `schl` = 'show_details_raidgruppen';
 UPDATE `prefix_config` SET `frage`='User brauchen Raidzeit angaben um sich Anmelden zu k&ouml;nnen?' WHERE `schl` = 'isRaidKalender';
@@ -52,3 +66,11 @@ UPDATE `prefix_config` SET `frage`='min. Anmeldezeit' WHERE `schl` = 'mams';
 DELETE `prefix_config` WHERE `schl`='domain';
 DELETE `prefix_config` WHERE `schl`='pzBalkenStyle';
 DELETE `prefix_config` WHERE `schl`='nextlastraid';
+
+/*
+SELECT 
+    a.id, a.class_id, a.name, a.search,
+    b.klassen as class_name
+FROM ic1_raid_classification AS a
+    LEFT JOIN ic1_raid_klassen AS b ON a.class_id = b.id
+*/
