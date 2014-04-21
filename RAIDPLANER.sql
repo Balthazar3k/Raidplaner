@@ -204,18 +204,17 @@ CREATE TABLE IF NOT EXISTS `prefix_raid_klassen` (
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
 
-INSERT INTO `prefix_raid_klassen` (`id`, `klassen`, `style`) VALUES
-(1, 'Krieger', 'background-color: #C69B6D;'),
-(2, 'Paladin', 'background-color: #f48cba;'),
-(3, 'Jäger', 'background-color: #AAD372;'),
-(4, 'Schurke', 'background-color: #fff468;'),
-(5, 'Priester', 'background-color: #ffffff;'),
-(6, 'Todesritter', 'background-color: #C41E3B;'),
-(7, 'Schamane', 'background-color: #2359FF;'),
-(8, 'Magier', 'background-color: #68CCEF;'),
-(9, 'Hexenmeister', 'background-color: #9382C9;'),
-(10, 'Mönch', 'background-color: #00FFBA;'),
-(11, 'Druide', 'background-color: #ff7c0a;');
+INSERT INTO `prefix_raid_klassen` (`id`, `klassen`, `s1b`, `s2b`, `s3b`, `aufnahmestop`) VALUES
+(2, 'Schurke', 'M&auml;ucheln', 'Kampf', 'T&auml;uschung', 1),
+(3, 'Krieger', 'Waffen', 'Furor', 'Schutz', 1),
+(4, 'Magier', 'Arcan', 'Feuer', 'Eis', 1),
+(5, 'Priester', 'Disziplin', 'Heilig', 'Schatten', 1),
+(6, 'Paladin', 'Heilig', 'Schutz', 'Vergeltung', 1),
+(7, 'Schamane', 'Elementar', 'Verst&auml;rkung', 'Wiederherstellung', 1),
+(8, 'Jaeger', 'Tierherrschaft', 'Treffsicherheit', '&uuml;berleben', 1),
+(9, 'Hexenmeister', 'Gebrechen', 'D&auml;monologie', 'Zerst&ouml;rung', 1),
+(10, 'Druide', 'Gleichgewicht', 'Wilder Kampf', 'Wiederherstellung', 1),
+(11, 'Todesritter', 'Blut', 'Frost', 'Unheilig', 1);
 
 CREATE TABLE IF NOT EXISTS `prefix_raid_level` (
   `id` int(11) NOT NULL auto_increment,
@@ -369,6 +368,4 @@ CREATE TABLE IF NOT EXISTS `prefix_raid_zeitgruppen_chars` (
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
-ALTER TABLE `prefix_raid_chars` 
-    CHANGE `s1` `s1` VARCHAR(255) NOT NULL, 
-    CHANGE `s2` `s2` VARCHAR(255) NOT NULL;
+ALTER TABLE `prefix_raid_chars` CHANGE `s1` `s1` VARCHAR(255) NOT NULL, CHANGE `s2` `s2` VARCHAR(255) NOT NULL;

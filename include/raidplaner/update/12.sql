@@ -1,4 +1,24 @@
-DROP TABLE `prefix_raid_zeit`, `prefix_raid_zeitgruppen`, `prefix_raid_zeitgruppen_chars`;
+DROP TABLE `prefix_raid_zeit`, `prefix_raid_zeitgruppen`, `prefix_raid_zeitgruppen_chars`, `prefix_raid_klassen`;
+
+CREATE TABLE IF NOT EXISTS `prefix_raid_klassen` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `klassen` varchar(255) NOT NULL DEFAULT '',
+  `style` text NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=12 ;
+
+INSERT INTO `prefix_raid_klassen` (`id`, `klassen`, `style`) VALUES
+(1, 'Krieger', 'background-color: #C69B6D;'),
+(2, 'Paladin', 'background-color: #f48cba;'),
+(3, 'Jäger', 'background-color: #AAD372;'),
+(4, 'Schurke', 'background-color: #fff468;'),
+(5, 'Priester', 'background-color: #ffffff;'),
+(6, 'Todesritter', 'background-color: #C41E3B;'),
+(7, 'Schamane', 'background-color: #2359FF;'),
+(8, 'Magier', 'background-color: #68CCEF;'),
+(9, 'Hexenmeister', 'background-color: #9382C9;'),
+(10, 'Mönch', 'background-color: #00FFBA;'),
+(11, 'Druide', 'background-color: #ff7c0a;');
 
 ALTER TABLE `prefix_raid_chars`
   CHANGE `s1` `s1` INT NOT NULL, 
@@ -95,15 +115,6 @@ INSERT INTO `prefix_raid_classification` (`id`, `class_id`, `name`, `search`) VA
 (31, 11, 'Gleichgewicht', 0),
 (32, 11, 'Wilder Kampf', 0),
 (33, 11, 'Wiederherstellung', 0);
-
-UPDATE `prefix_config` SET `frage`='Bilder in der Gruppen übersicht anzeigen?' WHERE `schl` = 'show_img_raidgruppen';
-UPDATE `prefix_config` SET `frage`='Details der Gruppen anzeigen (raidlist.php)' WHERE `schl` = 'show_details_raidgruppen';
-UPDATE `prefix_config` SET `frage`='User brauchen Raidzeit angaben um sich Anmelden zu k&ouml;nnen?' WHERE `schl` = 'isRaidKalender';
-UPDATE `prefix_config` SET `frage`='min. Anmeldezeit' WHERE `schl` = 'mams';
-
-DELETE `prefix_config` WHERE `schl`='domain';
-DELETE `prefix_config` WHERE `schl`='pzBalkenStyle';
-DELETE `prefix_config` WHERE `schl`='nextlastraid';
 
 /*
 SELECT 
