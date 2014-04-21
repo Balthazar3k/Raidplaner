@@ -1,4 +1,4 @@
-<h1 align="center">{$charakter.name} | {$charakter.level}</h1>
+<h1 align="center"><img align="absmiddle" src="include/raidplaner/images/class/class_{$charakter.class_id}.jpg"> | {$charakter.name} | {$charakter.level}</h1>
 
 <table width="100%" cellpadding="5" cellspacing="1" class="border">
     <tr class="Chead">
@@ -57,7 +57,7 @@
         {if $val.id != $charakter.id}
         <tr class="Cnorm">
             <td align="right"><a href="index.php?chars-details-{$val.id}"><b>{$val.name}</b></a> {$val.level}</td>
-            <td> {$val.race_name}|{$val.class_name}</td>  
+            <td><img align="absmiddle" src="include/raidplaner/images/class/class_{$val.class_id}.jpg"> {$val.race_name}|{$val.class_name}</td>  
         </tr>
         {/if}
     {/foreach}

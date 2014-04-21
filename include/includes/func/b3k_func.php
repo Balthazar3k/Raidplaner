@@ -150,6 +150,7 @@ function aRaidMenu(){
         "Index" => "raidindex",
         "<i class=\"fa fa-calendar fa-lg\"></i> Raidplaner" => "raid",
         "<i class=\"fa fa-group\"></i> Charaktere" => "chars",
+        "<i class=\"fa fa-clock-o\"></i> Zeiten" => "raidzeiten",
         "Klassen" => "raidclasses",
         "Config" => "raidconfig",
         "DKP Gruppen" => "raidgruppen",

@@ -13,40 +13,6 @@ require_once("include/includes/func/b3k_func.php");
 
 $design->header();
 
-
-
-
-if( $raid->permission()->update('application_class') ){
-    $array = array();
-    
-    if( $menu->get(1) == 'application_class' ){
-        $raid->db()
-            ->update('raid_klassen')
-            ->fields(array('aufnahmestop' => $menu->get(3)))
-            ->where(array('id' => $menu->get(2)))
-            ->init();
-    }
-    
-   
-}
-
-$array = array();
-$result = db_query("SELECT id, klassen FROM prefix_raid_klassen WHERE aufnahmestop=1");
-$cKlassen = db_num_rows($result);
-if( $cKlassen > 0 ){
-    while( $row = db_fetch_object($result) ){
-        if( RaidPermission( 0, TRUE) ){
-            $array[] = aLink(class_img($row->klassen),"bewerbung-updateKlassen-".$row->id."-0")." ";
-        }else{
-            $array[] = class_img($row->klassen);
-        }
-    }
-    
-
-}else{
-
-}
-
 switch($menu->get(1)){
     
     case "form":
@@ -78,7 +44,7 @@ switch($menu->get(1)){
                 'Es hat sich '.$bewerber['name'].' Beworben!'
             );
 
-            //wd("index.php?bewerbung","Du hast dich erfolgreich Beworben", 3);
+            wd("index.php?bewerbung","Du hast dich erfolgreich Beworben", 3);
         }else{
             wd("index.php?bewerbung","Du hast dich <b>nicht</b> erfolgreich Beworben ", 3);
         }
@@ -135,18 +101,26 @@ switch($menu->get(1)){
         
         $data['application'] = nl2br($allgAr['bewerbung']);
         
-        $data['class'] = $raid->db()
-            ->select('*')
-            ->from('raid_klassen')
-            ->where(array('aufnahmestop' => 1))
-            ->rows();
+        $data['class'] = $raid->db()->queryRows("
+            SELECT 
+                a.*, b.klassen AS class_name, b.style,
+                (SELECT COUNT(id) FROM prefix_raid_chars WHERE s1 = a.id AND rang > 2) AS num
+            FROM `prefix_raid_classification` as a
+                LEFT JOIN `prefix_raid_klassen` AS b ON a.class_id = b.id
+            WHERE search > 0
+            ORDER BY a.class_id
+        ");
  
         $data['candidate'] = $raid->db()->queryRows("
             SELECT
                 a.id, a.name, a.s1, a.s2, a.level, a.regist,
-                b.id as class_id, b.klassen as class_name
-                FROM prefix_raid_chars AS a 
-                LEFT JOIN prefix_raid_klassen AS b ON a.klassen = b.id  
+                b.id as class_id, b.klassen as class_name, b.style as class_style,
+                c.name as s1_name,
+                d.name as s2_name
+            FROM prefix_raid_chars AS a 
+                LEFT JOIN prefix_raid_klassen AS b ON a.klassen = b.id
+                LEFT JOIN prefix_raid_classification AS c ON a.s1 = c.id
+                LEFT JOIN prefix_raid_classification AS d ON a.s2 = d.id
              WHERE 
                 a.rang = 1 
              ORDER BY regist ASC" ,0

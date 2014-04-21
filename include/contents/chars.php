@@ -48,7 +48,7 @@ switch($menu->get(1)){
     case "form":
         button("Zur&uuml;ck","",8);
         echo '<br /><br />';
-        $raid->charakter()->form('Charakter Formular', 'index.php?chars-save-'.$menu->get(2), $menu->get(2));
+        $raid->charakter($menu->get(2))->form('Charakter Formular', 'index.php?chars-save-'.$menu->get(2), $menu->get(2));
     break;
     
     case "save":
@@ -82,8 +82,7 @@ switch($menu->get(1)){
 		wd('index.php?chars--show-'.$menu->get(2),'Raidtage wurde ge�ndert');
 	break;
     case "details":
-        $raid->charakter($menu->get(2))->name();
-        $raid->charakter()->details();
+        $raid->charakter($menu->get(2))->details();
     break;
 	
     default:
