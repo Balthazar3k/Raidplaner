@@ -67,7 +67,7 @@
                                             $(this).dialog('close');
                                     },
                                     "zur Seite": function(){
-                                            window.location.href = "index.php";
+                                            window.location.href = "admin.php?raidindex";
                                     }
                             }
                     });

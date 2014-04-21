@@ -8,6 +8,8 @@ require_once("include/includes/func/b3k_func.php");
 $design->header();
 
 aRaidMenu();
+RaidErrorMsg();
+copyright();
 
 $design->footer();
 ?>
