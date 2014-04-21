@@ -1,6 +1,8 @@
 DROP TABLE `prefix_raid_zeit`, `prefix_raid_zeitgruppen`, `prefix_raid_zeitgruppen_chars`;
 
 ALTER TABLE `prefix_raid_chars`
+  CHANGE `s1` `s1` INT NOT NULL, 
+  CHANGE `s2` `s2` INT NOT NULL,
   DROP `s3`,
   DROP `alter`,
   DROP `rlname`,

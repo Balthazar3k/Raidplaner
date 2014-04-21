@@ -21,7 +21,7 @@
                     {if $id != $class.class_id}
                         <tr style="{$class.style}">
                             <td colspan="3">
-                                <img align="absmiddle" src="include/raidplaner/images/wowklein/{$class.class_name}.gif">
+                                <img align="absmiddle" src="include/raidplaner/images/class/class_{$class.class_id}.jpg">
                                 <b>{$class.class_name}</b>
                             </td>  
                         </tr>

@@ -487,14 +487,13 @@ switch($menu->get(1)){
 					a.kom, a.stat, a.timestamp,					
 					b.name, b.id as cid, b.s1, b.s2, b.s3,
 					c.id as kid, c.klassen, 
-					d.level, 
+					b.level, 
 					e.id as rid,
 					f.statusmsg, f.color, 
 					SUM(dkp) as DKP 
 				FROM prefix_raid_anmeldung AS a 
 					LEFT JOIN prefix_raid_chars AS b ON a.char = b.id 
 					LEFT JOIN prefix_raid_klassen AS c ON b.klassen = c.id  
-					LEFT JOIN prefix_raid_level AS d ON b.level = d.id 
 					LEFT JOIN prefix_raid_raid AS e ON a.rid = e.id 
 					LEFT JOIN prefix_raid_statusmsg AS f ON a.stat = f.id 
 					LEFT JOIN prefix_raid_dkp AS g ON b.id = g.cid AND e.gruppen=g.dkpgrp 
@@ -506,7 +505,7 @@ switch($menu->get(1)){
 			while( $row = db_fetch_assoc( $sql )){
 				$Class = cssClass($Class);
 				$row["CLASS"] = $Class;
-				$row['img'] = class_img($row['klassen']);
+				$row['img'] = class_img($row['kid']);
 				$row['name'] = "<a href='index.php?chars-show-".$row['cid']."' title='".$name_title."'>".$row['name']."</a>";
 				$row['sb'] = char_skill($row['s1'],$row['s2'],$row['s3'],$row['kid']);
 				$tpl->set_ar_out( $row, 1 );

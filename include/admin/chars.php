@@ -135,7 +135,7 @@ switch($menu->get(1)){
 		if( $_SESSION['authmod']['CharsEditKlassen'] != 1 ){
 			$res = db_query("SELECT id, klassen FROM prefix_raid_klassen ORDER BY id DESC");
 			while( $row = db_fetch_object( $res ) ){
-				$classImg .= '<input type="image" name="klassen['.$row->id.']" src="include/raidplaner/images/wowklein/'.$row->klassen.'.gif" /> ';
+				$classImg .= '<input type="image" name="klassen['.$row->id.']" src="include/raidplaner/images/class/class_'.$row->id.'.jpg" /> ';
 				#$classen[$row->id] = $row->klassen;
 			}
 		
@@ -185,7 +185,7 @@ switch($menu->get(1)){
 					$tpl->set_ar_out( $t , 3);
 				}
 				$row->class = cssClass( $row->class );
-				$row->img = class_img($row->klassen);
+				$row->img = class_img($row->kid);
 				$row->name = aLink( $row->name, "chars-details-".$row->id, 1);
 				$row->geb = ( $row->gebdatum != "0000-00-00" ? "[".alter($row->gebdatum)."]" : '');
 				$row->uname = aLink( $row->uname, "user-1-".$row->uid , 1);

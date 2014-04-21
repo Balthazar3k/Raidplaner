@@ -148,8 +148,8 @@ function aRaidMenu(){
         
     $raidLinks = array(
         "Index" => "raidindex",
-        "Raidplaner" => "raid",
-        "Charaktere" => "chars",
+        "<i class=\"fa fa-calendar fa-lg\"></i> Raidplaner" => "raid",
+        "<i class=\"fa fa-group\"></i> Charaktere" => "chars",
         "Klassen" => "raidclasses",
         "Config" => "raidconfig",
         "DKP Gruppen" => "raidgruppen",
@@ -160,13 +160,13 @@ function aRaidMenu(){
         "Punkte (DKP)" => "raiddkps-0"
     );
     
-    echo "<div class=\"Cnorm buttonset btn-group\" style='border-radius: 5px; padding: 5px; box-shadow: 0 3px 1px rgba( 0, 0, 0, 0.3);' align='center'>";
+    echo "<div class=\"buttonset btn-group btn-group-sm\">";
     
     foreach( $raidLinks as $name => $url )
     {
         if( isset( $_SESSION['authmod'][$url] ) && $_SESSION['authmod'][$url] == 1 || is_admin() )
         {
-            echo "<a class=\"btn btn-primary\" href='admin.php?".$url."'>".$name."</a> ";
+            echo "<a class=\"btn btn-default\" href='admin.php?".$url."'>".$name."</a> ";
         }
     }
     
@@ -433,8 +433,12 @@ function bossinfos($ini, $rid){
 ###############################################
 ### Habe keine gut l�sung f�r diese function gefunden ^^ wenn jemand eine bessere idee hat so meldet sie mir ^^
 function char_skill( $a, $b, $c, $d, $e = 11 ){ # a=skill 1 b=skill 2, c=skill 3, d=klassenid, e=berechnungswert
-	
-	return $a ." / ". $b;
+    global $raid;
+    
+    $a = $raid->db('raid_classification')->select('name')->where('id', $a)->cell();
+    $b = $raid->db('raid_classification')->select('name')->where('id', $b)->cell();
+    
+    return $a ." / ". $b;
 }
 ### SKILLGRUPPE
 function skillgruppe($opt=0,$checked=0){
@@ -452,7 +456,7 @@ function skillgruppe($opt=0,$checked=0){
 }
 ####
 function class_img($i){
-    $link = 'include/raidplaner/images/wowklein/'.$i.'.gif';
+    $link = 'include/raidplaner/images/class/class_'.$i.'.jpg';
     if( file_exists($link)){
         return "<img src='".$link."'>";
     }
@@ -736,25 +740,29 @@ function sendpm_2_legitimate($title, $text, $status = 0){
 }
 
 function classSpecialization($id, $selected_1 = NULL, $selected_2 = NULL){
+    global $raid;
     
     if( empty($id) )
         return 'W&auml;hlen Sie bitte eine Klasse aus!';
     
-    $res = db_query("SELECT s1b, s2b, s3b FROM prefix_raid_klassen WHERE id=".$id."");
-    $row = db_fetch_assoc( $res );
-    
+    $res = $raid->db('raid_classification')
+            ->select('id', 'name')
+            ->where('class_id', $id)
+            ->rows();
+
     $specialization = array();
-    foreach( $row as $val ){
-        if( $selected_1 == $val ){
-            $specialization[1][] = sprintf('<option value="%s" selected="selected">%s</option>', $val, $val);
+    
+    foreach( $res as $val ){
+        if( $selected_1 == $val['id'] ){
+            $specialization[1][] = sprintf('<option value="%s" selected="selected">%s</option>', $val['id'], $val['name']);
         }else{
-            $specialization[1][] = sprintf('<option value="%s">%s</option>', $val, $val);
+            $specialization[1][] = sprintf('<option value="%s">%s</option>', $val['id'], $val['name']);
         }
         
-        if( $selected_2 == $val ){
-            $specialization[2][] = sprintf('<option value="%s" selected="selected">%s</option>', $val, $val);
+        if( $selected_2 == $val['id'] ){
+            $specialization[2][] = sprintf('<option value="%s" selected="selected">%s</option>', $val['id'], $val['name']);
         }else{
-            $specialization[2][] = sprintf('<option value="%s">%s</option>', $val, $val);
+            $specialization[2][] = sprintf('<option value="%s">%s</option>', $val['id'], $val['name']);
         }
     }
     

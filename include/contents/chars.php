@@ -108,7 +108,7 @@ switch($menu->get(1)){
         $erg = db_query("SELECT id, klassen FROM prefix_raid_klassen ORDER BY id DESC");
         $l_klassen = "<a href='index.php?chars'>".$img_del."</a> ";
         while( $row = db_fetch_assoc( $erg )){
-                $c['list_klassen'] .= "<a href='index.php?chars-".$row['id']."'><img src='include/raidplaner/images/wowklein/".$row['klassen'].".gif' border=0></a> ";
+                $c['list_klassen'] .= "<a href='index.php?chars-".$row['id']."'><img src='include/raidplaner/images/class/class_".$row['id'].".jpg' border=0></a> ";
         }
         ### Ausgabe der Daten.
         $tpl->set_ar_out( $c , 0 );
@@ -145,7 +145,7 @@ switch($menu->get(1)){
             ### Ausgaben �ndern/Hinzuf�gen
             $row['ARSENAL'] = "<a href='http://eu.battle.net/wow/de/character/".urlencode(utf8_encode($row['realm']))."/".str_replace(" ", "+",urlencode(utf8_encode($row['name'])))."/advanced' target='_blank'>Arsenal</a>";
             $row['CLASS'] = cssClass($row['CLASS']);
-            $row['img'] = "<img src='include/raidplaner/images/wowklein/".$row['klassen'].".gif'>";
+            $row['img'] = class_img($row['klassenid']);
             $row['name'] = "<a href='index.php?chars-details-".$row['id']."' name='".$row['id']."'>".$row['name']."</a>";
             ### Skillung Auswerten
             $row['sb'] = char_skill($row['s1'],$row['s2'],$row['s3'],$row['klassenid']);

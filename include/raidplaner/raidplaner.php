@@ -22,13 +22,16 @@ class Raidplaner {
     protected $smarty;
 
 
-    public function db(){
+    public function db($from = false){
         if(empty($this->db)){
             include('include/raidplaner/libs/class/database.php');
             $this->db = new Database();
         }
         
         $this->db->reset();
+        if( $from != false){
+            $this->db->from($from);
+        }
         return $this->db;
     }
     
