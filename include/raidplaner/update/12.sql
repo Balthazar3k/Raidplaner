@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS `prefix_raid_klassen` (
   `klassen` varchar(255) NOT NULL DEFAULT '',
   `style` text NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=12 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
 
 INSERT INTO `prefix_raid_klassen` (`id`, `klassen`, `style`) VALUES
 (1, 'Krieger', 'background-color: #C69B6D;'),
@@ -72,7 +72,7 @@ CREATE TABLE IF NOT EXISTS `prefix_raid_classification` (
   `name` varchar(64) NOT NULL,
   `search` int(2) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=34 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=34 ;
 
 INSERT INTO `prefix_raid_classification` (`id`, `class_id`, `name`, `search`) VALUES
 (1, 1, 'Waffen', 0),
