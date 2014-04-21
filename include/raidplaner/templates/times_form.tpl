@@ -55,5 +55,3 @@
         </tbody>
     </table>
 </form>
-                
-                {debug}

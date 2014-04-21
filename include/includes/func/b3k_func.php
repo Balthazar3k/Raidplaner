@@ -200,7 +200,7 @@ function exRaidChar($is=0){
 		if( $_SESSION['charid'] != ''){
 			return ( $is == 0 ? TRUE : '');
 		}else{
-			return ( $is == 0 ? FALSE : "Sie haben kein Char, <a href='index.php?chars-newchar'>Erstellen</a>." );
+			return ( $is == 0 ? FALSE : "Sie haben kein Charakter, <a href='index.php?chars-newchar'>Erstellen</a>." );
 		}
 	}else{
 		return (FALSE);
