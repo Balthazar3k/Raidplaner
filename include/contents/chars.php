@@ -118,7 +118,7 @@ switch($menu->get(1)){
         $q = $_POST['search'];
         $res = db_query("
             SELECT 
-                a.name, a.rang AS rangid, a.s1, a.s2, a.s3, a.realm, a.user, a.punkte, a.id, a.level, 
+                a.name, a.rang AS rangid, a.s1, a.s2, a.realm, a.user, a.id, a.level, 
                 b.id as klassenid, b.klassen, 
                 d.rang, 
                 e.name AS username 

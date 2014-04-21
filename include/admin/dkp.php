@@ -151,14 +151,14 @@ while( $row = db_fetch_assoc( $res )){
 }
 
 ### DKP Werte Laden
-$res = db_query("SELECT name, pm, dkp FROM prefix_raid_dkps WHERE inzen='".$InzenID."' ORDER BY id ASC");
+$res = db_query("SELECT name, dkp FROM prefix_raid_dkps WHERE inzen='".$InzenID."' ORDER BY id ASC");
 if(db_num_rows($res)){
     while($row = db_fetch_assoc( $res )){
         $value = json_encode( $row, true);
         $dkps['DKP'] .= "<option value='".$value."'>".$row['name']." (".$row['pm'].$row['dkp'].")</option>\n";
     }
 } else {
-    $res = db_query("SELECT name, pm, dkp FROM prefix_raid_dkps WHERE inzen='".$InzenID."' ORDER BY id ASC");
+    $res = db_query("SELECT name, dkp FROM prefix_raid_dkps WHERE inzen='0' ORDER BY id ASC");
     while($row = db_fetch_assoc( $res )){
         $value = json_encode( $row, true);
         $dkps['DKP'] .= "<option value='".$value."'>".$row['name']." (".$row['pm'].$row['dkp'].")</option>\n";
