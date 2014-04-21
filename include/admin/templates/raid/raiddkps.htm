@@ -13,28 +13,16 @@
           <td><input name="name" type="text" id="name" value="{name}" size="30" />
               <input name="id" type="hidden" id="id" value="{id}" /></td>
         </tr>
-        <tr class="Cnorm">
-          <td nowrap="nowrap">PM:</td>
-          <td><p>
-            <label>
-              <input name="pm" type="radio" id="pm_0" value="+" {pm1} />
-              Plus</label>
-            (+)<br />
-            <label>
-              <input type="radio" name="pm" value="-" id="pm_1" {pm2} />
-              Minus</label>
-            (-)<br />
-          </p></td>
-        </tr>
+
         <tr class="Cnorm">
           <td nowrap="nowrap">DKP:</td>
           <td><label>
-          <input name="dkp" type="text" id="dkp" value="{dkp}" size="30" />
+          <input name="dkp" type="text" id="dkp" value="{dkp}" placeholder="-150 oder 200" size="30" />
           </label></td>
         </tr>
         <tr class="Cnorm">
           <td>&nbsp;</td>
-          <td><input type="submit" name="button" id="button" value="Senden" /></td>
+          <td><input type="submit" value="Senden" /></td>
         </tr>
       </table>
     </form>
@@ -51,6 +39,10 @@
     <table width="100%" border="0" cellspacing="1" cellpadding="2" class="border">
       <tr class="Chead">
         <td colspan="2"><strong>Inztanzen</strong></td>
+      </tr>
+      <tr class="Cmite">
+        <td width="1%" class="Cdark"></td>
+        <td width="99%" nowrap="nowrap"><b><a href="admin.php?raiddkps-0">Standart Punkte</a></b></td>
       </tr>
       {EXPLODE}
       <tr class="{class}">
@@ -73,7 +65,7 @@
       </tr>
       {EXPLODE}
       <tr class="Cnorm">
-        <td width="50" nowrap="nowrap" class="Cdark"><div align="right">{pm}{dkp}</div></td>
+        <td width="50" nowrap="nowrap" class="Cdark"><div align="right">{dkp}</div></td>
         <td width="98%"><strong>{name}</strong></td>
         <td width="1%">{edit}</td>
         <td width="1%">{del}</td>

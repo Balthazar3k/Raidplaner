@@ -7,17 +7,18 @@ $cssPfad = 'include/admin/templates/';
 $cssFile = 'style.css';
 
 function groupinfos($cid,$id){
-	$sql = "SELECT
-				a.id AS cid,
-				a.user AS uid,
-				c.id AS grid, 
-				b.stammgrp AS grname,
-				d.uid AS guid, d.gid AS ggid, d.fid AS gfid 
-			FROM prefix_raid_chars AS a 
-				LEFT JOIN prefix_raid_stammgrp AS b ON b.id='".$id."'
-				LEFT JOIN prefix_groups AS c ON b.stammgrp=c.name
-				LEFT JOIN prefix_groupusers AS d ON c.id=d.gid AND a.user=d.uid
-			WHERE a.id=".$cid
+	$sql = "
+            SELECT
+                a.id AS cid,
+                a.user AS uid,
+                c.id AS grid, 
+                b.stammgrp AS grname,
+                d.uid AS guid, d.gid AS ggid, d.fid AS gfid 
+            FROM prefix_raid_chars AS a 
+                LEFT JOIN prefix_raid_stammgrp AS b ON b.id='".$id."'
+                LEFT JOIN prefix_groups AS c ON b.stammgrp=c.name
+                LEFT JOIN prefix_groupusers AS d ON c.id=d.gid AND a.user=d.uid
+            WHERE a.id=".$cid
 			;
 	$res = db_query( $sql );
 	return db_fetch_object( $res );
@@ -44,100 +45,55 @@ switch($menu->get(1)){
 		}
 	break;
 	
-	case "edit":
-		echo "<link rel='stylesheet' type='text/css' href='".$cssPfad.$cssFile."'>\n";
-		
-		setModulrightsForCharRang($_POST['id'],'remove');
-		setModulrightsForCharRang($_POST['id'],'insert');
-		
-		arrPrint( $_POST );
-		
-		if( db_query("UPDATE prefix_raid_chars SET 
-		`name` = '".ascape( $_POST['name'])."', 
-		`rang` = '".ascape( $_POST['rang'])."', 
-		`level` = '".ascape( $_POST['level'])."', 
-		`klassen` = '".ascape( $_POST['klassen'])."',
-		`rassen` = '".ascape( $_POST['rassen'])."', 
-		`s1` = '".ascape( $_POST['s1'])."', 
-		`s2` = '".ascape( $_POST['s2'])."', 
-		`s3` = '".ascape( $_POST['s3'])."', 
-		`skillgruppe` = '".ascape( $_POST['skillgruppe'])."', 
-		`mberuf` = '".ascape( $_POST['mberuf'])."', 
-		`mskill` = '".ascape( $_POST['mskill'])."', 
-		`sberuf` = '".ascape( $_POST['sberuf'])."', 
-		`sskill` = '".ascape( $_POST['sskill'])."', 
-		`warum` = '".ascape( $_POST['warum'])."', 
-		`pvp` = '".ascape( $_POST['pvp'])."', 
-		`raiden` = '".ascape( $_POST['raiden'])."', 
-		`teamspeak` = '".$_POST['teamspeak']."', 
-		`realm` = '".ascape( $_POST['realm'])."' 
-		WHERE id=".$_POST['id']) ){
-			wd( "admin.php?chars-details-".$_POST['id'], "Speichern war Erfolgreich!" );
-		}else{
-			wd( "admin.php?chars-details-".$_POST['id'], "Speichern war <b>nicht</b> Erfolgreich!" );
-		}
-	break;
+    case "form":
+        button("Zur&uuml;ck","",8);
+        $raid->charakter()->form('Charakter Formular', 'index.php?chars-save-'.$menu->get(2), $menu->get(2));
+    break;
+    
+    case "save":
+
+        if( $raid->charakter($menu->get(2))->save($_POST) ){
+            wd('admin.php?chars',"Charakter ".$charakter['name']." wurde erfolgreich gespeichert!", 3);
+        }else{
+            wd('admin.php?chars-details-'.$menu->get(2),"Charakter ".$charakter['name']." wurde <b>nicht</b> erfolgreich gespeichert!", 3);
+        }
+
+    break;
 	
-	case "add":
-		echo "<link rel='stylesheet' type='text/css' href='".$cssPfad.$cssFile."'>\n";
-	
-		$chk = "name=is,rang=int,level=int,klassen=int,rassen=int";
-		if( arrDataCheck( $_POST, $chk, 0 ) ){
-			if( @db_query( "INSERT INTO prefix_raid_chars (`name`, `rang`, `level`, `klassen`, `rassen`, `s1`, `s2`, `s3`, `skillgruppe`, `mberuf`, `mskill`, `sberuf`, `sskill`, `realm`, `user`, `warum`, `raiden`, `pvp`, `teamspeak`) VALUES(
-			'".ascape( $_POST['name'] )."', 
-			'".ascape( $_POST['rang'] )."', 
-			'".ascape( $_POST['level'] )."', 
-			'".ascape( $_POST['klassen'] )."',
-			'".ascape( $_POST['rassen'] )."', 
-			'".ascape( $_POST['s1'] )."', 
-			'".ascape( $_POST['s2'] )."', 
-			'".ascape( $_POST['s3'] )."', 
-			'".ascape( $_POST['skillgruppe'] )."', 
-			'".ascape( $_POST['mberuf'] )."', 
-			'".ascape( $_POST['sskill'] )."', 
-			'".ascape( $_POST['sberuf'] )."', 
-			'".ascape( $_POST['sskill'] )."', 
-			'".ascape( $_POST['realm'] )."', 
-			'".ascape( $_POST['id'] )."',
-			'".ascape( $_POST['warum'] )."',
-			'".ascape( $_POST['raiden'] )."',
-			'".ascape( $_POST['pvp'] )."',
-			'".ascape( $_POST['teamspeak'] )."');" ) ){
-				echo "<center>Char wurde unter deinen Username/id Gespeichert! ";
-				button("Fenster Schließen","javascript:window.close();", 1);
-				echo "</center>";
-			}else{
-				echo "<center>Char konnte <b>nicht</b> Gespeichert werden! ";
-				button("Zur&uuml;ck","", 8);
-				echo "</center>";
-			}
-		}else{
-			echo arrDataCheck( $_POST, $chk, 1 );
-		}
-	break;
-	
-	case "del":
-		echo "<link rel='stylesheet' type='text/css' href='".$cssPfad.$cssFile."'>\n";
-	
-		$char_name = db_result(db_query('SELECT name FROM prefix_raid_chars WHERE id='.$menu->get(2) ),0);
-		if(   $menu->get(3) != "true" ){
-			echo "<center><table border=0 cellpadding=5 cellspacing=1 class=border><tr class=Cnorm><td algin='center'>";
-			echo "<b><font  color=red>Wirklich alle daten von \"".$char_name."\" L&ouml;schen? ( dkp, anmeldungen, kalender )";
-			echo "[ <a href='admin.php?".$_SERVER['QUERY_STRING']."-true'>Ja</a> | <a href='admin.php?chars'>Nein</a> ]</font></b>";
-			echo "</td></tr></table></center>";
-		}
-		
-		if( RaidPermission( 0, TRUE) && $menu->get(3) == "true" ){
-			if( db_query("DELETE FROM prefix_raid_chars WHERE id = '".$menu->get(2)."' LIMIT 1") &&
-			db_query("DELETE FROM prefix_raid_dkp WHERE cid = '".$menu->get(2)."'") &&
-			db_query("DELETE FROM prefix_raid_kalender WHERE cid = '".$menu->get(2)."'") &&
-			db_query("DELETE FROM prefix_raid_anmeldung WHERE `char` = '".$menu->get(2)."'") ){
-				wd('admin.php?chars',$char_name.' wurde erfolgreich gel&ouml;scht!', 0);
-			}else{
-				wd('admin.php?chars',$char_name.' wurde <b>nicht</b> erfolgreich gel&ouml;scht!', 3);
-			}
-		}
-	break;
+    case "del":
+        defined ('main') or die ( 'no direct access' );
+        defined ('admin') or die ( 'only admin access' );
+        $design = new design ( 'Admins Area', 'Admins Area', 2 );
+
+        $design->header();
+
+        RaidErrorMsg();
+        aRaidMenu();
+                
+        $name = $raid->charakter($menu->get(2))->name();
+
+        if( $menu->get(3) != "true" ){
+
+            echo $raid->confirm()
+                ->message("Wirklich alle daten von \"".$name."\" L&ouml;schen?")
+                ->onTrue('admin.php?'.$_SERVER['QUERY_STRING'].'-true')
+                ->onFalse('admin.php?chars-details-'.$menu->get(2))
+                ->html('L&ouml;schen');
+
+        }
+
+        if( $menu->get(3) == "true" ){
+            if( $raid->permission()->delete('charakter', $message) ){
+
+                $raid->charakter()->delete($menu->get(2));
+                wd('admin.php?chars',$name.' wurde erfolgreich gel&ouml;scht!', 1);
+            }else{
+                wd('admin.php?chars',$name.' wurde "<b>NICHT</b>" erfolgreich gel&ouml;scht!', 3);
+            }
+        }
+        
+        $design->footer();
+    break;
 	
 	case "addtostamm":
 		echo "<link rel='stylesheet' type='text/css' href='".$cssPfad.$cssFile."'>\n";
@@ -179,14 +135,14 @@ switch($menu->get(1)){
 		if( $_SESSION['authmod']['CharsEditKlassen'] != 1 ){
 			$res = db_query("SELECT id, klassen FROM prefix_raid_klassen ORDER BY id DESC");
 			while( $row = db_fetch_object( $res ) ){
-				$classImg .= '<input type="image" name="klassen['.$row->id.']" src="include/raidplaner/images/wowklein/'.$row->klassen.'.gif" /> ';
+				$classImg .= '<input type="image" name="klassen['.$row->id.']" src="include/raidplaner/images/class/class_'.$row->id.'.jpg" /> ';
 				#$classen[$row->id] = $row->klassen;
 			}
 		
 			$tpl->set_out("srcClass",$classImg,0); ### SUCHEN
 			
 			echo "<br />";
-			button("NewChar", "javascript:creatWindow( \"admin.php?chars-new\", \"NewChar\", \"500\", \"705\" );", 12);
+			button("NewChar", "admin.php?chars-new", 0);
 			button("CharChangeAccount", "javascript:creatWindow( \"admin.php?extern-CharChangeAccount\", \"CharChangeAccount\", \"500\", \"70\" );", 12);
 		}
 				
@@ -199,16 +155,14 @@ switch($menu->get(1)){
 		
 		$tpl->out(1);
 		$sql = "SELECT 
-                        a.id, a.name, a.user, a.regist, a.s1, a.s2, a.s3, 
+                        a.id, a.name, a.user, a.regist, a.s1, a.s2, a.level, 
                         b.id as kid, b.klassen, 
                         c.id as rid, c.rang, 
-                        d.id as uid, d.name as uname, d.gebdatum, 
-                        e.level 
+                        d.id as uid, d.name as uname, d.gebdatum
                 FROM prefix_raid_chars AS a 
                         LEFT JOIN prefix_raid_klassen AS b ON a.klassen = b.id 
                         LEFT JOIN prefix_raid_rang AS c ON a.rang = c.id
                         LEFT JOIN prefix_user AS d ON a.user = d.id 
-                        LEFT JOIN prefix_raid_level AS e ON a.level = e.id 
                 ".$search."
                 ".( $_SESSION['authmod']['CharsEditKlassen'] == 1  ? 'WHERE b.id = '.$_SESSION['charklasse'].' ' : '' )."
                 ORDER BY c.id DESC, b.id DESC ";
@@ -231,7 +185,7 @@ switch($menu->get(1)){
 					$tpl->set_ar_out( $t , 3);
 				}
 				$row->class = cssClass( $row->class );
-				$row->img = class_img($row->klassen);
+				$row->img = class_img($row->kid);
 				$row->name = aLink( $row->name, "chars-details-".$row->id, 1);
 				$row->geb = ( $row->gebdatum != "0000-00-00" ? "[".alter($row->gebdatum)."]" : '');
 				$row->uname = aLink( $row->uname, "user-1-".$row->uid , 1);
@@ -300,34 +254,7 @@ switch($menu->get(1)){
 		
 		$table->out(0); #Table bis TD 1
 		
-		$res = db_query("SELECT 
-                            a.id, a.name, a.user, a.rang, a.level, a.klassen, a.rassen,
-                            a.s1, a.s2, a.s3, a.skillgruppe, a.warum, a.pvp, a.raiden,
-                            a.mberuf, a.mskill, a.sberuf, a.sskill, a.teamspeak, 
-                            a.realm, 
-                            b.rang as rangname 
-                    FROM prefix_raid_chars AS a 
-                            LEFT JOIN prefix_raid_rang AS b ON a.rang=b.id 
-                    WHERE
-                    a.id = ".$menu->get(2)." 
-                    LIMIT 1");
-						
-		$c = db_fetch_object( $res );
-		
-		$c->editPath = "admin.php?chars-edit";
-		$c->title = "Edit Char:" .$c->name;
-		$hidden1 = "<input type='hidden' name='rang' value='".$c->rang."'>";
-		$c->rang = ( $_SESSION['authid'] != $c->user ? drop_down_menu("prefix_raid_rang" , "rang", $c->rang, "") : $c->rangname.$hidden1 );
-		$c->level = drop_down_menu("prefix_raid_level" , "level", $c->level, "");
-		$c->klassen = drop_down_menu("prefix_raid_klassen" , "klassen", $c->klassen, "");
-		$c->rassen = drop_down_menu("prefix_raid_rassen" , "rassen", $c->rassen, "");
-		$c->skillgruppe = skillgruppe( 1, $c->skillgruppe );
-		$c->mberuf = drop_down_menu("prefix_raid_berufe" , "mberuf", $c->mberuf, "");
-		$c->sberuf = drop_down_menu("prefix_raid_berufe" , "sberuf", $c->sberuf, "");
-		$c->tsy = ( $c->teamspeak = 1 ? 'checked="checked"' : '' );
-		$c->tsn = ( $c->teamspeak = 0 ? 'checked="checked"' : '' );
-		
-		$tpl->set_ar_out($c, 5);
+                $raid->charakter()->form('Charakter Formular', 'admin.php?chars-save-'.$menu->get(2), $raid->charakter($menu->get(2))->get());
 		
 		$table->out(1); ## SCHLIEßT TD1 öffnet TD2
                 $stamm = (object) array();
@@ -335,15 +262,17 @@ switch($menu->get(1)){
 		$stamm->stammgrp = drop_down_menu("prefix_raid_stammgrp" , "stammgrp", "", "");
 		$tpl->set_ar_out($stamm,6);
 		
-		$res = db_query("SELECT 
-							a.cid, a.sid, a.date, 
-							b.name, 
-							c.stammgrp 
-						FROM prefix_raid_stammrechte AS a
-							LEFT JOIN prefix_raid_chars AS b ON a.eid=b.id 
-							LEFT JOIN prefix_raid_stammgrp AS c ON a.sid=c.id 
-						WHERE a.cid=".$menu->get(2)."
-						ORDER BY a.sid ASC");
+		$res = db_query("
+                    SELECT 
+                        a.cid, a.sid, a.date, 
+                        b.name, 
+                        c.stammgrp 
+                    FROM prefix_raid_stammrechte AS a
+                        LEFT JOIN prefix_raid_chars AS b ON a.eid=b.id 
+                        LEFT JOIN prefix_raid_stammgrp AS c ON a.sid=c.id 
+                    WHERE a.cid=".$menu->get(2)."
+                    ORDER BY a.sid ASC"
+                );
 		
 		if( db_num_rows( $res ) != 0 ){
 			while( $row = db_fetch_object( $res )){
@@ -364,30 +293,19 @@ switch($menu->get(1)){
 	break;
 	
 	case "new":
-		echo "<link rel='stylesheet' type='text/css' href='".$cssPfad.$cssFile."'>\n";
+		defined ('main') or die ( 'no direct access' );
+		defined ('admin') or die ( 'only admin access' );
+		$design = new design ( 'Admins Area', 'Admins Area', 2 );
 		
-		class cobject{}
-		$c = new cobject();
-	
-		$c->editPath = "admin.php?chars-add";
-		$c->title = "Neuen Char Anlegen!";
+		$design->header();
 		
-		$c->name = '';
-		$c->s1 = $c->s2 = $c->s3 = '';
-		$c->id = $_SESSION['authid'];
-		$c->rang = drop_down_menu("prefix_raid_rang" , "rang", 1, "");
-		$c->level = drop_down_menu("prefix_raid_level" , "level", 1, "");
-		$c->klassen = drop_down_menu("prefix_raid_klassen" , "klassen", 2, "");
-		$c->rassen = drop_down_menu("prefix_raid_rassen" , "rassen", 1, "");
-		$c->skillgruppe = skillgruppe( 1 );
-		$c->mberuf = drop_down_menu("prefix_raid_berufe" , "mberuf", 0, "");
-		$c->sberuf = drop_down_menu("prefix_raid_berufe" , "sberuf", 0, "");
-		$c->mskill = $c->sskill = $c->warum = $c->pvp = $c->raiden = $c->teamspeak = '';
-		$c->realm = $allgAr['realm'];
-		
-		$tpl->set_ar_out($c, 5);
+		RaidErrorMsg();
+		aRaidMenu();
+                
+		$raid->charakter()->form('Charakter Formular', 'admin.php?chars-save');
 		
 		copyright();
+                $design->footer();
 	break;
 }
 
