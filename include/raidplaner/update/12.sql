@@ -35,13 +35,6 @@ ALTER TABLE `prefix_raid_chars`
   DROP `punkte`,
   DROP `teamspeak`;
 
-ALTER TABLE `prefix_raid_klassen`
-  DROP `s1b`,
-  DROP `s2b`,
-  DROP `s3b`,
-  DROP `aufnahmestop`,
-  ADD `style` TEXT NOT NULL;
-
 ALTER TABLE `prefix_raid_dkps`
   DROP `pm`;
 
