@@ -97,7 +97,7 @@ function RaidErrorMsg(){
             while( $row = db_fetch_assoc( $res )){
                 $error['chkRaids'] .= "<div align='center'>";
                 $error['chkRaids'] .= "ERROR: Ausstehender Raid vom: <a href='admin.php?raid-edit-".$row['id']."'>". DateFormat("D d.m.Y H:i", $row['inv'])."</a> ";
-                $error['chkRaids'] .= "(Status �ndern!)";
+                $error['chkRaids'] .= "(Status &auml;ndern!)";
                 $error['chkRaids'] .= "</div>";
             }
 	}
@@ -170,7 +170,7 @@ function aRaidMenu(){
         }
     }
     
-    echo "</div><br />";
+    echo "</div><br /><br />";
 } 
 ### Ist der User Stamm?
 function isStamm($i){

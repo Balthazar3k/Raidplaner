@@ -17,7 +17,8 @@ ALTER TABLE `prefix_raid_klassen`
   DROP `s1b`,
   DROP `s2b`,
   DROP `s3b`,
-  DROP `aufnahmestop`;
+  DROP `aufnahmestop`,
+  ADD `style` TEXT NOT NULL;
 
 ALTER TABLE `prefix_raid_dkps`
   DROP `pm`;
@@ -56,7 +57,42 @@ CREATE TABLE IF NOT EXISTS `prefix_raid_classification` (
   `name` varchar(64) NOT NULL,
   `search` int(2) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=34 ;
+
+INSERT INTO `prefix_raid_classification` (`id`, `class_id`, `name`, `search`) VALUES
+(1, 1, 'Waffen', 0),
+(2, 1, 'Furor', 0),
+(3, 1, 'Schutz', 0),
+(4, 2, 'Heilig', 0),
+(5, 2, 'Schutz', 0),
+(6, 2, 'Vergeltung', 0),
+(7, 3, 'Tierherrschaft', 0),
+(8, 3, 'Treffsicherheit', 0),
+(9, 3, 'Überleben', 0),
+(10, 4, 'Mäucheln', 0),
+(11, 4, 'Kampf', 0),
+(12, 4, 'Täuschung', 0),
+(13, 5, 'Disziplin', 0),
+(14, 5, 'Heilig', 0),
+(15, 5, 'Schatten', 0),
+(16, 6, 'Blut', 0),
+(17, 6, 'Frost', 0),
+(18, 6, 'Unheilig', 0),
+(19, 7, 'Elementar', 0),
+(20, 7, 'Verstärkung', 0),
+(21, 7, 'Wiederherstellung', 0),
+(22, 8, 'Arcan', 0),
+(23, 8, 'Feuer', 0),
+(24, 8, 'Eis', 0),
+(25, 9, 'Gebrechen', 0),
+(26, 9, 'Dämonologie', 0),
+(27, 9, 'Zerstörung', 0),
+(28, 10, 'Braumeister', 0),
+(29, 10, 'Nebelwirker', 0),
+(30, 10, 'Windläufer', 0),
+(31, 11, 'Gleichgewicht', 0),
+(32, 11, 'Wilder Kampf', 0),
+(33, 11, 'Wiederherstellung', 0);
 
 UPDATE `prefix_config` SET `frage`='Bilder in der Gruppen übersicht anzeigen?' WHERE `schl` = 'show_img_raidgruppen';
 UPDATE `prefix_config` SET `frage`='Details der Gruppen anzeigen (raidlist.php)' WHERE `schl` = 'show_details_raidgruppen';

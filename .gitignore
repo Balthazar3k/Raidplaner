@@ -523,3 +523,4 @@ install.php
 install.sql
 scandir.php
 include/raidplaner/cache/*
+*.db

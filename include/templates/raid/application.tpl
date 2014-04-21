@@ -46,7 +46,6 @@
                     <div class="btn-group btn-group-justified">
                         <a class="btn btn-success" href="index.php?bewerbung-form"><i class="fa fa-file-text"></i> Formular</a>
                         <a class="btn btn-primary" href="index.php?user-regist"><i class="fa fa-user"></i> Regestrieren</a>
-                        <a class="btn btn-primary" href="index.php?user-regist"><i class="fa fa-user"></i> Regestrieren</a>
                     </div>
                 </div>
             </div>        

@@ -1,50 +1,85 @@
-<form action="admin.php?raidclasses-saveClass-{$data.edit.id}" method="post">
-    <table>
-        <thead class="Chead">
-            <tr>
-                <th colspan="2">Klassen Liste</th>
-            </tr>
-            <tr>
-                <td align="right">ID</td>
-                <td>Name</td>
-            </tr>
-        </thead>
+<div class="pull-left">
+    <form action="admin.php?raidclasses-saveClassification-{$data.edit.id}" method="post">
+        <table width="100%" cellspacing="1" cellpadding="5" class="border">
+            <thead class="Chead">
+                <tr>
+                    <th colspan="3">Spezialiesierung</th>
+                </tr>
+                <tr>
+                    <td> </td>
+                    <td>Name</td>
+                    <td><i class="fa fa-search-plus"></i> </td>
+                </tr>
+            </thead>
 
-        <tbody class="Cnorm">
-            {foreach from=$data.class item=class}
-            <tr>
-                <td align="right">{$class.id}</td>
-                <td>
-                    <img align="absmiddle" src="include/raidplaner/images/wowklein/{$class.klassen}.gif">
-                    <a href="admin.php?raidclasses-class-{$class.id}"><b>{$class.klassen}</b></a>
-                </td>
-            </tr>
-            {/foreach}
-        </tbody>
+            <tbody class="Cnorm">
+                {assign "id" "0"}
+                {assign "num" "1"}
+                {foreach from=$data.classification item=class}
+                    
+                    
+                    {if $id != $class.class_id}
+                        <tr style="{$class.style}">
+                            <td colspan="3">
+                                <img align="absmiddle" src="include/raidplaner/images/wowklein/{$class.class_name}.gif">
+                                <b>{$class.class_name}</b>
+                            </td>  
+                        </tr>
+                        {assign var="id" $class.class_id}
+                        {assign "num" "1"}
+                    {/if}
+                    
+                    <tr>
+                        <td style="{$class.style}">{$num}.</td>
+                        <td>
+                            <div class="pull-left"><b>{$class.name}</b></div>
+                            <div class="pull-right btn-group btn-group-xs">
+                                <a class="btn btn-success" href="admin.php?raidclasses-classification-{$class.id}"><i class="fa fa-edit"></i></a>
+                                <a class="btn btn-warning" href="admin.php?raidclasses-removeClassification-{$class.id}"><i class="fa fa-trash-o"></i></a>                      
+                            </div>
+                        </td>
+                        <td class="btn-group btn-group-xs">
+                            <a class="btn btn-success" href="admin.php?raidclasses-search-p{$class.id}"><i class="fa fa-plus-circle"></i></a>
+                            <a class="btn btn-default {if $class.search == 0}disabled{/if}" href="admin.php?raidclasses-search-o{$class.id}"><b>{$class.search}</b></a>
+                            <a class="btn btn-danger {if $class.search == 0}disabled{/if}"  href="admin.php?raidclasses-search-m{$class.id}"><i class="fa fa-minus-circle"></i></a>
+                        </td>    
+                    </tr>
+                        
+                    {assign "num" $num+1}
+                {/foreach}
+            </tbody>
 
-        <thead class="Chead">
-            <tr>
-                <th colspan="2">Neue Klasse</th>
-            </tr>
-            <tr>
-                <td></td>
-                <td>Name</td>
-            </tr>
-        </thead>
+            <thead class="Chead">
+                <tr>
+                    <th colspan="3">Neue Klasse</th>
+                </tr>
+            </thead>
 
-        <tbody class="Cmite">
-            <tr>
-                <td></td>
-                <td><input type="text" name="klassen" placeholder="Name" value="{$data.edit.klassen}"></td>
-            </tr>
-        </tbody>
+            <tbody class="Cmite">
+                <tr>
+                    <td></td>
+                    <td>
+                        <select name="class_id">
+                            <option></option>
+                            {foreach $data.class as $item}
+                            <option value="{$item.id}" {if $item.id == $data.edit.class_id}selected="selected"{/if}>{$item.klassen}</option>
+                            {/foreach}
+                        </select>
+                        <input type="text" name="name" placeholder="Name" value="{$data.edit.name}">
+                    </td>
+                    <td>
+                        <input type="text" name="search" placeholder="0" value="{$data.edit.search}" maxlength="2" size="2" class="text-center">
+                    </td>
+                </tr>
+            </tbody>
 
-        <tfoot class="Cdark">
-            <tr>
-                <td></td>
-                <td><input type="submit" value="Speichern" /></td>
-            </tr>
-        </tfoot>
-    </table>
-</form>
-{debug}
+            <tfoot class="Cdark">
+                <tr>
+                    <td colspan="3"><input type="submit" value="Speichern" /></td>
+                </tr>
+            </tfoot>
+        </table>
+    </form>
+</div>
+                    
+<br style="clear: both;" />

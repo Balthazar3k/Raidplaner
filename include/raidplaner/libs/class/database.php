@@ -16,6 +16,7 @@ class Database {
     public $_fields;
     public $_from;
     public $_where;
+    public $_order;
     public $_limit;
     
     public function status(){
@@ -74,9 +75,19 @@ class Database {
         return $this;
     }
     
-    public function where($param) 
+    public function where($param, $val = NULL) 
     {
-        $this->_where = (array) $param;
+        if( is_array($param) ){
+            $this->_where = (array) $param;
+        } else {
+            $this->_where = array($param => $val);
+        }
+        return $this;
+    }
+    
+    public function order($param) 
+    {
+        $this->_order = (array) $param;
         return $this;
     }
     
@@ -214,6 +225,7 @@ class Construct
         $sql = 'SELECT '. ( $data->_select[0] == '*' ? '*' : implode(', ', self::getSelect($data->_select)));
         $sql .= ' FROM '. $data->_from;
         $sql .= ( empty($data->_where) ? '':' WHERE '. implode(' AND ', self::getFields($data->_where)) ) ;
+        $sql .= ( empty($data->_order) ? '':' ORDER BY '. implode(', ', self::getOrder($data->_order)) ) ;
         $sql .= ';';
         return $sql;
                 
@@ -287,6 +299,17 @@ class Construct
             $attr = array();
             foreach( $attributes as $value){
                 $attr[] = '"'.$value.'"';
+            }
+            return $attr;
+        }
+    }
+    
+    public static function getOrder($attributes)
+    {
+        if( is_array($attributes) && count($attributes) > 0 ){
+            $attr = array();
+            foreach( $attributes as $key => $value){
+                $attr[] = '`'.$key.'` '.$value.'';
             }
             return $attr;
         }
