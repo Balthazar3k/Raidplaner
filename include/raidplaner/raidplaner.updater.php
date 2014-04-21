@@ -60,9 +60,9 @@ class updater
 			if( $version < escape($file_name, 'integer') ){
 				$this->updateFiles[escape($file_name, 'integer')] = $this->updatePath . $file_name;
 			}else{
-				/*if( !@unlink( $this->updatePath . $file_name ) ){
+				if( !@unlink( $this->updatePath . $file_name ) ){
 					$this->updateErrors[] = "Update Datei \"". $updateFile ."\" konnte <b>nicht</b> gel&ouml;scht werden!";
-				}*/
+				}
 			}
 		}
 	}
