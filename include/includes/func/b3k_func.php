@@ -218,7 +218,7 @@ function isRaidKalender($is=0){
 }
 ### �berpr�fen ob Char eine Skillung hat wenn ein Char exestiert!
 function isRaidSkillung($is=0){
-	$erg = db_query("SELECT `s1`,`s2`,`s3` FROM `prefix_raid_chars` WHERE id='".$_SESSION['charid']."'");
+	$erg = db_query("SELECT `s1`,`s2` FROM `prefix_raid_chars` WHERE id='".$_SESSION['charid']."'");
 	$sc = db_fetch_assoc($erg);
 	if( $sc['s1'] != 0 or $sc['s2'] != 0 or $sc['s3'] != 0 ){ 
 		return ( $is == 0 ? TRUE : '');

@@ -485,7 +485,7 @@ switch($menu->get(1)){
 		$tpl->out( 0 );
 		$sql = db_query( "SELECT 
 					a.kom, a.stat, a.timestamp,					
-					b.name, b.id as cid, b.s1, b.s2, b.s3,
+					b.name, b.id as cid, b.s1, b.s2,
 					c.id as kid, c.klassen, 
 					b.level, 
 					e.id as rid,
@@ -507,7 +507,7 @@ switch($menu->get(1)){
 				$row["CLASS"] = $Class;
 				$row['img'] = class_img($row['kid']);
 				$row['name'] = "<a href='index.php?chars-show-".$row['cid']."' title='".$name_title."'>".$row['name']."</a>";
-				$row['sb'] = char_skill($row['s1'],$row['s2'],$row['s3'],$row['kid']);
+				$row['sb'] = char_skill($row['s1'],$row['s2'],null,$row['kid']);
 				$tpl->set_ar_out( $row, 1 );
 			}
 		}else{
