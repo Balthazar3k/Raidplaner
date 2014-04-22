@@ -11,6 +11,8 @@ class Raidplaner {
     
     protected $charakter;
     
+    protected $event;
+
     protected $permission;
     
     protected $confirm;
@@ -45,6 +47,18 @@ class Raidplaner {
             $this->charakter->setId($id);
         }
         return $this->charakter;      
+    }
+    
+    public function event($id = false){
+        if(empty($this->event)){
+            include('include/raidplaner/libs/class/event.php');
+            $this->event = new Event($this);
+        } 
+        
+        if( $id ){
+            $this->event->setId($id);
+        }
+        return $this->event;      
     }
     
     public function permission(){
