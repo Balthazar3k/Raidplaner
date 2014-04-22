@@ -69,6 +69,9 @@ class Event {
     public function form($title, $path){
         $data = array();
         
+        $data['form_path'] = $path;
+        $data['form_title'] = $title;
+        
         $data['status'] = $this->db('raid_statusmsg')
                 ->select('id', 'statusmsg')
                 ->rows();
