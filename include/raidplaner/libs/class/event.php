@@ -66,8 +66,35 @@ class Event {
         
     }
     
-    public function form(){
+    public function form($title, $path){
+        $data = array();
         
+        $data['status'] = $this->db('raid_statusmsg')
+                ->select('id', 'statusmsg')
+                ->rows();
+        
+        $data['leader'] = $this->db('raid_chars')
+                ->select('id', 'name')
+                ->where('rang', 10)
+                ->order(array('rang' => 'DESC'))
+                ->rows();
+        
+        $data['dungeon'] = $this->db('raid_inzen')
+                ->select('id', 'name')
+                ->rows();
+        
+        $data['group'] = $this->db('raid_gruppen')
+                ->select('id', 'gruppen')
+                ->rows();
+        
+        $data['times'] = $this->db('raid_zeit')
+                ->select('id', 'weekday', 'start', 'inv', 'pull')
+                ->rows();
+        
+        $this->raidplaner->smarty()
+                ->assign('data', $data)
+                ->assign('event', $this->get())
+                ->display('event_form.tpl');           
     }
 }
 
