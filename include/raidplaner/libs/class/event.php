@@ -66,7 +66,7 @@ class Event {
         
     }
     
-    public function form($title, $path){
+    public function form($title, $path, $id = NULL){
         $data = array();
         
         $data['form_path'] = $path;
@@ -96,7 +96,7 @@ class Event {
         
         $this->raidplaner->smarty()
                 ->assign('data', $data)
-                ->assign('event', $this->get())
+                ->assign('event', $this->setId($id)->get())
                 ->display('event_form.tpl');           
     }
 }
