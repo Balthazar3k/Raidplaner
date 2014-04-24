@@ -19,9 +19,10 @@ $raid->header()
     ->set('jquery/css/ui-darkness/jquery-ui-1.10.4.custom.min.css')
 
     ->set('../../includes/css/raidplaner.css')
-    ->set('../../includes/js/b3k.js');
+    ->set('../../includes/js/b3k.js')
+    ->set('mousewheel/jquery.mousewheel.min.js');
 
-$raid->header()->get('font-awesome', 'jquery', '..');
+$raid->header()->get('font-awesome', 'jquery', 'mousewheel', '..');
 
 ### Sessions der mainchars Generieren.
 function CreatRaidSession(){
