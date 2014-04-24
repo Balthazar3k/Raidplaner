@@ -17,6 +17,25 @@ class Charakter {
         $this->_id = (int) $id;
     }
     
+    private static function standart_sql(){
+        return '
+            SELECT 
+                a.id, a.name, a.level, a.s1, a.s2,
+                b.id as class_id, b.klassen as class_name,
+                c.name as s1_name,
+                d.name as s2_name,
+                e.id as rank_id, e.rang as rank_name,  
+                f.id as race_id, f.rassen as race_name 
+             FROM prefix_raid_chars AS a 
+                LEFT JOIN prefix_raid_klassen AS b ON a.klassen = b.id 
+                LEFT JOIN prefix_raid_classification AS c ON a.s1 = c.id
+                LEFT JOIN prefix_raid_classification AS d ON a.s2 = d.id
+                LEFT JOIN prefix_raid_rang AS e ON a.rang = e.id 
+                LEFT JOIN prefix_raid_rassen AS f ON a.rassen = f.id 
+        ';
+    }
+
+
     public function save($data) {
 
         $status = array();
@@ -93,25 +112,15 @@ class Charakter {
             trigger_error('need Charakter id');
         }
         
-        $charakter = $this->raidplaner->db()->queryRow('
-            SELECT 
-                a.id, a.name, a.level, a.s1, a.s2, a.warum, a.skillgruppe, a.regist,
-                b.id as class_id, b.klassen as class_name,  
-                d.id as rank_id, d.rang as rank_name, 
-                f.id as user_id, f.name AS user_name, 
-                e.id as race_id, e.rassen as race_name
-            FROM prefix_raid_chars AS a 
-                LEFT JOIN prefix_raid_klassen AS b ON a.klassen = b.id 
-                LEFT JOIN prefix_raid_rang AS d ON a.rang = d.id 
-                LEFT JOIN prefix_raid_rassen AS e ON a.rassen = e.id 
-                LEFT JOIN prefix_user AS f ON a.user = f.id 
+        $charakter = $this->raidplaner->db()->queryRow(
+            self::standart_sql() . '
             WHERE a.id = \''.$this->_id.'\'
             LIMIT 1
         ');
          
         $this->_uid = $charakter['user_id'];
         
-        $charakter['times'] = $this->raidplaner->db()
+        $charakter['times'] = @$this->raidplaner->db()
                 ->select('zid')
                 ->from('raid_zeit_charakter')
                 ->where(array('cid' => $this->_id))
@@ -128,22 +137,9 @@ class Charakter {
                 ->where(array('id' => $this->_id))
                 ->cell();
 
-            return $this->raidplaner->db()->queryRows('
-                SELECT 
-                    a.id, a.name, a.level, a.s1, a.s2,
-                    b.id as class_id, b.klassen as class_name,
-                    c.name as s1_name,
-                    d.name as s2_name,
-                    e.id as rank_id, e.rang as rank_name,  
-                    f.id as race_id, f.rassen as race_name 
-                 FROM prefix_raid_chars AS a 
-                    LEFT JOIN prefix_raid_klassen AS b ON a.klassen = b.id 
-                    LEFT JOIN prefix_raid_classification AS c ON a.s1 = c.id
-                    LEFT JOIN prefix_raid_classification AS d ON a.s2 = d.id
-                    LEFT JOIN prefix_raid_rang AS e ON a.rang = e.id 
-                    LEFT JOIN prefix_raid_rassen AS f ON a.rassen = f.id 
-                    
-                 WHERE a.user = \''.$this->_uid.'\'
+            return $this->raidplaner->db()->queryRows(
+                self::standart_sql() . ' 
+                WHERE a.user = \''.$this->_uid.'\'
             ');
         } else {
             return array();
