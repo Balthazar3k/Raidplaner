@@ -487,7 +487,7 @@ switch($menu->get(1)){
 					a.kom, a.stat, a.timestamp,					
 					b.name, b.id as cid, b.s1, b.s2,
 					c.id as kid, c.klassen, 
-					b.level, 
+					b.level, b.skillgruppe,
 					e.id as rid,
 					f.statusmsg, f.color, 
 					SUM(dkp) as DKP 
@@ -507,7 +507,7 @@ switch($menu->get(1)){
 				$row["CLASS"] = $Class;
 				$row['img'] = class_img($row['kid']);
 				$row['name'] = "<a href='index.php?chars-show-".$row['cid']."' title='".$name_title."'>".$row['name']."</a>";
-				$row['sb'] = char_skill($row['s1'],$row['s2'],null,$row['kid']);
+				$row['skillgruppe'] = skillgruppe(0,$row['skillgruppe']);
 				$tpl->set_ar_out( $row, 1 );
 			}
 		}else{
