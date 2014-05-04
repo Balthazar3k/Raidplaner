@@ -5,7 +5,7 @@ Beschreibung:
 ---------------------------------------
 Kleines Framework
 
-Dieses Modul eignet sich um schneller Module zu Schreiben.
+Dieses Modul eignet sich um schneller Module zu Schreiben in ilch.
 Man sollte sich mit OOP auskennen.
 
 Entwickelt
@@ -42,6 +42,7 @@ $core->func();
 $core->permission();
 $core->confirm();
 $core->header();
+$core->smarty();
 
 Bekannte Einschränkungen / Fehler:
 ---------------------------------------
