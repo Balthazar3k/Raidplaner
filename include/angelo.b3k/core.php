@@ -2,7 +2,7 @@
 
 /* 
  * Copyright: Balthazar3k.funpic.de 2014
- * Modue: Raidplaner 1.1
+ * Module: Core
  */
 
 class Core {
@@ -20,7 +20,7 @@ class Core {
 
     public function db($from = false){
         if(empty($this->db)){
-            include('include/raidplaner/libs/class/database.php');
+            include('include/angelo.b3k/libs/class/database.php');
             $this->db = new Database();
         }
         
@@ -34,7 +34,7 @@ class Core {
     
     public function permission(){
         if(empty($this->permission)){
-            include('include/raidplaner/libs/class/permission.php');
+            include('include/angelo.b3k/libs/class/permission.php');
             $this->permission = new Permission($this);
         }
         
@@ -43,7 +43,7 @@ class Core {
     
     public function confirm(){
         if(empty($this->confirm)){
-            include('include/raidplaner/libs/class/confirm.php');
+            include('include/angelo.b3k/libs/class/confirm.php');
             $this->confirm = new Confirm($this);
         }
         
@@ -52,7 +52,7 @@ class Core {
     
     public function header(){
         if(empty($this->header)){
-            include('include/raidplaner/libs/class/header.php');
+            include('include/angelo.b3k/libs/class/header.php');
             $this->header = new Header();
         }
         
@@ -61,14 +61,13 @@ class Core {
     
     public function smarty(){
         if(empty($this->smarty)){
-            require_once('include/raidplaner/libs/smarty/Smarty.class.php');
+            require_once('include/angelo.b3k/libs/smarty/Smarty.class.php');
             $this->smarty = new Smarty();
             $this->smarty
-                ->addTemplateDir('include/raidplaner/templates/')
-                ->addTemplateDir('include/templates/raid/')
-                ->addPluginsDir('include/raidplaner/libs/smarty/plugins/')
-                ->setCompileDir('include/raidplaner/cache/templates_c')
-                ->setCacheDir('.include/raidplaner/cache');
+                ->addTemplateDir('include/angelo.b3k/templates/')
+                ->addPluginsDir('include/angelo.b3k/libs/smarty/plugins/')
+                ->setCompileDir('include/angelo.b3k/cache/templates_c/')
+                ->setCacheDir('include/angelo.b3k/cache/');
         }
         
         return $this->smarty;
