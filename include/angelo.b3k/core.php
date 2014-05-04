@@ -5,17 +5,13 @@
  * Modue: Raidplaner 1.1
  */
 
-class Raidplaner {
+class Core {
     
     protected $db;
-    
-    protected $charakter;
     
     protected $permission;
     
     protected $confirm;
-    
-    protected $times;
     
     protected $header;
     
@@ -35,17 +31,6 @@ class Raidplaner {
         return $this->db;
     }
     
-    public function charakter($id = false){
-        if(empty($this->charakter)){
-            include('include/raidplaner/libs/class/charakter.php');
-            $this->charakter = new Charakter($this);
-        } 
-        
-        if( $id ){
-            $this->charakter->setId($id);
-        }
-        return $this->charakter;      
-    }
     
     public function permission(){
         if(empty($this->permission)){
@@ -63,15 +48,6 @@ class Raidplaner {
         }
         
         return $this->confirm;
-    }
-    
-    public function times(){
-        if(empty($this->times)){
-            include('include/raidplaner/libs/class/times.php');
-            $this->times = new Times($this);
-        }
-        
-        return $this->times;
     }
     
     public function header(){

@@ -1,14 +1,14 @@
 <?php
 class Permission {
     
-    protected $raidplaner;
+    protected $core;
     
     protected $create;
     protected $update;
     protected $delete;
     
     public function __construct($object) {
-        $this->raidplaner = $object;
+        $this->core = $object;
         
         /* Permissions for Creating */
         $this->create = array(

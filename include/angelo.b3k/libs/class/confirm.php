@@ -1,7 +1,7 @@
 <?php
 class Confirm {
     
-    protected $raidplaner;
+    protected $core;
     
     protected $_message;    
     protected $_true;
@@ -9,7 +9,7 @@ class Confirm {
     protected $_button;
     
     public function __construct($object) {
-        $this->raidplaner = $object;
+        $this->core = $object;
         return $this;
     }
     
@@ -36,7 +36,7 @@ class Confirm {
         );
         
         return '
-            <div id="dialog-confirm" title="'.$title.'" '. $this->raidplaner->setAttr($attr).'>
+            <div id="dialog-confirm" title="'.$title.'" '. $this->core->setAttr($attr).'>
                 '.$this->_message.'
             </div>
         ';

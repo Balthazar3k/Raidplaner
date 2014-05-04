@@ -6,9 +6,9 @@
     <!--RAIDPLANER HEADER-->
     <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Ubuntu:regular,bold&subset=Latin&effect=shadow-multiple|3d">
     <link rel='stylesheet' type='text/css' href='include/includes/css/raidplaner.css' />
-    <script src='include/raidplaner/libs/jquery/js/jquery-1.10.2.js' type='text/javascript'></script>
-    <script src='include/raidplaner/libs/jquery/js/jquery-ui-1.10.4.custom.min.js'></script>
-    <link rel='stylesheet' type='text/css' href='include/raidplaner/libs/jquery/css/ui-darkness/jquery-ui-1.10.4.custom.min.css' />
+    <script src='include/angelo.b3k/libs/jquery/js/jquery-1.10.2.js' type='text/javascript'></script>
+    <script src='include/angelo.b3k/libs/jquery/js/jquery-ui-1.10.4.custom.min.js'></script>
+    <link rel='stylesheet' type='text/css' href='include/angelo.b3k/libs/jquery/css/ui-darkness/jquery-ui-1.10.4.custom.min.css' />
     <script src='include/includes/js/b3k.js' type='text/javascript'></script>
     <!--RAIDPLANER HEADER END-->
     <script type='text/javascript'>
