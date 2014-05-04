@@ -16,22 +16,23 @@ Entwickelt
 
 Installation:
 ---------------------------------------
+• Alle Files Hochladen
 • Den folgenden Code in die "include/includes/loader.php" einfügen
 
-/* Balthazar3k Core */
-require_once ('include/angelo.b3k/core.php');
-$core = new Core();
+        /* Balthazar3k Core */
+        require_once ('include/angelo.b3k/core.php');
+        $core = new Core();
 
-$core->header()
-    ->set('font-awesome/css/font-awesome.min.css')
-        
-    ->set('jquery/js/jquery-1.10.2.js')
-    ->set('jquery/js/jquery-ui-1.10.4.custom.min.js')
-    ->set('jquery/css/ui-darkness/jquery-ui-1.10.4.custom.min.css')
+        $core->header()
+            ->set('font-awesome/css/font-awesome.min.css')
 
-    ->set('core/core.js');
+            ->set('jquery/js/jquery-1.10.2.js')
+            ->set('jquery/js/jquery-ui-1.10.4.custom.min.js')
+            ->set('jquery/css/ui-darkness/jquery-ui-1.10.4.custom.min.css')
 
-$core->header()->get('font-awesome', 'jquery', 'core');
+            ->set('core/core.js');
+
+        $core->header()->get('font-awesome', 'jquery', 'core');
 
 Schnittstellen:
 ---------------------------------------
