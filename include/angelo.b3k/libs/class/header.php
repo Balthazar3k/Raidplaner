@@ -5,8 +5,8 @@ class Header{
     protected $parse;
 
     protected $headers_html = array(
-        'css' => '<link id="%s" type="text/css" href="include/raidplaner/libs/%s" rel="stylesheet" />',
-        'js' => '<script id="%s" type="text/javascript" src="include/raidplaner/libs/%s" ></script>'
+        'css' => '<link id="%s" type="text/css" href="include/angelo.b3k/libs/%s" rel="stylesheet" />',
+        'js' => '<script id="%s" type="text/javascript" src="include/angelo.b3k/libs/%s" ></script>'
     );
     
     public function set($string){

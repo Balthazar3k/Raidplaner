@@ -214,7 +214,7 @@ class Database {
     }
     
     public function getSql(){
-        arrPrint($this->_sql);
+        print_r($this->_sql);
     }
     
 }

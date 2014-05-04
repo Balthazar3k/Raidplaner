@@ -1,30 +1,46 @@
-Raidplaner & DKP System v1.1 für ilchClan 1.1p (www.ilch.de):
+Core v1.0 für ilch CMS 1.1p (www.ilch.de):
 _____________________________________________________________
 
 Beschreibung:
 ---------------------------------------
-Raidplaner mit DKP System für den Gebrauch von Gilden deren Aktivität
-World-of-Warcraft angehört. Aber bestimmt auch möglich anders anzupassen.
-Bei weiteren Fragen Verbesserungsvorschläge... http://balthazar3k.funpic.de!
+Kleines Framework
 
-Dieses Modul eignet sich auch für anderer Zwecke.
-Verbesserungsvorschläge sind immer Herzlichst Willkommen :)
+Dieses Modul eignet sich um schneller Module zu Schreiben.
+Man sollte sich mit OOP auskennen.
 
 Entwickelt
 ---------------------------------------
 • von "Balthazar3k"
-• auf Basis von IlchClan 1.1o
-• Es werden keine Dateien Überschrieben, funktioniert größtenteils eigenständig! Benötigt jedoch ilch User und MySQL Funktionen
+• auf Basis von IlchClan 1.1p
+• Es werden keine Dateien Überschrieben.
 
 Installation:
 ---------------------------------------
-• Welche Schritte muss ich ausführen, damit dieses Modul funktioniert ?
-	01. alle Dateien im Archive, in ihrer Ordnerstruktur hochladen
-	02. Die install.raidplaner.php ausführen um die Datenbanken zu Installieren!
-	03. Die "install.raidplaner.php" & "RAIDPLANER.sql" nach der Installation Löschen.
-	04. ü in der Navigation einfügen ( raidlist.php, chars.php, raidstatistik.php, bewerbung.php)
-	05. Den ersten Charakter anlegen, dem dann Rang Gildenmeister geben.	
-• Über weitere Einstellungen informiert Sie der Raidplaner
+• Den folgenden Code in die "include/includes/loader.php" einfügen
+
+/* Balthazar3k Core */
+require_once ('include/angelo.b3k/core.php');
+$core = new Core();
+
+$core->header()
+    ->set('font-awesome/css/font-awesome.min.css')
+        
+    ->set('jquery/js/jquery-1.10.2.js')
+    ->set('jquery/js/jquery-ui-1.10.4.custom.min.js')
+    ->set('jquery/css/ui-darkness/jquery-ui-1.10.4.custom.min.css')
+
+    ->set('core/core.js');
+
+$core->header()->get('font-awesome', 'jquery', 'core');
+
+Schnittstellen:
+---------------------------------------
+
+$core->db();
+$core->func();
+$core->permission();
+$core->confirm();
+$core->header();
 
 Bekannte Einschränkungen / Fehler:
 ---------------------------------------

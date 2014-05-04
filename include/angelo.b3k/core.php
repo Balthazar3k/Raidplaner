@@ -16,6 +16,8 @@ class Core {
     protected $header;
     
     protected $smarty;
+    
+    protected $func;
 
 
     public function db($from = false){
@@ -73,26 +75,13 @@ class Core {
         return $this->smarty;
     }
     
-    /**
-     * change the array to a HTML Atributes string
-     * 
-     * @param array $attributes
-     * @return string
-     */
-    
-    public function setAttr($attributes)
-    {
-        if( is_Array($attributes) && count($attributes) > 0 ){
-            $attr = array();
-            foreach( $attributes as $key => $value){
-                if( is_array($value) ){
-                    $attr[] = $key . '="'.$this->setCSS($value).'"';
-                } else {
-                    $attr[] = $key . '="'.$value.'"';
-                }
-            }
-            return implode(' ', $attr);
+    public function func(){
+        if(empty($this->func)){
+            include('include/angelo.b3k/libs/class/func.php');
+            $this->func = new Func();
         }
+        
+        return $this->func;
     }
 }
 ?>
