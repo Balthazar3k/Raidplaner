@@ -18,6 +18,8 @@ class Core {
     protected $smarty;
     
     protected $func;
+    
+    protected $upload;
 
 
     public function db($from = false){
@@ -82,6 +84,15 @@ class Core {
         }
         
         return $this->func;
+    }
+    
+    public function upload(){
+        if(empty($this->upload)){
+            include('include/angelo.b3k/libs/class/uploader.php');
+            $this->upload = new Upload($this);
+        }
+        
+        return $this->upload;
     }
 }
 ?>

@@ -8,10 +8,12 @@ $(document).ready(function() {
 
             },
             'Nein': function() {
-                window.location.href = $(this).attr('data-false');
+                if( $(this).attr('data-false') ){
+                    window.location.href = $(this).attr('data-false');
+                } else {
+                    $(this).dialog('close');
+                }
             }
         }
-    });
-
-    $('.buttonset').buttonset();      
+    });    
 });

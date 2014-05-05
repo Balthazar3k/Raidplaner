@@ -36,8 +36,8 @@ class Confirm {
         );
         
         return '
-            <div id="dialog-confirm" title="'.$title.'" '. $this->core->func()->setAttr($attr).'>
-                '.$this->_message.'
+            <div id="dialog-confirm" title="'.htmlentities($title).'" '. $this->core->func()->setAttr($attr).'>
+                '.htmlentities($this->_message).'
             </div>
         ';
     }
