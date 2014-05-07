@@ -10,7 +10,7 @@ switch ($menu->get(3)){
     case 'edit':
         $categoryEdit = $core->db()
             ->select('*')
-            ->from('article_category')
+            ->from('shop_category')
             ->where('category_id', $menu->get(4))
             ->row();
     break;
@@ -28,14 +28,14 @@ switch ($menu->get(3)){
                 ->init();
             
             $core->db()->singel()
-                ->update('article_category')
+                ->update('shop_category')
                 ->fields($_POST)
                 ->where('category_id', $menu->get(4))
                 ->init();
             
         } else {
             $last_id = $core->db()->queryRow("
-                SELECT MAX(category_id) FROM prefix_article_category;
+                SELECT MAX(category_id) FROM prefix_shop_category;
             ");
             
             $_POST['category_image'] = $core->upload()
@@ -44,7 +44,7 @@ switch ($menu->get(3)){
             
             $_POST['category_sub'] = $menu->get(2);
             $core->db()->singel()
-                ->insert('article_category')
+                ->insert('shop_category')
                 ->fields($_POST)
                 ->init();
             
@@ -58,7 +58,7 @@ switch ($menu->get(3)){
             
             $image = $core->db()
                 ->select('category_image')
-                ->from('article_category')
+                ->from('shop_category')
                 ->where('category_id', $menu->getE(4))
                 ->cell();
             
@@ -66,19 +66,19 @@ switch ($menu->get(3)){
             @unlink($image);
             
             /* Lösche Kategorie */
-            $core->db()->delete('article_category')
+            $core->db()->delete('shop_category')
                 ->where('category_id', $menu->getE(4))
                 ->init();
             
             /* Lösche Sub Kategorien */
-            $core->db()->delete('article_category')
+            $core->db()->delete('shop_category')
                 ->where('category_sub', $menu->getE(4))
                 ->init();
             
         } else {
             $name = $core->db()
                 ->select('category_name')
-                ->from('article_category')
+                ->from('shop_category')
                 ->where('category_id', $menu->get(4))
                 ->cell();
             
@@ -104,11 +104,10 @@ $design->header();
 $categoryID = (empty($menu->get(2)) ? 0 : $menu->get(2));
 $articleCategory = $core->db()
         ->select('*')
-        ->from('article_category')
+        ->from('shop_category')
         ->where('category_sub', $categoryID)
         ->rows();
 
-$tpl = $core->smarty();
 
 $tpl->assign('category', $articleCategory);
 
@@ -122,17 +121,4 @@ $tpl->display('article_category.tpl');
 
 
 $design->footer();
-
-function categorys($field, $category) {
-    if( !is_array($category) ){
-        return NULL;
-    }
-    
-    $array = array();
-    
-    foreach( $category as $i => $v ){
-        $array[$i] = '';
-    }
-}
-
 ?>

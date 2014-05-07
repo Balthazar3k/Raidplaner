@@ -2,7 +2,7 @@
 
 <div class="col-lg-6">
     <div class="col-lg-12">
-        <a class="btn btn-default" href="javascript:history.back()"><i class="fa fa-reply"></i> Zur&uuml;ck</a>
+        <a class="btn btn-default" href="?shop-category-{$smarty.session.shop.last_category}"><i class="fa fa-reply"></i> Zur&uuml;ck</a>
         <h4 class="pull-right">
             {if $category|is_array}
                 <b>{$category|count}</b> Kategorien<br>
@@ -38,6 +38,20 @@
 <div class="col-lg-3">
     <legend>Formular</legend>
     <form class="form-horizontal" method="post" enctype="multipart/form-data" action="admin.php?shop-category-{$edit.id}-save-{$edit.res.category_id}">
+        <!--<div class="form-group">
+            <div class="col-lg-12">
+                <select
+                    name="category_sub"
+                    class="form-control"
+                    >
+                        {foreach from=$category_sub item=sub}
+                            {foreach from=$sub item=i}
+                                <option value="{$i.category_id}">{$i.category_name}</option>
+                            {/foreach}
+                        {/foreach}
+                </select>
+            </div> 
+        </div>-->
         <div class="form-group">
             <div class="col-lg-12">
                 <input 
