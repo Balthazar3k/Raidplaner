@@ -80,7 +80,8 @@ switch ($menu->get(3)){
             echo $core->confirm()
                 ->message('Möchten Sie wirklich den Artikel "'.$name.'" löschen?')
                 ->onTrue('admin.php?shop-article-'.$menu->get(2).'-delete-t'.$menu->get(4))
-                ->html('Aktion bestätigen!');
+                ->onFalse('admin.php?shop-article-'.$menu->get(2))
+                ->panel('Aktion bestätigen!');
         }
                
     break;
@@ -103,17 +104,24 @@ $category = $core->db()
 
 $article = $core->db()->queryRows("
     SELECT
-        a.*, b.*
+        a.*, b.*, c.*
     FROM prefix_shop_articles AS a
         LEFT JOIN prefix_shop_units AS b ON a.article_unit = b.unit_id
+        LEFT JOIN prefix_shop_category AS c ON a.article_category = c.category_id
     WHERE a.article_category = '".$categoryID."'
     ORDER BY a.article_name ASC;
 ");
+
+$units = $core->db()
+        ->select('*')
+        ->from('shop_units')
+        ->rows();
 
 //$core->func()->ar($article);
 
 $tpl->assign('category', $category);
 $tpl->assign('article', $article);
+$tpl->assign('units', $units);
 $tpl->assign('edit', array(
     'id' => $articleID,
     'res' => $articleEdit
