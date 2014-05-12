@@ -4,22 +4,18 @@
 
 
 defined ('main') or die ( 'no direct access' );
-defined ('admin') or die ( 'only admin access' );
 
-unset($_SESSION['shop']);
-
-$core->header()->get('font-awesome', 'jquery', 'core', 'bootstrap');
+$core->header()->get('core');
 $tpl = $core->smarty();
 $tpl->assign('menu', $menu->menu_ar);
 
 switch($menu->get(1)){
-    default: $shopModule = 'category.php'; break;
-    case 'category': $shopModule = 'category.php'; break;
-    case 'article': $shopModule = 'article.php'; break;
+    default: $shopModule = 'article.php'; break;
+    case 'ajax': $shopModule = 'ajax.php'; break;
 }
 
 if( !empty( $shopModule )){
-    include 'include/admin/shop/'.$shopModule;
+    include 'include/contents/shop/'.$shopModule;
 }
 
 /* Set last Category ID */

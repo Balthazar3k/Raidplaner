@@ -1,3 +1,6 @@
+
+include/angelo.b3k/cache/*
+include/designs/hofladen/*
 nbproject/*
 include/downs/downloads/downs/.gitignore
 include/downs/downloads/user_upload/.gitignore

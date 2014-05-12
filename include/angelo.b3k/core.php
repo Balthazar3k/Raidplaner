@@ -9,6 +9,8 @@ class Core {
     
     protected $db;
     
+    protected $pager;
+    
     protected $permission;
     
     protected $confirm;
@@ -35,6 +37,14 @@ class Core {
         return $this->db;
     }
     
+    public function pager(){
+        if(empty($this->pager)){
+            include('include/angelo.b3k/libs/class/pager.php');
+            $this->pager = new Pager($this->db());
+        }
+        
+        return $this->pager;
+    }
     
     public function permission(){
         if(empty($this->permission)){

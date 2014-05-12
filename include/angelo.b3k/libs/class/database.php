@@ -63,6 +63,10 @@ class Database {
         }
     }
     
+    private function db_result($res){
+        return db_result($res, 0);
+    }
+    
     public function from($from) 
     {
         $this->_from = (string) 'prefix_'.$from;
@@ -144,6 +148,12 @@ class Database {
         $this->_sql[] = $sql;
         $res = $this->db_query($sql);
         return $this->row($res);
+    }
+    
+    public function queryCell($sql){
+        $this->_sql[] = $sql;
+        $res = $this->db_query($sql);
+        return $this->db_result($res);
     }
     
     public function getQuery(){

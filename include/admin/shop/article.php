@@ -16,10 +16,13 @@ switch ($menu->get(3)){
     break;
 
     case 'save':
-
+        
         $core->upload()
             ->type('jpg', 'gif', 'jpeg', 'png')
             ->path('include/angelo.b3k/images/shop_articles/');
+        
+        /* Change Price to Decimal */
+        $_POST['article_netprice'] = str_replace(',','.', $_POST['article_netprice']);
         
         if($menu->get(4)){
             
@@ -104,13 +107,31 @@ $category = $core->db()
 
 $article = $core->db()->queryRows("
     SELECT
-        a.*, b.*, c.*
+        SQL_CALC_FOUND_ROWS /* SELECT FOUND_ROWS() */
+        a.*, b.*, c.*,
+        
+        /* Calc Price with Tax */
+        ROUND(((a.article_netprice*a.article_tax)/100),2) AS article_taxprice,
+        ROUND((((a.article_netprice*a.article_tax)/100)+article_netprice),2) AS article_taxnetprice,
+
+        /* Calc Price with Discount */
+        ROUND(((a.article_netprice*a.article_discount)/100),2) AS article_discountprice,
+        ROUND((((a.article_netprice*a.article_discount)/100)-a.article_netprice),2) AS article_discountnetprice,
+
+        /* Calc final Price */
+        ROUND(((a.article_netprice-(a.article_netprice*a.article_discount)/100)+((a.article_netprice*a.article_tax)/100)),2) AS article_grossprice
+    
     FROM prefix_shop_articles AS a
         LEFT JOIN prefix_shop_units AS b ON a.article_unit = b.unit_id
         LEFT JOIN prefix_shop_category AS c ON a.article_category = c.category_id
     WHERE a.article_category = '".$categoryID."'
-    ORDER BY a.article_name ASC;
+    ORDER BY a.article_name ASC
+    LIMIT ".$core->pager()->limit(1,3).";
 ");
+
+$core->pager()->get();
+
+$core->func()->ar($_SESSION);
 
 $units = $core->db()
         ->select('*')
