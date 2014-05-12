@@ -50,16 +50,16 @@
             </thead>
             <tbody>
                 {foreach $article as $i}
-                <tr {if $menu[3] == 'edit' && $menu[4] == $i.article_id}class="info"{/if}>
+                <tr {if $menu[3] == 'edit' && $menu[4] == $i.article_id}class="info"{/if} data-view="{$i.article_name}">
                     <td class="text-right">{$i.article_id}</td>
                     <td><b>{$i.article_name}</b></td>
                     <td class="text-center">{if !empty($i.article_image)}<i class="fa fa-check-square"></i>{else}{/if}</td>
                     <td class="text-center">{$i.article_number} {$i.unit_short}</td>
                     <td class="text-center">{$i.article_amount} {$i.unit_short}</td>
-                    <td class="text-center">{$i.article_netprice|price} {$i|shop}</td>
-                    <td class="text-center success"><b>{$i.article_netprice|tax:$i.article_tax}</b></td>
-                    <td class="text-center">{if !empty($i.article_tax)}{$i.article_tax}%{/if}</td>
-                    {if !empty($i.article_discount)}<td class="text-center danger">{$i.article_discount}% | {($i.article_netprice|discount:$i.article_discount)|tax:$i.article_tax}</td>{else}<td></td>{/if}
+                    <td class="text-center">{$i.article_netprice|price}</td>
+                    <td class="text-center success"><b>{$i.article_grossprice|price}</b></td>
+                    <td class="text-center">{if !empty($i.article_tax)}{$i.article_tax}% | +{$i.article_taxprice|price}{/if}</td>
+                    {if !empty($i.article_discount)}<td class="text-center danger">{$i.article_discount}% | -{$i.article_discountprice|price}</td>{else}<td></td>{/if}
                     <td>
                         <div  class="btn-group pull-right">
                             <a class="btn btn-success btn-xs" href="?shop-article-{$menu[2]}-edit-{$i.article_id}"><i class="fa fa-edit"></i> </a>

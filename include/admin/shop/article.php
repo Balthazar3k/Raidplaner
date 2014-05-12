@@ -125,13 +125,8 @@ $article = $core->db()->queryRows("
         LEFT JOIN prefix_shop_units AS b ON a.article_unit = b.unit_id
         LEFT JOIN prefix_shop_category AS c ON a.article_category = c.category_id
     WHERE a.article_category = '".$categoryID."'
-    ORDER BY a.article_name ASC
-    LIMIT ".$core->pager()->limit(1,3).";
+    ORDER BY a.article_name ASC;
 ");
-
-$core->pager()->get();
-
-$core->func()->ar($_SESSION);
 
 $units = $core->db()
         ->select('*')
