@@ -1,19 +1,27 @@
 $(document).ready(function() {
-    $( "#dialog-confirm" ).dialog({
-        resizable: false,
-        modal: true,
-        buttons: {
-            "Ja": function() {
-              window.location.href = $(this).attr('data-true');
-
-            },
-            'Nein': function() {
-                if( $(this).attr('data-false') ){
-                    window.location.href = $(this).attr('data-false');
-                } else {
-                    $(this).dialog('close');
-                }
-            }
+    $( "[data-amount]" ).click(function(event){
+        event.preventDefault();
+        var amount = $(this).attr('data-amount');
+        var input = $(this).parent().next();
+        var current = input.val();
+        input.val(eval(current+amount));
+        
+        if( input.val() <= 0){
+            $(this).addClass('disabled');
+        } else {
+            $(this).next().removeClass('disabled');
         }
-    });    
+        
+    });
+    
+    $('form#standart').bind('submit', function(event){
+        event.preventDefault();
+   
+        var action = $(this).attr('action'); // Wohin die Daten gesendet werden!
+        var input = $(this).serialize();     // Formular Daten umwandeln!
+
+        $.post( action, input, function(data){
+            
+        }, 'html');
+    });
 });

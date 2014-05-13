@@ -47,24 +47,28 @@
             </div>
             <div class="col-lg-4">
                 <ul class="list-group">
-                    <li class="list-group-item list-group-item-info text-center"><b>{$i.article_grossprice|price}</b> {$i.unit_text}</li>
+                    <li class="list-group-item list-group-item-info text-center"><b>{$i.article_grossprice|price}</b> - {$i.article_amount} {$i.unit_unit}</li>
                     {if $i.article_discount != 0}
                         <li class="list-group-item list-group-item-success text-center">
                             <b>Rabatt: {$i.article_discount}% | <span style="text-decoration: line-through;">{$i.article_taxnetprice|price}</span></b>
                         </li>
                     {/if}
                     <li class="list-group-item">
-                        <div class="input-group">
-                            <div class="input-group-btn">
-                                <a class="btn btn-default" href="">&nbsp;<i class="fa fa-plus-circle"></i></a>
-                                <a class="btn btn-default" href=""><i class="fa fa-minus-circle"></i>&nbsp;</a>
+                        <form id="standart" action="index.php?shop-ajax-pruchase">
+                            <input type="hidden" name="user_id" value="{$smarty.session.authid}" />
+                            <input type="hidden" name="article_id" value="{$i.article_id}" />                           
+                            <div class="input-group">
+                                <div class="input-group-btn">
+                                    <a data-amount="+{$i.article_amount}" class="btn btn-default" href="">&nbsp;<i class="fa fa-plus-circle"></i></a>
+                                    <a data-amount="-{$i.article_amount}" class="btn btn-default" href=""><i class="fa fa-minus-circle"></i>&nbsp;</a>
+                                </div>
+                                <input type="text" class="form-control text-center" name="article_amount" value="{$i.article_amount}">
+                                <span class="input-group-addon">{$i.unit_short}</span>
+                                <div class="input-group-btn">
+                                    <button type="submit" class="btn btn-success" href="">&nbsp;<i class="fa fa-shopping-cart"></i>&nbsp;</button>
+                                </div>
                             </div>
-                            <input type="number" class="form-control text-center" value="1">
-                            <span class="input-group-addon">{$i.unit_short}</span>
-                            <div class="input-group-btn">
-                                <a class="btn btn-success" href="">&nbsp;<i class="fa fa-shopping-cart"></i>&nbsp;</a>
-                            </div>
-                        </div>
+                        </form>
                     </li>
                 </ul>
             </div>

@@ -38,6 +38,22 @@ class Func {
             print_r($res);
             ?><hr></pre><?php
         }
+    }
+    
+    /**
+     * Transform Arrays
+     * 
+     * @param array
+     */
+    
+    public function transformArray($currentArray)
+    {
+        $newArray = array();
+        foreach($currentArray as $key => $val){
+            $newArray[$key][] = $val;
+        }
+        
+        return $newArray;
     }  
 }
 ?>
