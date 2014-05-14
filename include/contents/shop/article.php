@@ -30,6 +30,7 @@ $units = $core->db()
         ->from('shop_units')
         ->rows();
 
+$tpl->assign('cart', session_shoppingCart());
 $tpl->assign('category', $category);
 $tpl->assign('article', $article);
 $tpl->assign('units', $units);

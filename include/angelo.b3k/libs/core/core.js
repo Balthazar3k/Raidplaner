@@ -22,6 +22,10 @@ $(document).ready(function() {
 
         $.post( action, input, function(data){
             
-        }, 'html');
+            $.each(data, function( key, val ){
+                $('#'+key).text(val);
+            });
+            
+        }, 'JSON');
     });
 });

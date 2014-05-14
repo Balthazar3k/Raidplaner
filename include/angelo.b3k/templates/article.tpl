@@ -1,29 +1,34 @@
 <div class="col-lg-12">
     <div class="input-group">
-        <div class="input-group-btn">
-            <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">Kategorien <span class="caret"></span></button>
-            <ul class="dropdown-menu">
-                
-                {foreach $category as $i}
-                <li><a href="?shop-article-{$i.category_id}">{$i.category_name}</a></li>
-                {/foreach}
-                {if $menu[2] != '' || $menu[2] != 0}
-                <li class="divider"></li>
-                <li><a href="?shop-article-0"><i class="fa fa-mail-reply-all"></i> Zur&uuml;ck</a></li>
-                {/if}
-            </ul>
-        </div>
+        <span class="input-group-btn">
+            <a class="btn btn-default" href="?shop-article-0"><i class="fa fa-mail-reply-all"></i> Zur&uuml;ck</a>
+        </span>
         <span class="input-group-addon"><i class="fa fa-search fa-lg"></i></span>
         <input type="text" class="form-control" placeholder="Suchen">
         <span class="input-group-addon">
-            <i class="fa fa-shopping-cart fa-lg"></i> 3
+            <i class="fa fa-shopping-cart fa-lg"></i>&nbsp; &nbsp;<b id="articleNum">{$cart.articleNum}</b>
         </span>
         <span class="input-group-addon">
-            18,32 {'currency'|config}
+            <b id="priceSum">{$cart.priceSum}</b>
         </span>
     </div>
 </div>
 <br /><br />
+
+{foreach $category as $item}
+<a href="index.php?shop-article-{$item.category_id}">
+    <div class="col-lg-2">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <img class="img-thumbnail" src="{if file_exists($item.category_image)}{$item.category_image}{else}include/angelo.b3k/images/placeholder.png{/if}">
+                <h4 class="text-center">{$item.category_name}</h4>
+            </div>
+        </div>
+    </div>
+</a>
+{/foreach}
+
+{if !empty($article) }
 <div class="col-lg-12">
     <ul class="list-group">
         {foreach $article as $i}
@@ -54,7 +59,7 @@
                         </li>
                     {/if}
                     <li class="list-group-item">
-                        <form id="standart" action="index.php?shop-ajax-pruchase">
+                        <form id="standart" action="index.php?shop-ajax-shoppingCart">
                             <input type="hidden" name="user_id" value="{$smarty.session.authid}" />
                             <input type="hidden" name="article_id" value="{$i.article_id}" />                           
                             <div class="input-group">
@@ -77,4 +82,8 @@
         {/foreach}
     </ul>
 </div>
+{else}
+    <br style="clear: both;" />
+    <h3 class="text-center">In dieser Kategorie sind keine Artikel vorhanden.</h3>
+{/if}
 {debug}

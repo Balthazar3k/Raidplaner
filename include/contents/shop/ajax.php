@@ -8,7 +8,7 @@ defined ('main') or die ( 'no direct access' );
 $ajax = array();
 
 switch ($menu->get(2)){
-    case "pruchase":
+    case "shoppingCart":
         /* Get Data from article */
         $article = $core->db()->queryRow(standart_article_sql() . "
             WHERE a.article_id = ".$_POST['article_id']."
@@ -19,10 +19,18 @@ switch ($menu->get(2)){
         $_POST['price'] = ($_POST['article_amount'] / $article['article_amount'])*$article['article_grossprice'];
         
         /* Add to Session [cart] */
-        $_SESSION['shop']['cart'] = array_merge_recursive(
-            $_SESSION['shop']['cart'],
-            $core->func()->transformArray($_POST)
-        );
+        if( !is_array($_SESSION['shop']['cart']) ){
+            $_SESSION['shop']['cart'] = $core->func()->transformArray($_POST);
+        } else { 
+            $_SESSION['shop']['cart'] = array_merge_recursive(
+                $_SESSION['shop']['cart'],
+                $core->func()->transformArray($_POST)
+            );
+        }
+        
+        /* Send Json */
+        
+        exit(json_encode(session_shoppingCart()));
         
     break;
 }
