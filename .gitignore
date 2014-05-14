@@ -527,3 +527,4 @@ install.sql
 scandir.php
 include/raidplaner/cache/*
 *.db
+!/include/angelo.b3k/install/install.sql
