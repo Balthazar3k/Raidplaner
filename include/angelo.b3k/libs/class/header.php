@@ -6,7 +6,7 @@ class Header{
 
     protected $headers_html = array(
         'css' => '<link id="%s" type="text/css" href="include/angelo.b3k/libs/%s" rel="stylesheet" />',
-        'js' => '<script id="%s" type="text/javascript" src="include/angelo.b3k/libs/%s" ></script>'
+        'js' => '<script id="%s" type="text/javascript" src="include/angelo.b3k/libs/%s" charset="utf-8"></script>'
     );
     
     public function set($string){
