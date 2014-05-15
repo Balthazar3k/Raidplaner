@@ -8,28 +8,18 @@ $design = new design ( $title , $hmenu );
 $design->header();
 
 shop_bar();
-shop_category();
-
-$categoryID = (empty($menu->get(2)) ? 0 : $menu->get(2));
-
-$categoryInfo = $core->db()
-        ->select('*')
-        ->from('shop_category')
-        ->where('category_id', $categoryID)
-        ->row();
 
 $article = $core->db()->queryRows(
     standart_article_sql()  
     ."
-    WHERE a.article_category = '".$categoryID."'
+    WHERE a.article_id = '".$menu->get(2)."'
     ORDER BY a.article_name ASC;
     "
 );
 
-$tpl->assign('info', $categoryInfo);
+$tpl->assign('cart', session_shoppingCart());
 $tpl->assign('article', $article);
-
-$tpl->display('article.tpl');
+$tpl->display('details.tpl');
 
 $design->footer();
 ?>

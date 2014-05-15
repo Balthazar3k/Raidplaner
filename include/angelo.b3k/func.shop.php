@@ -34,8 +34,30 @@ function session_shoppingCart(){
 function shop_price($price){   
     global $allgAr;
     $price = sprintf("%01.2f", $price);
-    $price = str_replace('.', ',', $price).' '.$allgAr['currency'];
+    $price = str_replace('.', ',', $price);
     return $price;
+}
+
+function shop_category(){
+    global $core, $tpl, $menu;
+    
+    $categoryID = (empty($menu->get(2)) ? 0 : $menu->get(2));
+
+    $category = $core->db()
+            ->select('*')
+            ->from('shop_category')
+            ->where('category_sub', $categoryID)
+            ->rows();
+    
+    $tpl->assign('category', $category);
+    $tpl->display('shop_category.tpl');
+}
+
+function shop_bar(){
+    global $core, $tpl;
+    
+    $tpl->assign('cart', session_shoppingCart());
+    $tpl->display('shop_bar.tpl');
 }
 
 ?>

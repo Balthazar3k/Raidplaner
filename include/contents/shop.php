@@ -13,7 +13,8 @@ $tpl = $core->smarty();
 $tpl->assign('menu', $menu->menu_ar);
 
 switch($menu->get(1)){
-    default: $shopModule = 'article.php'; break;
+    default: $shopModule = 'article.php'; break; 
+    case 'details': $shopModule = 'details.php'; break;
     case 'ajax': $shopModule = 'ajax.php'; break;
 }
 
@@ -22,9 +23,9 @@ if( !empty( $shopModule )){
 }
 
 /* Set last Category ID */
-if( $_SESSION['shop']['last_category'] != $menu->get(2) ){
+if( $menu->get(1) == 'article' && $_SESSION['shop']['last_category'] != $menu->get(2) ){
     $_SESSION['shop']['last_category'] = $menu->get(2);
-} else {
+} else if( $menu->get(1) == 'article' ) {
     $_SESSION['shop']['last_category'] = 0;
 }
 ?>

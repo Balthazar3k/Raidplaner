@@ -33,6 +33,20 @@ switch ($menu->get(2)){
         exit(json_encode(session_shoppingCart()));
         
     break;
+    
+    case 'search':
+        $article = $core->db()->queryRows(
+            standart_article_sql()  
+            ."
+            WHERE a.article_name LIKE '%". escape($_POST['search'], string) ."%'
+            ORDER BY a.article_name ASC;
+            "
+        );
+
+        $tpl->assign('article', $article);
+        $tpl->display('shop_search.tpl');
+        exit();
+    break;
 }
 
 $core->func()->ar($_SESSION['shop']);

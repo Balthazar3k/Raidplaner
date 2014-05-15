@@ -14,7 +14,7 @@ $(document).ready(function() {
         
     });
     
-    $('form#standart').bind('submit', function(event){
+    $(document).on('submit', 'form#standart',function(event){
         event.preventDefault();
    
         var action = $(this).attr('action'); // Wohin die Daten gesendet werden!
@@ -27,5 +27,21 @@ $(document).ready(function() {
             });
             
         }, 'JSON');
+    });
+    
+    $('input[data-search]').bind('keyup', function(event){
+        var search = $(this).val();
+
+        if( search.length >= 3 ){
+            $('.search-icon').toggleClass('fa-spinner fa-spin', 'fa-search');
+            var action = $(this).attr('data-search'); // Wohin die Daten gesendet werden!
+            var setIn = $(this).attr('data-set'); // Searchstring!      
+        
+            $.post( action, 'search=' + search, function(data){
+
+                $(setIn).html(data);
+                $('.search-icon').toggleClass('fa-spinner fa-spin', 'fa-search');
+            }, 'HTML');
+        }
     });
 });
