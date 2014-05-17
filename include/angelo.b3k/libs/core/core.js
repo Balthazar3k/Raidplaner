@@ -44,4 +44,8 @@ $(document).ready(function() {
             }, 'HTML');
         }
     });
+    
+    
+    $('[data-toggle=popover]').popover();
+    $('[data-toggle=modal]').modal('toggle');
 });
