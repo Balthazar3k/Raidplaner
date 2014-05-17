@@ -31,14 +31,15 @@
                         {/if}
                         <li class="list-group-item">
                             <form id="standart" action="index.php?shop-ajax-shoppingCart">
-                                <input type="hidden" name="user_id" value="{$smarty.session.authid}" />
-                                <input type="hidden" name="article_id" value="{$i.article_id}" />                           
+                                <input type="hidden" name="article_id" value="{$i.article_id}" />
+                                <input type="hidden" name="article_amount" value="{$i.article_amount}" />
+                                <input type="hidden" name="article_grossprice" value="{$i.article_grossprice}" />
                                 <div class="input-group">
                                     <div class="input-group-btn">
-                                        <a data-amount="+{$i.article_amount}" class="btn btn-default" href="">&nbsp;<i class="fa fa-plus-circle"></i></a>
-                                        <a data-amount="-{$i.article_amount}" class="btn btn-default" href=""><i class="fa fa-minus-circle"></i>&nbsp;</a>
+                                        <a data-amount="+{$i.article_amount}" class="btn btn-default" href="#">&nbsp;<i class="fa fa-plus-circle"></i></a>
+                                        <a data-amount="-{$i.article_amount}" class="btn btn-default" href="#"><i class="fa fa-minus-circle"></i>&nbsp;</a>
                                     </div>
-                                    <input type="text" class="form-control text-center" name="article_amount" value="{$i.article_amount}">
+                                    <input type="text" class="form-control text-center" name="user_amount" value="{$i.article_amount}">
                                     <span class="input-group-addon">{$i.unit_short}</span>
                                     <div class="input-group-btn">
                                         <button type="submit" class="btn btn-success" href="">&nbsp;<i class="fa fa-shopping-cart"></i>&nbsp;</button>

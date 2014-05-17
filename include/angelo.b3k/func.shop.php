@@ -24,10 +24,9 @@ function standart_article_sql(){
 }
 
 function session_shoppingCart(){
-    $priceSum = ( is_array($_SESSION['shop']['cart']['price']) ? array_sum($_SESSION['shop']['cart']['price']) : 0 );
     return array(
-        'priceSum' => shop_price($priceSum),
-        'articleNum' => count($_SESSION['shop']['cart']['price'])
+        'priceSum' => ( !empty($_SESSION['shop']['price']) ? $_SESSION['shop']['price'] : 0 ),
+        'articleNum' => count($_SESSION['shop']['cart']) 
     );
 }
 

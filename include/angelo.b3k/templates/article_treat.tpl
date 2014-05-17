@@ -30,9 +30,6 @@
                 Keine Artikel Vorhanden
             {/if}
         </div>
-        <div class="panel-body">
-            Hier sind alle Artikel der Kategorie <b>{$article[0].catergory_name}</b>
-        </div>
         <table class="table table-striped table-hover">
             <thead>
                 <tr>

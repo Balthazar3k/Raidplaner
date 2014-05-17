@@ -9,27 +9,19 @@ $ajax = array();
 
 switch ($menu->get(2)){
     case "shoppingCart":
-        /* Get Data from article */
-        $article = $core->db()->queryRow(standart_article_sql() . "
-            WHERE a.article_id = ".$_POST['article_id']."
-            LIMIT 1;
-        ");
         
-        /* Calc Price */
-        $_POST['price'] = ($_POST['article_amount'] / $article['article_amount'])*$article['article_grossprice'];
+        /* Calc Price & List Article ID in Session */
         
-        /* Add to Session [cart] */
-        if( !is_array($_SESSION['shop']['cart']) ){
-            $_SESSION['shop']['cart'] = $core->func()->transformArray($_POST);
-        } else { 
-            $_SESSION['shop']['cart'] = array_merge_recursive(
-                $_SESSION['shop']['cart'],
-                $core->func()->transformArray($_POST)
-            );
-        }
+        /* FEHLER */
+        
+        $_SESSION['shop']['price'] += shop_price(($_POST['user_amount'] / $_POST['article_amount'])*$_POST['article_grossprice'], 2);
+        $_SESSION['shop']['cart'][] = array(
+            'article_id' => $_POST['article_id'], 
+            'article_amount' => $_POST['user_amount']
+        );
+        
         
         /* Send Json */
-        
         exit(json_encode(session_shoppingCart()));
         
     break;
@@ -48,6 +40,4 @@ switch ($menu->get(2)){
         exit();
     break;
 }
-
-$core->func()->ar($_SESSION['shop']);
 ?>

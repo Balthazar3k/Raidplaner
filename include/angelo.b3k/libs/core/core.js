@@ -47,5 +47,4 @@ $(document).ready(function() {
     
     
     $('[data-toggle=popover]').popover();
-    $('[data-toggle=modal]').modal('toggle');
 });
