@@ -10,20 +10,26 @@ $ajax = array();
 switch ($menu->get(2)){
     case "shoppingCart":
         
-        /* Calc Price & List Article ID in Session */
-        
-        /* FEHLER */
-        
-        $_SESSION['shop']['price'] += shop_price(($_POST['user_amount'] / $_POST['article_amount'])*$_POST['article_grossprice'], 2);
-        $_SESSION['shop']['cart'][] = array(
+        /* Calc Price & List Article ID in Session */       
+        $user_price = (($_POST['user_amount'] / $_POST['article_amount'])*$_POST['article_grossprice']);
+        $_SESSION['shop']['price'] += $user_price;
+               
+        $_SESSION['shop']['cart'][$_POST['article_id']] = array(
             'article_id' => $_POST['article_id'], 
-            'article_amount' => $_POST['user_amount']
+            'user_amount' => $_POST['user_amount'] + $_SESSION['shop']['cart'][$_POST['article_id']]['user_amount'],
+            'user_price' => $user_price + $_SESSION['shop']['cart'][$_POST['article_id']]['price'],
         );
         
         
         /* Send Json */
         exit(json_encode(session_shoppingCart()));
         
+    break;
+
+    case 'clearShoppingCart':
+        $_SESSION['shop']['price'] = shop_price(0);
+        $_SESSION['shop']['cart'] = array();
+        exit(json_encode(session_shoppingCart()));
     break;
     
     case 'search':

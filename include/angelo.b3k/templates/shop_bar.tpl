@@ -6,11 +6,18 @@
         <span class="input-group-addon"><i class="fa fa-search fa-lg search-icon"></i></span>
         <input type="text" data-search="index.php?shop-ajax-search" data-set="#article" class="form-control" name="search" placeholder="Suchen">
         <span class="input-group-btn">
-            <a class="btn btn-success" href="?shop-shoppingcart">
+            <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
                 <i class="fa fa-shopping-cart fa-lg"></i>&nbsp; &nbsp;
                 <b id="articleNum">{$cart.articleNum}</b>x Artikel |  
                 <b id="priceSum">{$cart.priceSum}</b> {'currency'|config}
-            </a>
+                &nbsp; &nbsp;<span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu pull-right">
+              <li><a href="?shop-shoppingcart">Zum Warenkorb</a></li>
+              <li><a href="#">Zur Bestellung</a></li>
+              <li class="divider"></li>
+              <li><a href="index.php?shop-ajax-clearShoppingCart">Warenkorb Leeren</a></li>
+            </ul>
         </span>
     </div>
 </div>

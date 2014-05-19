@@ -1,10 +1,12 @@
 <?php
 
-function standart_article_sql(){
+function standart_article_sql($select = NULL){
     return "
         SELECT
             SQL_CALC_FOUND_ROWS /* SELECT FOUND_ROWS() */
-            a.*, b.*, c.*,
+            a.*, b.*, c.*, 
+            
+            ".( !empty($select) ? $select.',' : NULL)."
 
             /* Calc Price with Tax */
             ROUND(((a.article_netprice*a.article_tax)/100),2) AS article_taxprice,
@@ -25,7 +27,7 @@ function standart_article_sql(){
 
 function session_shoppingCart(){
     return array(
-        'priceSum' => ( !empty($_SESSION['shop']['price']) ? $_SESSION['shop']['price'] : 0 ),
+        'priceSum' => shop_price($_SESSION['shop']['price']),
         'articleNum' => count($_SESSION['shop']['cart']) 
     );
 }

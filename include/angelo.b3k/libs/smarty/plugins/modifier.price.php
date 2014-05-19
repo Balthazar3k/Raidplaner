@@ -5,6 +5,7 @@
 function smarty_modifier_price($price)
 {   
     global $allgAr;
+    $price = sprintf("%01.2f", $price);
     $price = str_replace('.', ',', $price).' '.$allgAr['currency'];
     
     return $price;

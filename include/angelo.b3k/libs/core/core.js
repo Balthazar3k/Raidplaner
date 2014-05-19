@@ -29,6 +29,20 @@ $(document).ready(function() {
         }, 'JSON');
     });
     
+    $('a[href*=ajax]').click(function(event){
+        event.preventDefault();
+        
+        var action = $(this).attr('href'); // Wohin die Daten gesendet werden!
+
+        $.post( action, '', function(data){
+            
+            $.each(data, function( key, val ){
+                $('#'+key).text(val);
+            });
+            
+        }, 'JSON');
+    });
+    
     $('input[data-search]').bind('keyup', function(event){
         var search = $(this).val();
 
@@ -43,6 +57,14 @@ $(document).ready(function() {
                 $('.search-icon').toggleClass('fa-spinner fa-spin', 'fa-search');
             }, 'HTML');
         }
+    });
+    
+    $('[data-amount]').bind('click', function(event){
+        event.preventDefault();
+        var user_amount = $(this).parent().next(); // INPUT WERT
+        var user_price = $(this).parent().next().next().next(); //GESAMT PREIS ANZEIGE
+        var article_price = $(this).parent()
+        console.log(user_amount.val(),user_price.text());
     });
     
     
