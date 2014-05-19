@@ -22,12 +22,12 @@
     
     <tr class="Cnorm">
         <td align="right">1. Skillung:</td>
-        <td>{$charakter.s1}</td>
+        <td>{$charakter.s1_name}</td>
     </tr>
     
     <tr class="Cnorm">
         <td align="right">2. Skillung:</td>
-        <td>{$charakter.s2}</td>
+        <td>{$charakter.s2_name}</td>
     </tr>
     
     <tr class="Cnorm">

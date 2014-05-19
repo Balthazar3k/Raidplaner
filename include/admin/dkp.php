@@ -87,6 +87,12 @@ switch( $menu->get(3) ){
             db_query("UPDATE prefix_raid_items SET `drop`='".($drop+1)."' , bid='".$boss->bossid."' , iid='".$row['inzen']."', class = '".$iClass."' WHERE id='".$itemID."' LIMIT 1");
         }
     break;
+    
+    case "rezzen":
+        $bid = $menu->get(4);
+        $rid = $menu->get(1);
+        db_query("DELETE FROM prefix_raid_bosscounter WHERE bid=".$bid." AND rid=".$rid." LIMIT 1");
+    break;
 
     case "status":
         if( isset($_POST['all']) ){
@@ -175,7 +181,7 @@ $res = db_query("
 ");
 				
 while( $row = db_fetch_assoc( $res )){
-	$value = json_encode( $row, true);
+	$value = json_encode( $row );
 	$dkps['BOSSE'] .= "<option id='".$row['bossid']."' value='".$value."' style='background-color: green; color: #FFFFFF;'>".$row['bossname']."</option>\n";
 }
 ### Killed Bosse
