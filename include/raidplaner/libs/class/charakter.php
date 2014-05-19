@@ -47,15 +47,19 @@ class Charakter {
         
         if( $ID ){
             $status[] = (bool) $this->raidplaner->db()->update('raid_chars')->fields($data['charakter'])->where(array('id' => $this->_id ))->init();
-            $status[] = (bool) $this->raidplaner->db()->delete('raid_zeit_charakter')->where(array('cid' => $ID ))->init();
-            foreach( array_keys( $data['times']) as $timeID ){
-                $status[] = (bool) $this->raidplaner->db()->insert('raid_zeit_charakter')->fields(array('zid' => $timeID, 'cid' => $ID))->init();
+            if(is_array($data['times'])){
+                $status[] = (bool) $this->raidplaner->db()->delete('raid_zeit_charakter')->where(array('cid' => $ID ))->init();
+                foreach( array_keys( $data['times']) as $timeID ){
+                    $status[] = (bool) $this->raidplaner->db()->insert('raid_zeit_charakter')->fields(array('zid' => $timeID, 'cid' => $ID))->init();
+                }
             }
         } else {
             $status[] = (bool) $this->raidplaner->db(1)->insert('raid_chars')->fields($data['charakter'])->init();
             $charakter_id = $this->raidplaner->db()->select('id')->from('raid_chars')->where(array('name' => $data['charakter']['name']))->cell();
-            foreach( array_keys( $data['times']) as $timeID ){
-               $status[] = (bool) $this->raidplaner->db()->insert('raid_zeit_charakter')->fields(array('zid' => $timeID, 'cid' => $charakter_id))->init();
+            if(is_array($data['times'])){
+                foreach( array_keys( $data['times'] ) as $timeID ){
+                   $status[] = (bool) $this->raidplaner->db()->insert('raid_zeit_charakter')->fields(array('zid' => $timeID, 'cid' => $charakter_id))->init();
+                }
             }
         }
         

@@ -14,6 +14,15 @@ aRaidMenu();
 
 $authid = $_SESSION['authid'];
 
+if( $menu->get(4) == "rezzen" ){
+    $bid = $menu->get(5);
+    $rid = $menu->get(1);
+    db_query("DELETE FROM prefix_raid_bosscounter WHERE bid=".$bid." AND rid=".$rid." LIMIT 1");
+    wd('admin.php?dkp-'.$menu->get(1).'-'.$menu->get(2), 'Boss wurde Wiederbelebt!', 0);
+    $design->footer();
+    exit();
+}
+
 function statmsg($ssid){
     $abf = db_query("SELECT * FROM prefix_raid_statusmsg WHERE sid='2' or sid='3';");
     $opt = "";
@@ -30,33 +39,29 @@ function statmsg($ssid){
 
 switch( $menu->get(3) ){
     case "dkp":	
-        $dkp = json_decode($_POST['punkte'], true);
-        $boss = json_decode($_POST['boss'], true);
+        $dkp = json_decode( $_POST['punkte'] );
+        $boss = json_decode( $_POST['boss'] );
 
-        ## Wenn Item verteilt!
-        if( !empty( $_POST['item'] ) )
-        {	$item = " {_raiditem_".$_POST['item']."}";
-                $itemID = $_POST['item'];
-        }		
-        
-        $info = (empty($_POST['sinfo']) ? $dkp['name'] : $_POST['sinfo']);
-        $dkp = (empty($_POST['sdkp']) ? $dkp['dkp'] : $_POST['sdkp']);
+		
+       
+        $info = (empty($_POST['sinfo']) ? $dkp->name : $_POST['sinfo']);
+        $dkp = (empty($_POST['sdkp']) ? $dkp->dkp : $_POST['sdkp']);
 
-        $info .= ( empty( $boss['bossname'] ) ? "" : ": ". $boss['bossname'] );
+        $info .= ( empty( $boss->bossname ) ? "" : ": ". $boss->bossname );
 
         if( isset($_POST['chars']) )
         {	foreach( $_POST['chars'] as $value )
-                {	$user = json_decode($value, true);
+                {	$user = json_decode( $value );
 
                         $sql = 'INSERT INTO `prefix_raid_dkp` (`id`, `rid`, `dkpgrp`, `cid`, `uid`, `dkp`, `info`, `date`) 
                                         VALUES (NULL, 
                                         \''.$menu->get(1).'\',
                                          \''.$menu->get(2).'\',
-                                          \''.$user['char'].'\',
-                                           \''.$user['user'].'\',
-                                                \''.$dkp.'\',
-                                                 \''.$info.$item.'\',
-                                                  \''.time().'\');'; 
+                                          \''.$user->char.'\',
+                                           \''.$user->user.'\',
+                                            \''.$dkp.'\',
+                                             \''.$info.'\',
+                                              \''.time().'\');'; 
 
                         db_query( $sql );
                 }
@@ -67,11 +72,11 @@ switch( $menu->get(3) ){
 
         $BossKey = ( $row['bosskey'] == 0 ? $menu->get(1) : $row['bosskey'] );
 
-        $isBossKilled = @db_result(db_query("SELECT id FROM prefix_raid_bosscounter WHERE rid='".$BossKey."' AND bid='".$boss['bossid']."'"),0);
+        $isBossKilled = @db_result(db_query("SELECT id FROM prefix_raid_bosscounter WHERE rid='".$BossKey."' AND bid='".$boss->bossid."'"),0);
 
-        if( !empty($boss['bossid']) && empty($isBossKilled)){
+        if( !empty($boss->bossid) && empty($isBossKilled)){
                 $sql = 'INSERT INTO `prefix_raid_bosscounter` (`id`, `bid`, `grpid`, `rid`, `iid`, `time`) 
-                VALUES (NULL, \''.$boss['bossid'].'\', \''.$menu->get(2).'\', \''.$BossKey.'\', \''.$row['inzen'].'\', \''.time().'\');';
+                VALUES (NULL, \''.$boss->bossid.'\', \''.$menu->get(2).'\', \''.$BossKey.'\', \''.$row['inzen'].'\', \''.time().'\');';
                 db_query( $sql );
         }
 
@@ -79,14 +84,8 @@ switch( $menu->get(3) ){
             $iClass = $_POST['itemClass'];
             $iClass = (empty( $iClass ) ? "itemStandart" : $iClass );
             $drop = db_result(db_query("SELECT `drop` FROM prefix_raid_items WHERE id='".$itemID."' LIMIT 1"),0);
-            db_query("UPDATE prefix_raid_items SET `drop`='".($drop+1)."' , bid='".$boss['bossid']."' , iid='".$row['inzen']."', class = '".$iClass."' WHERE id='".$itemID."' LIMIT 1");
+            db_query("UPDATE prefix_raid_items SET `drop`='".($drop+1)."' , bid='".$boss->bossid."' , iid='".$row['inzen']."', class = '".$iClass."' WHERE id='".$itemID."' LIMIT 1");
         }
-    break;
-
-    case "rezzen":
-        $bid = $menu->get(4);
-        $rid = $menu->get(1);
-        db_query("DELETE FROM prefix_raid_bosscounter WHERE bid=".$bid." AND rid=".$rid." LIMIT 1");
     break;
 
     case "status":
@@ -146,7 +145,7 @@ $res = db_query("
 ");
 
 while( $row = db_fetch_assoc( $res )){
-	$value = json_encode( $row, true);
+	$value = json_encode( $row );
 	$dkps['chars'] .= "<option value='".$value."'>".$row['name']."</option>\n";
 }
 
@@ -154,13 +153,13 @@ while( $row = db_fetch_assoc( $res )){
 $res = db_query("SELECT name, dkp FROM prefix_raid_dkps WHERE inzen='".$InzenID."' ORDER BY id ASC");
 if(db_num_rows($res)){
     while($row = db_fetch_assoc( $res )){
-        $value = json_encode( $row, true);
+        $value = json_encode( $row );
         $dkps['DKP'] .= "<option value='".$value."'>".$row['name']." (".$row['pm'].$row['dkp'].")</option>\n";
     }
 } else {
     $res = db_query("SELECT name, dkp FROM prefix_raid_dkps WHERE inzen='0' ORDER BY id ASC");
     while($row = db_fetch_assoc( $res )){
-        $value = json_encode( $row, true);
+        $value = json_encode( $row );
         $dkps['DKP'] .= "<option value='".$value."'>".$row['name']." (".$row['pm'].$row['dkp'].")</option>\n";
     }
 }

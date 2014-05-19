@@ -19,7 +19,7 @@ function bossrezzen(boss)
 {	var id = boss.id;
 	var name = boss.innerHTML;
 	
-	var status = confirm( "\"" + name + "\" Wiederbeleben?\n OK für Ja, Abbrechen für Nein" );
+	var status = confirm( "\"" + name + "\" Wiederbeleben?\n OK fuer Ja, Abbrechen fuer Nein" );
 	if( status )
 		document.location.href = document.location.href + "-rezzen-" + id;
 }

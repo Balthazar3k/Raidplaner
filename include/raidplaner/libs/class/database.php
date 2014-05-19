@@ -199,9 +199,7 @@ class Database {
     }
     
     public function maskedValues(){
-        array_walk($this->_fields, function(&$field){
-           $field = mysql_real_escape_string($field);
-        });
+        $this->_fields = array_map("mysql_real_escape_string", $this->_fields);
     }
     
     public function reset(){

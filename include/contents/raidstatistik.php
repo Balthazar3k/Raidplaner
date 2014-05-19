@@ -116,13 +116,7 @@ switch($menu->get(1)){
 		db_table( "SELECT a.rassen, COUNT(b.rassen) as anzahl FROM prefix_raid_rassen AS a, prefix_raid_chars AS b 
 		WHERE a.id=b.rassen GROUP BY a.rassen ORDER BY anzahl DESC", 0 );
 		echo "<br>";
-		db_table( "SELECT a.berufe as Main_Berufe, COUNT(b.mberuf) as anzahl FROM prefix_raid_berufe AS a, prefix_raid_chars AS b 
-		WHERE a.id=b.mberuf GROUP BY a.berufe ORDER BY anzahl DESC", 0 );
-		echo "<br>";
-		db_table( "SELECT a.berufe as Second_Berufe, COUNT(b.sberuf) as anzahl FROM prefix_raid_berufe AS a, prefix_raid_chars AS b 
-		WHERE a.id=b.sberuf GROUP BY a.berufe ORDER BY anzahl DESC", 0 );
-		echo "<br>";
-		db_table( "SELECT a.rang as Ränge, COUNT(b.rang) as anzahl FROM prefix_raid_rang AS a, prefix_raid_chars AS b 
+		db_table( "SELECT a.rang as Rang, COUNT(b.rang) as anzahl FROM prefix_raid_rang AS a, prefix_raid_chars AS b 
 		WHERE a.id=b.rang GROUP BY a.rang ORDER BY a.id DESC", 0 );
 	break;
 }
