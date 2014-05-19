@@ -7,7 +7,7 @@ CreatRaidSession();
 $raid = new Raidplaner();
 
 function copyright(){
- echo "<br><div align='center' class='smallfont'>[ Raidplaner &amp; DKP System v1.2 &copy; by <a href='http://Balthazar3k.funpic.de' target='_blank'>Balthazar3k.funpic.de</a> ]</div>\n";
+ echo "<br><div align='center' class='smallfont'>[ Raidplaner &amp; DKP System v1.2.1 &copy; by <a href='http://Balthazar3k.funpic.de' target='_blank'>Balthazar3k.funpic.de</a> ]</div>\n";
 }
 ###### RAIDPLANER HEADER
 
