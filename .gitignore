@@ -1,6 +1,7 @@
 nbproject/*
 include/downs/downloads/downs/.gitignore
 include/downs/downloads/user_upload/.gitignore
+include/designs/hofladen/*
 info_update.txt
 update.php
 admin.php
