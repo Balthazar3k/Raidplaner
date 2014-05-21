@@ -194,8 +194,8 @@ class Database {
         $rows = array();
         $res = $this->init();
         while( $row = mysql_fetch_assoc($res) ){
-            $res = array_keys($row);
-            $rows[] = $row[$res[0]];
+            $keys = array_keys($row);
+            $rows[] = $row[$keys[0]];
         }
         $this->_sql[] = $rows;
         return $rows;
