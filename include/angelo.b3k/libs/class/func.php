@@ -49,8 +49,11 @@ class Func {
     public function transformArray($currentArray)
     {
         $newArray = array();
-        foreach($currentArray as $key => $val){
-            $newArray[$key][] = $val;
+        $this->ar($currentArray);
+        foreach($currentArray as $id => $ar){
+            foreach( $ar as $key => $val ){
+                $newArray[$key][] = $val;
+            }
         }
         
         return $newArray;

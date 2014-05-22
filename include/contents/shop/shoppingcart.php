@@ -7,40 +7,30 @@ defined ('main') or die ( 'no direct access' );
 $design = new design ( $title , $hmenu );
 $design->header();
 
-function show_Spanish($n, $m)
-{
-    return("Die Zahl $n heißt auf Spanisch  $m");
+switch ($menu->get(2)){
+    case "recalc":
+        $i = (object) $_GET;
+        
+        /* Setze anzahl der Menge neu */
+        $amount = $_SESSION['shop']['cart'][$i->article_id]['user_amount'];
+        if( $amount > $i->article_amount ) {
+            $_SESSION['shop']['cart'][$i->article_id]['user_amount'] = ( ( $i->data == 'p') ? ($amount+$i->article_amount) : ($amount-$i->article_amount) );
+        } else {
+            $_SESSION['shop']['cart'][$i->article_id]['user_amount'] = ( ( $i->data == 'p') ? ($amount+$i->article_amount) : ($amount) );
+        }
+        
+        $cart = $core->func()->transformArray($_SESSION['shop']['cart']);
+        
+        $core->func()->ar($cart);   
+    break;
 }
-
-function map_Spanish($n, $m)
-{
-    return(array($n => $m));
-}
-
-class test {
-    protected $b = array(
-        "uno" => "Bananas", 
-        "dos" => "Bananas", 
-        "tres" => "Bananas", 
-        "cuatro" => "Bananas", 
-        "cinco" => "Bananas"
-    );
-    
-    public function maskedValues(){
-        $this->b = array_map("mysql_real_escape_string", $this->b);
-        return $this->b;
-    }
-}
-
-$c = new Test();
-print_r($c->maskedValues());
 
 $article_id = array();
 foreach ($_SESSION['shop']['cart'] as $key => $val){
     $article_id[] = $val['article_id'];
 }
 
-if(is_array($article_id)) {
+if( is_array($article_id) && !empty($article_id) ){
     $article = $core->db()->queryRows(standart_article_sql() . "
         WHERE a.article_id IN(".implode(',', $article_id).");
     ");

@@ -1,5 +1,6 @@
 <div id="article">
-    {if !empty($article) }
+    {if !empty($article) } {debug}
+    <a class="btn btn-success" href="index.php?shop-article-{$menu[2]}"><i class="fa fa-reply-all"></i> Weiter Einkaufen gehen</a><br /><br />
     <div class="col-lg-12">
         <ul class="list-group">
             {foreach $article as $i}
@@ -16,8 +17,9 @@
                     ">
                 </div>
                 <div class="col-lg-6">
-                    <h3 style="margin-top: 5px;">{$i.article_name}</h3>
-                    <p>
+                    <h3 style="margin-top: 5px;">{$i.article_name} <b class="small">- {$i.category_name}</b></h3>
+                    <p>  
+                        <hr>
                         {$i.article_description|truncate:128}
                     </p>
                 </div>
@@ -36,8 +38,8 @@
                                 <input type="hidden" name="article_grossprice" value="{$i.article_grossprice}" />
                                 <div class="input-group">
                                     <div class="input-group-btn">
-                                        <a data-amount="+{$i.article_amount}" class="btn btn-default" href="#">&nbsp;<i class="fa fa-plus-circle"></i></a>
-                                        <a data-amount="-{$i.article_amount}" class="btn btn-default" href="#"><i class="fa fa-minus-circle"></i>&nbsp;</a>
+                                        <a href="index.php?shop-shoppingcart-recalc&data=p&{$i|http_build_query}" class="btn btn-default">&nbsp;<i class="fa fa-plus-circle"></i></a>
+                                        <a href="index.php?shop-shoppingcart-recalc&data=m&{$i|http_build_query}" class="btn btn-default"><i class="fa fa-minus-circle"></i>&nbsp;</a>
                                     </div>
                                     <input type="text" class="form-control text-right" name="user_amount" value="{$smarty.session.shop.cart[$i.article_id].user_amount}">
                                     <span class="input-group-addon">{$i.unit_short}</span>
@@ -50,6 +52,15 @@
                 <br style="clear: both;" />
             </li>
             {/foreach}
+            <li class="list-group-item">
+                <div class="col-lg-8"></div>
+                <div class="col-lg-4">
+                    <ul class="list-group">
+                        <li class="list-group-item text-center">Gesamt: </li>
+                    </ul>
+                </div>
+                <br style="clear: both;" />
+            </li>
         </ul>
     </div>
     {else}
@@ -57,8 +68,8 @@
         <div class="alert alert-info">
             <i class="fa fa-info-circle fa-2x pull-left"></i> 
             <p class="pull-left">
-                In dieser Kategorie sind keine Artikel vorhanden,<br>
-                bitte w&auml;hlen Sie eine andere Kategorie aus.
+                Es sind keine Artikel im Warenkorb<br />
+                <a class="btn btn-default" href="index.php?shop-article-{$menu[2]}"><i class="fa fa-reply-all"></i> Einkaufen gehen</a>
             </p>
             <br style="clear: both;" />
         </div>

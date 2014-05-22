@@ -16,8 +16,9 @@
                     ">
                 </div>
                 <div class="col-lg-6">
-                    <h3 style="margin-top: 5px;">{$i.article_name}</h3>
-                    <p>
+                    <h3 style="margin-top: 5px;">{$i.article_name} <b class="small">- {$i.category_name}</b></h3>
+                    <p>  
+                        <hr>
                         {$i.article_description|truncate:128}
                     </p>
                 </div>

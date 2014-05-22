@@ -33,10 +33,17 @@ switch ($menu->get(2)){
     break;
     
     case 'search':
+        $search = str_replace(' ', '%', htmlentities($_POST['search']));
+
         $article = $core->db()->queryRows(
             standart_article_sql()  
             ."
-            WHERE a.article_name LIKE '%". escape($_POST['search'], string) ."%'
+            WHERE (
+                a.article_name LIKE '%". $search ."%' OR 
+                a.article_description LIKE '%". $search ."%' OR
+                c.category_name LIKE '%". $search ."%' OR
+                c.category_description LIKE '%". $search ."%'
+            )
             ORDER BY a.article_name ASC;
             "
         );
