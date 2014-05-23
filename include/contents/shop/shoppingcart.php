@@ -4,10 +4,6 @@
 
 defined ('main') or die ( 'no direct access' );
 
-
-
-
-
 switch ($menu->get(2)){
     case "recalc":
         $i = (object) $_GET;
@@ -22,6 +18,24 @@ switch ($menu->get(2)){
         
         recalc_total_price();
         wd('index.php?shop-shoppingcart#article'.$i->article_id, 'Neuberechnung abgeschlossen!', 0);
+        exit();
+    break;
+    
+    case "delete":
+        $i = $menu->get(3);
+        
+        /* Aus dem Warenkorb Löschen */
+        unset($_SESSION['shop']['cart'][$i]);
+
+        recalc_total_price();
+        wd('index.php?shop-shoppingcart#article'.$i, 'Neuberechnung abgeschlossen!', 0);
+        exit();
+    break;
+
+    case "clear":
+        $_SESSION['shop']['price'] = shop_price(0);
+        $_SESSION['shop']['cart'] = array();
+        wd('index.php?shop', 'Warenkorb wurde geleert', 3);
         exit();
     break;
 }
