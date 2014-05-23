@@ -1,5 +1,4 @@
 <?php
-
 function standart_article_sql($select = NULL){
     return "
         SELECT
@@ -61,4 +60,12 @@ function shop_bar(){
     $tpl->display('shop_bar.tpl');
 }
 
+function recalc_total_price(){
+    $data = array();
+    foreach($_SESSION['shop']['cart'] as $id => $val ){
+        $data[$id] = $_SESSION['shop']['cart'][$id]['user_price'] = round((($val['user_amount'] / $val['article_amount']) * $val['article_price']), 2);
+    }
+    
+    $_SESSION['shop']['price'] = array_sum($data);
+}
 ?>

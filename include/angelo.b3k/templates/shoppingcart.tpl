@@ -1,10 +1,11 @@
 <div id="article">
-    {if !empty($article) } {debug}
+    {if !empty($article) }
     <a class="btn btn-success" href="index.php?shop-article-{$menu[2]}"><i class="fa fa-reply-all"></i> Weiter Einkaufen gehen</a><br /><br />
     <div class="col-lg-12">
         <ul class="list-group">
             {foreach $article as $i}
             <li class="list-group-item">
+                <a name="article{$i.article_id}"></a>
                 <div class="col-lg-2">
                     <img class="img-thumbnail" src="
                          {if file_exists($i.article_image)}
@@ -32,20 +33,15 @@
                             </li>
                         {/if}
                         <li class="list-group-item">
-                            <form id="calcPrice">
-                                <input type="hidden" name="article_id" value="{$i.article_id}" />
-                                <input type="hidden" name="article_amount" value="{$i.article_amount}" />
-                                <input type="hidden" name="article_grossprice" value="{$i.article_grossprice}" />
-                                <div class="input-group">
-                                    <div class="input-group-btn">
-                                        <a href="index.php?shop-shoppingcart-recalc&data=p&{$i|http_build_query}" class="btn btn-default">&nbsp;<i class="fa fa-plus-circle"></i></a>
-                                        <a href="index.php?shop-shoppingcart-recalc&data=m&{$i|http_build_query}" class="btn btn-default"><i class="fa fa-minus-circle"></i>&nbsp;</a>
-                                    </div>
-                                    <input type="text" class="form-control text-right" name="user_amount" value="{$smarty.session.shop.cart[$i.article_id].user_amount}">
-                                    <span class="input-group-addon">{$i.unit_short}</span>
-                                    <span class="input-group-addon">{(($smarty.session.shop.cart[$i.article_id].user_amount / $i.article_amount) * $i.article_grossprice|round:2)|price}</span>
+                            <div class="input-group">
+                                <div class="input-group-btn">
+                                    <a href="index.php?shop-shoppingcart-recalc&data=p&{$i|http_build_query}#article-{$i.article_id}" class="btn btn-default">&nbsp;<i class="fa fa-plus-circle"></i></a>
+                                    <a href="index.php?shop-shoppingcart-recalc&data=m&{$i|http_build_query}#article-{$i.article_id}" class="btn btn-default"><i class="fa fa-minus-circle"></i>&nbsp;</a>
                                 </div>
-                            </form>
+                                <input type="text" class="form-control text-right" name="user_amount" value="{$smarty.session.shop.cart[$i.article_id].user_amount}">
+                                <span class="input-group-addon">{$i.unit_short}</span>
+                                <span class="input-group-addon">{(($smarty.session.shop.cart[$i.article_id].user_amount / $i.article_amount) * $i.article_grossprice|round:2)|price}</span>
+                            </div>
                         </li>
                     </ul>
                 </div>
@@ -56,7 +52,7 @@
                 <div class="col-lg-8"></div>
                 <div class="col-lg-4">
                     <ul class="list-group">
-                        <li class="list-group-item text-center">Gesamt: </li>
+                        <li class="list-group-item text-center">Gesamt: <b>{$smarty.session.shop.price|price}</b></li>
                     </ul>
                 </div>
                 <br style="clear: both;" />

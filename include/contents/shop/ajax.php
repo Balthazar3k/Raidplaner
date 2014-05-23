@@ -16,6 +16,8 @@ switch ($menu->get(2)){
                
         $_SESSION['shop']['cart'][$_POST['article_id']] = array(
             'article_id' => $_POST['article_id'], 
+            'article_amount' => $_POST['article_amount'],
+            'article_price' => $_POST['article_grossprice'],
             'user_amount' => $_POST['user_amount'] + $_SESSION['shop']['cart'][$_POST['article_id']]['user_amount'],
             'user_price' => $user_price + $_SESSION['shop']['cart'][$_POST['article_id']]['price'],
         );

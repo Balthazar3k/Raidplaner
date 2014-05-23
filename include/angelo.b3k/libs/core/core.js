@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    $( "[data-amount]" ).click(function(event){
+    $(document).on('click', "[data-amount]", function(event){
         event.preventDefault();
         var amount = $(this).attr('data-amount');
         var input = $(this).parent().next();
@@ -14,7 +14,7 @@ $(document).ready(function() {
         
     });
     
-    $(document).on('submit', 'form#standart',function(event){
+    $(document).on('submit', 'form#standart', function(event){
         event.preventDefault();
    
         var action = $(this).attr('action'); // Wohin die Daten gesendet werden!
