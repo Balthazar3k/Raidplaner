@@ -68,4 +68,34 @@ function recalc_total_price(){
     
     $_SESSION['shop']['price'] = array_sum($data);
 }
+
+function order_type($get = false){
+    
+    $types = array(
+        1 => array(
+            'title' => 'Hofladen Balzers',
+            'type' => 'Selbstabholer',
+            'city' => 'Balzers',
+            'message' => 'Im Laden selber Abholen'
+        ),
+        2 => array(
+            'title' => 'Gem&uuml;eslada in Vaduz',
+            'type' => 'Selbstabholer',
+            'city' => 'Vaduz',
+            'message' => 'Im Gem&uuml;eslada Vaduz selber Abholen'
+        ),
+        3 => array(
+            'title' => 'Hauslieferung',
+            'type' => 'Lieferung',
+            'city' => 'Hofladen',
+            'message' => 'Die Ware wird Geliefert, die Lieferreichweite liegt bei 15km'
+        )
+    );
+    
+    if( $get ){
+        return $types[$get];
+    } else {
+        return $types;
+    }
+}
 ?>
