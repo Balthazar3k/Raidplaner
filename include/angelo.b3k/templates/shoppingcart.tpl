@@ -44,7 +44,7 @@
             </tfood>
         </table>        
     </div>
-    <a class="btn btn-success pull-right">Bestellen</a>
+    <a class="btn btn-success pull-right" href="index.php?shop-order">Bestellen</a>
     {else}
         <br style="clear: both;" />
         <div class="alert alert-info">
