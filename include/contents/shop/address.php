@@ -4,10 +4,21 @@
 
 switch($menu->get(2)){
     case 'saveAddress':
-        if( $menu->get(3) ){
-            $core->db()->singel()->update('shop_address')->fields($_POST)->where('address_id', $menu->get(3))->init();
+        
+        $status = array();
+        foreach($_POST as $key => $val ){
+            $status[$key] = (bool) !empty($val);
+        }
+        
+        if( !in_array(false, $status) ){
+            if( $menu->get(3) ){
+                $core->db()->singel()->update('shop_address')->fields($_POST)->where('address_id', $menu->get(3))->init();
+            } else {
+                $core->db()->singel()->insert('shop_address')->fields($_POST)->init();
+            }
         } else {
-            $core->db()->singel()->insert('shop_address')->fields($_POST)->init();
+            $tpl->assign('status', $status);
+            $edit = $_POST;
         }
     break;
     

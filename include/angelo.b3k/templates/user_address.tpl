@@ -7,7 +7,7 @@
     <br style="clear: both;" />
 </div>
 
-<div class="col-lg-7">{debug}
+<div class="col-lg-6">{debug}
     {foreach $address as $k => $i}
         <div class="col-lg-6">
             <div class="panel panel-default">
@@ -19,8 +19,7 @@
                             {$i.address_last_name}<br>
                             {$i.address_street} {$i.address_street_nr}<br>
                             {$i.address_zipcode} {$i.address_place}<br><br>
-                            {$i.address_phone}<br>
-                            {$i.address_mobil}
+                            {$i.address_phone}
                         </div>
                     </a>
                     <div class="btn-group btn-group-justified">	
@@ -33,54 +32,77 @@
     {/foreach}
 </div>
 
-<div class="col-lg-5">
-    <div class="panel panel-default">
-        <div class="panel-heading">Adresse Erstellen</div>   
-        <div class="panel-body">
-            <form class="form" action="index.php?shop-order-saveAddress{if !empty($edit.address_id)}-{$edit.address_id}{/if}" method="post" />
+<div class="col-lg-6">
+    <form class="form" action="index.php?shop-order-saveAddress{if !empty($edit.address_id)}-{$edit.address_id}{/if}" method="post" />
+        <div class="panel panel-default">
+            <div class="panel-heading">Adresse Erstellen</div>   
+            <div class="panel-body">
+                
+                {if is_array($status)}
+                <div class="alert alert-danger">
+                    <i class="fa fa-info-circle pull-left"></i>
+                    <div class="pull-left small">Alle Felder sind Pflicht, bitte f&uuml;llen Sie alle Rot eingerahmten felder aus.</div>
+                    <br style="clear: both;" />
+                </div>
+                {/if}
+
                 <div class="col-lg-12">
-                    <label>Firma</label>
-                    <input class="form-control" type="text" placeholder="Firmenname" name="address_company" value="{$edit.address_company}" />
-
-                    <label>Nachname</label>
-                    <input class="form-control" type="name" placeholder="Nachname" name="address_last_name" value="{$edit.address_last_name}" />
-
-                    <label>Vorname</label>
-                    <input class="form-control" type="name" placeholder="Vorname" name="address_first_name" value="{$edit.address_first_name}" />
+                    
+                    <div class="form-group {if is_array($status) && !$status.address_company}has-error{/if}">
+                        <label for="address_company">Firma</label>
+                        <input class="form-control" type="text" placeholder="Firmenname" name="address_company" value="{$edit.address_company}" />
+                    </div>
+                    
+                    <div class="form-group {if is_array($status) && !$status.address_last_name}has-error{/if}">
+                        <label for="address_last_name">Nachname</label>
+                        <input class="form-control" type="name" placeholder="Nachname" name="address_last_name" value="{$edit.address_last_name}" />
+                    </div>
+                    
+                    <div class="form-group {if is_array($status) && !$status.address_first_name}has-error{/if}">
+                        <label>Vorname</label>
+                        <input class="form-control" type="name" placeholder="Vorname" name="address_first_name" value="{$edit.address_first_name}" />
+                    </div>
+                    
                 </div>
 
                 <label class="col-xs-9">Strasse</label>
                 <label class="col-xs-3">Haus-Nr.</label>
                 <div class="col-xs-9">
-                    <input class="form-control" type="name" placeholder="Strasse" name="address_street" value="{$edit.address_street}" />
+                    <div class="form-group {if is_array($status) && !$status.address_street}has-error{/if}">
+                        <input class="form-control" type="name" placeholder="Strasse" name="address_street" value="{$edit.address_street}" />
+                    </div>
                 </div>
                 <div class="col-xs-3">
-                    <input class="form-control " type="name" placeholder="Hausnummer" name="address_street_nr" value="{$edit.address_street_nr}" />
+                    <div class="form-group {if is_array($status) && !$status.address_street_nr}has-error{/if}">
+                        <input class="form-control " type="name" placeholder="Hausnummer" name="address_street_nr" value="{$edit.address_street_nr}" />
+                    </div>
                 </div>
 
                 <label class="col-xs-4">PLZ</label>
                 <label class="col-xs-8">Stadt</label>
                 <div class="col-xs-4">
-                    <input class="form-control" type="name" placeholder="PLZ" name="address_zipcode" value="{$edit.address_zipcode}" />
+                    <div class="form-group {if is_array($status) && !$status.address_zipcode}has-error{/if}">
+                        <input class="form-control" type="name" placeholder="PLZ" name="address_zipcode" value="{$edit.address_zipcode}" />
+                    </div>
                 </div>
                 <div class="col-xs-8">
-                    <input class="form-control " type="name" placeholder="Stadt" name="address_place" value="{$edit.address_place}" />
+                    <div class="form-group {if is_array($status) && !$status.address_place}has-error{/if}">
+                        <input class="form-control " type="name" placeholder="Stadt" name="address_place" value="{$edit.address_place}" />
+                    </div>
                 </div>
-                <br style="clear: both;" /><br>
+                <br style="clear: both;" /><br><br>
 
                 <div class="col-lg-12">
-                    
-                    <label>Telefon</label>
-                    <input class="form-control" type="name" placeholder="Telefonnummer" name="address_phone" value="{$edit.address_phone}" />
-
-                    <label>Mobil</label>
-                    <input class="form-control" type="name" placeholder="Handynummer" name="address_mobil" value="{$edit.address_mobil}" />
-
-                    <button class="btn btn-info" type="submit">Speichern</button>
-
+                    <div class="form-group {if is_array($status) && !$status.address_phone}has-error{/if}">
+                        <label>Telefon / Mobil</label>
+                        <input class="form-control" type="name" placeholder="Telefonnummer" name="address_phone" value="{$edit.address_phone}" />
+                    </div>
                 </div>
-            </form>
-            
+
+            </div>
+            <div class="panel-footer">
+                <button class="btn btn-info" type="submit">Speichern</button>
+            </div>
         </div>
-    </div>
+    </form>
 </div>
