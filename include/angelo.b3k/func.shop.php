@@ -60,6 +60,11 @@ function shop_bar(){
     $tpl->display('shop_bar.tpl');
 }
 
+function order_progressbar(){
+    global $core, $tpl;
+    $tpl->display('order_progressbar.tpl');
+}
+
 function recalc_total_price(){
     $data = array();
     foreach($_SESSION['shop']['cart'] as $id => $val ){

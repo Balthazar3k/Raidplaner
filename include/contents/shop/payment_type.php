@@ -5,6 +5,8 @@
 $design = new design ( $title , $hmenu );
 $design->header();
 
+order_progressbar();
+
 $tpl->assign('type', payment_type());
 $tpl->display('payment_type.tpl');
 

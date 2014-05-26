@@ -8,7 +8,7 @@ defined ('main') or die ( 'no direct access' );
 /* Load Shop Files */
 require_once 'include/angelo.b3k/func.shop.php';
 
-//$core->func()->ar($_SESSION);
+//$core->func()->ar($_SESSION['shop'], $_POST);
 
 $core->header()->get('core');
 $tpl = $core->smarty();

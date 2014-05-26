@@ -5,6 +5,8 @@
 $design = new design ( $title , $hmenu );
 $design->header();
 
+order_progressbar();
+
 $tpl->assign('type', order_type());
 $tpl->display('order_type.tpl');
 

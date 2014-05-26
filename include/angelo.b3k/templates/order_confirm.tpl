@@ -1,108 +1,105 @@
-<div class="alert alert-info">
-    <i class="fa fa-info-circle fa-2x pull-left"></i> 
-    <div class="pull-left">
-        W&auml;hlen Sie bitte Ihre Adresse aus, die wird auch f&uuml;r eine Selbstabholung ben&ouml;tigt.<br>
-        Bedenken Sie bitte das bei einer Hauslieferung, zus&auml;tzliche Kosten anfallen.
-    </div>
-    <br style="clear: both;" />
-</div>
-
-<div class="col-lg-6">{debug}
-    {foreach $address as $k => $i}
-        <div class="col-lg-6">
-            <div class="panel panel-default">
-                <div class="panel-body" style="padding: 4px!important;">
-                    <a href="index.php?shop-order-address-{$i.address_id}">
-                        <div class="alert alert-info" style="margin-bottom: 4px!important;">
-                            {if $i.address_company}{$i.address_company}<br>{/if}
-                            {$i.address_first_name}
-                            {$i.address_last_name}<br>
-                            {$i.address_street} {$i.address_street_nr}<br>
-                            {$i.address_zipcode} {$i.address_place}<br><br>
-                            {$i.address_phone}
-                        </div>
-                    </a>
-                    <div class="btn-group btn-group-justified">	
-                        <a class="btn btn-success" href="index.php?shop-order-editAddress-{$i.address_id}"><i class="fa fa-edit"></i> </a>
-                        <a class="btn btn-danger" href="index.php?shop-order-deleteAddress-{$i.address_id}"><i class="fa fa-trash-o"></i> </a>
-                    </div>
-                </div>
-            </div>
+<div id="article" class="col-lg-8">{debug}
+    {if !empty($article) }
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <b>Warenkorb</b> | {$article|count} Artikel
         </div>
-    {/foreach}
-</div>
-
-<div class="col-lg-6">
-    <form class="form" action="index.php?shop-order-saveAddress{if !empty($edit.address_id)}-{$edit.address_id}{/if}" method="post" />
-        <div class="panel panel-default">
-            <div class="panel-heading">Adresse Erstellen</div>   
-            <div class="panel-body">
-                
-                {if is_array($status)}
-                <div class="alert alert-danger">
-                    <i class="fa fa-info-circle pull-left"></i>
-                    <div class="pull-left small">Alle Felder sind Pflicht, bitte f&uuml;llen Sie alle Rot eingerahmten felder aus.</div>
-                    <br style="clear: both;" />
-                </div>
-                {/if}
-
-                <div class="col-lg-12">
-                    
-                    <div class="form-group {if is_array($status) && !$status.address_company}has-error{/if}">
-                        <label for="address_company">Firma</label>
-                        <input class="form-control" type="text" placeholder="Firmenname" name="address_company" value="{$edit.address_company}" />
-                    </div>
-                    
-                    <div class="form-group {if is_array($status) && !$status.address_last_name}has-error{/if}">
-                        <label for="address_last_name">Nachname</label>
-                        <input class="form-control" type="name" placeholder="Nachname" name="address_last_name" value="{$edit.address_last_name}" />
-                    </div>
-                    
-                    <div class="form-group {if is_array($status) && !$status.address_first_name}has-error{/if}">
-                        <label>Vorname</label>
-                        <input class="form-control" type="name" placeholder="Vorname" name="address_first_name" value="{$edit.address_first_name}" />
-                    </div>
-                    
-                </div>
-
-                <label class="col-xs-9">Strasse</label>
-                <label class="col-xs-3">Haus-Nr.</label>
-                <div class="col-xs-9">
-                    <div class="form-group {if is_array($status) && !$status.address_street}has-error{/if}">
-                        <input class="form-control" type="name" placeholder="Strasse" name="address_street" value="{$edit.address_street}" />
-                    </div>
-                </div>
-                <div class="col-xs-3">
-                    <div class="form-group {if is_array($status) && !$status.address_street_nr}has-error{/if}">
-                        <input class="form-control " type="name" placeholder="Hausnummer" name="address_street_nr" value="{$edit.address_street_nr}" />
-                    </div>
-                </div>
-
-                <label class="col-xs-4">PLZ</label>
-                <label class="col-xs-8">Stadt</label>
-                <div class="col-xs-4">
-                    <div class="form-group {if is_array($status) && !$status.address_zipcode}has-error{/if}">
-                        <input class="form-control" type="name" placeholder="PLZ" name="address_zipcode" value="{$edit.address_zipcode}" />
-                    </div>
-                </div>
-                <div class="col-xs-8">
-                    <div class="form-group {if is_array($status) && !$status.address_place}has-error{/if}">
-                        <input class="form-control " type="name" placeholder="Stadt" name="address_place" value="{$edit.address_place}" />
-                    </div>
-                </div>
-                <br style="clear: both;" /><br><br>
-
-                <div class="col-lg-12">
-                    <div class="form-group {if is_array($status) && !$status.address_phone}has-error{/if}">
-                        <label>Telefon / Mobil</label>
-                        <input class="form-control" type="name" placeholder="Telefonnummer" name="address_phone" value="{$edit.address_phone}" />
-                    </div>
-                </div>
-
-            </div>
-            <div class="panel-footer">
-                <button class="btn btn-info" type="submit">Speichern</button>
-            </div>
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th class="text-right">Art.-Nr.</th>
+                    <th>Artikelname</th>
+                    <th class="text-center">Preis - Menge</th>
+                    <th class="text-center table-bordered" colspan="4">&Auml;nderungen</th>
+                    <th class="text-right">Preis</th>
+                </tr>
+            </thead>
+            <tbody>
+            {foreach $article as $i}
+                <tr id="article{$i.article_id}">
+                    <td class="text-right">{$i.article_id}</td>
+                    <td><b>{$i.article_name}</b></td>
+                    <td class="text-center small">{$i.article_grossprice|price} f&uuml;r {$i.article_amount}{$i.unit_short} </td>
+                    <td class="text-center table-bordered"><a class="btn btn-success btn-xs" href="index.php?shop-order-recalc&data=p&{$i|http_build_query}#article-{$i.article_id}"><i class="fa fa-plus-circle"></i></a></td>
+                    <td class="text-center table-bordered"><b>{$smarty.session.shop.cart[$i.article_id].user_amount}</b> {$i.unit_unit}</td>
+                    <td class="text-center table-bordered"><a class="btn btn-warning btn-xs"  href="index.php?shop-order-recalc&data=m&{$i|http_build_query}#article-{$i.article_id}"><i class="fa fa-minus-circle"></i></a></td>
+                    <td class="text-center table-bordered"><a class="btn btn-danger btn-xs"  href="index.php?shop-order-delete-{$i.article_id}"><i class="fa fa-trash-o"></i></a></td>
+                    <td class="text-right info">{(($smarty.session.shop.cart[$i.article_id].user_amount / $i.article_amount) * $i.article_grossprice|round:2)|price}</td>
+                </tr>
+            {/foreach}
+            </tbody>
+            <tfood>
+                <tr>
+                    <td colspan="6"><span class="small"><i>alle Angaben inkl. MwSt.</i></span> </td>
+                    <td class="text-right" >Total</td>
+                    <td class="text-right"><b>{$smarty.session.shop.price|price}</b></td>
+                </tr>
+            </tfood>
+        </table>        
+    </div>
+    <form class="form form-horizontal" action="index.php?shop-send-order">
+        <div class="pull-left">
+            <label for="agb">
+                <input type="checkbox" name="agb" value="1" onclick="$('button[type=submit]').removeClass(disabled);">
+                Hier mit Best&auml;tige ich die <a href="index.php?agb">AGB</a>
+            </label>
+        </div>
+        <div class="pull-right">
+            <button type="submit" class="btn btn-success disabled">Bestellung abschicken</button>
         </div>
     </form>
+    {else}
+        <br style="clear: both;" />
+        <div class="alert alert-info">
+            <i class="fa fa-info-circle fa-2x pull-left"></i> 
+            <p class="pull-left">
+                Es sind keine Artikel im Warenkorb<br />
+                <a class="btn btn-default" href="index.php?shop-article-{$menu[2]}"><i class="fa fa-reply-all"></i> Einkaufen gehen</a>
+            </p>
+            <br style="clear: both;" />
+        </div>
+    {/if}
+</div>
+
+<div id="article" class="col-lg-4">
+    <ul class="list-group list-group-default">
+        <a class="list-group-item list-group-item-info text-center" href="index.php?shop-order-reset-order_type">
+            <b>{$order.type}</b>
+            <i class="fa fa-edit pull-right"></i>
+            <br style="clearboth">
+        </a>
+        <li class="list-group-item text-center">
+            <b>{$order.title}</b>
+            <hr>
+            <p>
+                {$order.message}
+            </p>
+        </li>
+        <a class="list-group-item list-group-item-info" href="index.php?shop-order-reset-order_payment">
+            <i class="fa fa-dollar fa-lg"></i> <b>Zahlungsmethode: {$payment.type}</b>
+            <i class="fa fa-edit pull-right"></i>
+            <br style="clearboth">
+        </a>
+        <li class="list-group-item text-center">
+            <b>{$payment.title}</b>
+            <hr>
+            <p>
+                {$payment.message}
+            </p>
+        </li>
+        <a class="list-group-item list-group-item-info" href="index.php?shop-order-reset-order_address">
+            <i class="fa fa-home fa-lg"></i> <b>Lieferadresse</b>
+            <i class="fa fa-edit pull-right"></i>
+            <br style="clearboth">
+        </a>
+        <li class="list-group-item">
+            {if $address.address_company}{$address.address_company}<br>{/if}
+            {$address.address_first_name}
+            {$address.address_last_name}<br>
+            {$address.address_street} {$address.address_street_nr}<br>
+            {$address.address_zipcode} {$address.address_place}<br><br>
+            {$address.address_phone}
+        </li>
+        
+    </ul>
 </div>

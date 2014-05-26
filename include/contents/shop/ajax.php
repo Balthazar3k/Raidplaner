@@ -31,6 +31,7 @@ switch ($menu->get(2)){
     case 'clearShoppingCart':
         $_SESSION['shop']['price'] = shop_price(0);
         $_SESSION['shop']['cart'] = array();
+        unset($_SESSION['shop']['order']);
         exit(json_encode(session_shoppingCart()));
     break;
     

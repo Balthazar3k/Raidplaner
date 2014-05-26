@@ -25,7 +25,7 @@ switch ($menu->get(2)){
         $i = $menu->get(3);
         
         /* Aus dem Warenkorb Löschen */
-        unset($_SESSION['shop']['cart'][$i], $_SESSION['shop']['order']);
+        unset($_SESSION['shop']['cart'][$i]);
 
         recalc_total_price();
         wd('index.php?shop-shoppingcart#article'.$i, 'Neuberechnung abgeschlossen!', 0);
@@ -35,6 +35,7 @@ switch ($menu->get(2)){
     case "clear":
         $_SESSION['shop']['price'] = shop_price(0);
         $_SESSION['shop']['cart'] = array();
+        unset($_SESSION['shop']['order']);
         wd('index.php?shop', 'Warenkorb wurde geleert', 3);
         exit();
     break;

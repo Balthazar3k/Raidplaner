@@ -4,7 +4,7 @@
 
 switch($menu->get(2)){
     case 'saveAddress':
-        $core->func()->ar('Hallo Welt!');
+
         $status = array();
         foreach($_POST as $key => $val ){
             $status[$key] = (bool) !empty($val);
@@ -12,7 +12,7 @@ switch($menu->get(2)){
         
         if( !in_array(false, $status) ){
             
-            $_POST['address'] = $_SESSION['authid'];
+            $_POST['address_uid'] = $_SESSION['authid'];
             
             if( $menu->get(3) ){
                 $core->db()->singel()->update('shop_address')->fields($_POST)->where('address_id', $menu->get(3))->init();
@@ -36,6 +36,8 @@ switch($menu->get(2)){
 
 $design = new design ( $title , $hmenu );
 $design->header();
+
+order_progressbar();
 
 $tpl->assign('edit', $edit);
 $tpl->assign('address', $core->db()

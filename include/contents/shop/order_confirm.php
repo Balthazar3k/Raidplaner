@@ -17,7 +17,7 @@ switch ($menu->get(2)){
         }
         
         recalc_total_price();
-        wd('index.php?shop-shoppingcart#article'.$i->article_id, 'Neuberechnung abgeschlossen!', 0);
+        wd('index.php?shop-order#article'.$i->article_id, 'Neuberechnung abgeschlossen!', 0);
         exit();
     break;
     
@@ -28,7 +28,7 @@ switch ($menu->get(2)){
         unset($_SESSION['shop']['cart'][$i], $_SESSION['shop']['order']);
 
         recalc_total_price();
-        wd('index.php?shop-shoppingcart#article'.$i, 'Neuberechnung abgeschlossen!', 0);
+        wd('index.php?shop-order#article'.$i, 'Neuberechnung abgeschlossen!', 0);
         exit();
     break;
 
@@ -43,6 +43,8 @@ switch ($menu->get(2)){
 $design = new design ( $title , $hmenu );
 $design->header();
 
+order_progressbar();
+
 $article_id = array();
 foreach ($_SESSION['shop']['cart'] as $key => $val){
     $article_id[] = $val['article_id'];
@@ -54,6 +56,15 @@ if( is_array($article_id) && !empty($article_id) ){
     ");
 }
 
+$address = $core->db()
+        ->select('*')
+        ->from('shop_address')
+        ->where('address_id', $_SESSION['shop']['order']['order_address'])
+        ->row();
+
+$tpl->assign('address', $address);
+$tpl->assign('payment', payment_type($_SESSION['shop']['order']['order_payment']));
+$tpl->assign('order', order_type($_SESSION['shop']['order']['order_type']));
 $tpl->assign('article', $article);
 $tpl->display('order_confirm.tpl');
 

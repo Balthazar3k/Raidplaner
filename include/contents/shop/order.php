@@ -14,33 +14,26 @@ if( loggedin() ){
         case 'payment':
             $_SESSION['shop']['order']['order_payment'] = $menu->get(3);
         break;
+        case 'reset':
+            unset($_SESSION['shop']['order'][$menu->get(3)]);
+        break;
+        case 'clear':
+             unset($_SESSION['shop']['order']);
+        break;
     }
     
     $_SESSION['shop']['order']['order_user'] = $_SESSION['authid'];
     $_SESSION['shop']['order']['order_price'] = $_SESSION['shop']['price'];
-
+    
     // Order Type
     if( !isset($_SESSION['shop']['order']['order_type']) ){
         include('include/contents/shop/order_type.php');
-        exit();
-    }
-    
-    // Address
-    if( !isset($_SESSION['shop']['order']['order_address']) ){
+    } else if ( !isset($_SESSION['shop']['order']['order_address']) ){
         include('include/contents/shop/order_address.php');
-        exit();
-    }
-    
-    // Payment
-    if( !isset($_SESSION['shop']['order']['order_payment']) ){
+    } else if ( !isset($_SESSION['shop']['order']['order_payment']) ){
         include('include/contents/shop/payment_type.php');
-        exit();
-    }
-    
-    // Confirm
-    if( !isset($_SESSION['shop']['order']['order_confirm']) ){
+    } else if ( !isset($_SESSION['shop']['order']['order_confirm']) ){
         include('include/contents/shop/order_confirm.php');
-        exit();
     }
     
 } else {
