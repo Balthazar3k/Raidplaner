@@ -97,5 +97,36 @@ function order_type($get = false){
     } else {
         return $types;
     }
-}
+} 	
+
+
+function payment_type($get = false){
+    
+    $types = array(
+        1 => array(
+            'title' => 'Barzahlung',
+            'type' => 'Bar Bezahlen',
+            'permission' => -1,
+            'message' => 'Bar Zahlen bei Lieferung oder Abholung'
+        ),
+        2 => array(
+            'title' => 'Auf Rechnung Kaufen',
+            'type' => 'Rechnung',
+            'permission' => -1,
+            'message' => 'Auf Rechnung, Sie bekommen ein &uuml;berweisungsschein'
+        ),
+        3 => array(
+            'title' => 'Anschreiben Lassen',
+            'type' => 'Anschreiben',
+            'permission' => -4,
+            'message' => 'Kosten werden Angeschrieben, Rechnung wird am ende eines Monats verschickt'
+        )
+    );
+    
+    if( $get ){
+        return $types[$get];
+    } else {
+        return $types;
+    }
+} 
 ?>

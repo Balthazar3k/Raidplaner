@@ -11,31 +11,39 @@ if( loggedin() ){
         case 'address':
             $_SESSION['shop']['order']['order_address'] = $menu->get(3);
         break;
+        case 'payment':
+            $_SESSION['shop']['order']['order_payment'] = $menu->get(3);
+        break;
     }
-    
-    $core->func()->ar($_SESSION['shop']);
     
     $_SESSION['shop']['order']['order_user'] = $_SESSION['authid'];
     $_SESSION['shop']['order']['order_price'] = $_SESSION['shop']['price'];
 
     // Order Type
     if( !isset($_SESSION['shop']['order']['order_type']) ){
-        include('include/contents/shop/ordertype.php');
+        include('include/contents/shop/order_type.php');
+        exit();
     }
     
     // Address
     if( !isset($_SESSION['shop']['order']['order_address']) ){
-        include('include/contents/shop/address.php');
+        include('include/contents/shop/order_address.php');
+        exit();
+    }
+    
+    // Payment
+    if( !isset($_SESSION['shop']['order']['order_payment']) ){
+        include('include/contents/shop/payment_type.php');
+        exit();
+    }
+    
+    // Confirm
+    if( !isset($_SESSION['shop']['order']['order_confirm']) ){
+        include('include/contents/shop/order_confirm.php');
+        exit();
     }
     
 } else {
    /* Login oder Registrieren */
 }
-
-//unset($_SESSION['shop']['order']['order_type']);
-unset($_SESSION['shop']['order']['order_address']);
-$core->func()->ar($_SESSION['shop']);
-
-
-
 ?>

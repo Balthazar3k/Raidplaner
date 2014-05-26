@@ -4,13 +4,16 @@
 
 switch($menu->get(2)){
     case 'saveAddress':
-        
+        $core->func()->ar('Hallo Welt!');
         $status = array();
         foreach($_POST as $key => $val ){
             $status[$key] = (bool) !empty($val);
         }
         
         if( !in_array(false, $status) ){
+            
+            $_POST['address'] = $_SESSION['authid'];
+            
             if( $menu->get(3) ){
                 $core->db()->singel()->update('shop_address')->fields($_POST)->where('address_id', $menu->get(3))->init();
             } else {
@@ -41,7 +44,7 @@ $tpl->assign('address', $core->db()
         ->rows()
 );
 
-$tpl->display('user_address.tpl');
+$tpl->display('order_address.tpl');
 
 $design->footer();
 ?>

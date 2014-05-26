@@ -55,7 +55,7 @@ if( is_array($article_id) && !empty($article_id) ){
 }
 
 $tpl->assign('article', $article);
-$tpl->display('shopping_cart.tpl');
+$tpl->display('order_confirm.tpl');
 
 $design->footer();
 ?>
