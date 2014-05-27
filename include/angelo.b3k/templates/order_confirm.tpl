@@ -37,10 +37,10 @@
             </tfood>
         </table>        
     </div>
-    <form class="form form-horizontal" action="index.php?shop-send-order">
+    <form class="form form-horizontal" action="index.php?shop-order-success" method="post">
         <div class="pull-left">
             <label for="agb">
-                <input type="checkbox" name="agb" value="1" onclick="$('button[type=submit]').removeClass(disabled);">
+                <input id="agb" type="checkbox" name="agb" value="1" onclick="$('button[type=submit]').toggleClass('disabled');">
                 Hier mit Best&auml;tige ich die <a href="index.php?agb">AGB</a>
             </label>
         </div>

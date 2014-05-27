@@ -18,7 +18,12 @@ if( loggedin() ){
             unset($_SESSION['shop']['order'][$menu->get(3)]);
         break;
         case 'clear':
-             unset($_SESSION['shop']['order']);
+            unset($_SESSION['shop']['order']);
+        break;
+        
+        case 'success':
+            include('include/contents/shop/order_success.php');
+            exit();
         break;
     }
     
