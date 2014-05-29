@@ -44,19 +44,22 @@ switch ($menu->get(2)){
 $design = new design ( $title , $hmenu );
 $design->header();
 
-$article_id = array();
-foreach ($_SESSION['shop']['cart'] as $key => $val){
-    $article_id[] = $val['article_id'];
-}
+if( is_array($_SESSION['shop']['cart']) ){
+    
+    $article_id = array();
+    foreach ($_SESSION['shop']['cart'] as $key => $val){
+        $article_id[] = $val['article_id'];
+    }
 
-if( is_array($article_id) && !empty($article_id) ){
-    $article = $core->db()->queryRows(standart_article_sql() . "
-        WHERE a.article_id IN(".implode(',', $article_id).");
-    ");
+    if( is_array($article_id) && !empty($article_id) ){
+        $article = $core->db()->queryRows(standart_article_sql() . "
+            WHERE a.article_id IN(".implode(',', $article_id).");
+        ");
+    }
 }
+    $tpl->assign('article', $article);
+    $tpl->display('shopping_cart.tpl');
 
-$tpl->assign('article', $article);
-$tpl->display('shopping_cart.tpl');
 
 $design->footer();
 ?>

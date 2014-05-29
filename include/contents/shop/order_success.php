@@ -33,7 +33,42 @@ switch($menu->get(2)){
 
                 if( !in_array( false, $status ) ){
                     $result = true;
-                    unset($_SESSION['shop']);
+                    
+                    $user_mail = $core->db()
+                            ->select('email')
+                            ->from('user')
+                            ->where('id', $_SESSION['authid'])
+                            ->cell();
+                            
+                    
+                    $article_id = array();
+                    foreach ($_SESSION['shop']['cart'] as $key => $val){
+                        $article_id[] = $val['article_id'];
+                    }
+
+                    if( is_array($article_id) && !empty($article_id) ){
+                        $article = $core->db()->queryRows(standart_article_sql() . "
+                            WHERE a.article_id IN(".implode(',', $article_id).");
+                        ");
+                    }
+
+                    $address = $core->db()
+                            ->select('*')
+                            ->from('shop_address')
+                            ->where('address_id', $_SESSION['shop']['order']['order_address'])
+                            ->row();
+                    
+                    $tpl->assign('order_id', $id);
+                    $tpl->assign('address', $address);
+                    $tpl->assign('payment', payment_type($_SESSION['shop']['order']['order_payment']));
+                    $tpl->assign('order', order_type($_SESSION['shop']['order']['order_type']));
+                    $tpl->assign('article', $article);
+                    $mail = $tpl->fetch('order_mail.tpl');
+                    
+                    icmail($user_mail, 'Bestellung beim Hofladen', $mail, 'noreplay@hofladen.li', true);
+                    $core->func()->ar($user_mail, $mail);
+                    
+                    //unset($_SESSION['shop']);
                 }
             }
             
@@ -44,7 +79,9 @@ switch($menu->get(2)){
 $design = new design ( $title , $hmenu );
 $design->header();
 
-$core->func()->ar($result);
+//$core->func()->ar($result, $_SESSION['shop']);
+$tpl->assign('order_status', $result);
+$tpl->display('order_success.tpl');
 
 $design->footer();
 ?>

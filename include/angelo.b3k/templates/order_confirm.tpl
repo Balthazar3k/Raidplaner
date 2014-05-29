@@ -1,4 +1,4 @@
-<div id="article" class="col-lg-8">{debug}
+<div id="article" class="col-lg-8">
     {if !empty($article) }
     <div class="panel panel-default">
         <div class="panel-heading">

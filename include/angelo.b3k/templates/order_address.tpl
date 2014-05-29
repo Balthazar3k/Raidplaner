@@ -7,7 +7,7 @@
     <br style="clear: both;" />
 </div>
 
-<div class="col-lg-6">{debug}
+<div class="col-lg-6">
     {foreach $address as $k => $i}
         <div class="col-lg-6">
             <div class="panel panel-default">
