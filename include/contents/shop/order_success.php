@@ -60,15 +60,15 @@ switch($menu->get(2)){
                     
                     $tpl->assign('order_id', $id);
                     $tpl->assign('address', $address);
-                    $tpl->assign('payment', payment_type($_SESSION['shop']['order']['order_payment']));
-                    $tpl->assign('order', order_type($_SESSION['shop']['order']['order_type']));
+                    $tpl->assign('payment_type', payment_type($_SESSION['shop']['order']['order_payment']));
+                    $tpl->assign('order_type', order_type($_SESSION['shop']['order']['order_type']));
                     $tpl->assign('article', $article);
                     $mail = $tpl->fetch('order_mail.tpl');
                     
-                    icmail($user_mail, 'Bestellung beim Hofladen', $mail, 'noreplay@hofladen.li', true);
-                    $core->func()->ar($user_mail, $mail);
+                    icmail($user_mail, 'Ihre Bestellung beim Hofladen', $mail, 'noreplay@niggshofladen.li', true);
+					icmail($allgAr['shop_order_email'], 'Ihre Bestellung beim Hofladen', $mail, $user_mail, true);
                     
-                    //unset($_SESSION['shop']);
+                    unset($_SESSION['shop']);
                 }
             }
             
@@ -79,7 +79,6 @@ switch($menu->get(2)){
 $design = new design ( $title , $hmenu );
 $design->header();
 
-//$core->func()->ar($result, $_SESSION['shop']);
 $tpl->assign('order_status', $result);
 $tpl->display('order_success.tpl');
 

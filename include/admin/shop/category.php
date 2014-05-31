@@ -24,7 +24,7 @@ switch ($menu->get(3)){
         if($menu->get(4)){
             
             $_POST['category_image'] = $core->upload()
-                ->name($menu->get(4).'_'. $_POST['category_name'])
+                ->name($menu->get(4))
                 ->init();
             
             $core->db()->singel()
@@ -39,7 +39,7 @@ switch ($menu->get(3)){
             ");
             
             $_POST['category_image'] = $core->upload()
-                ->name($last_id.'_'. $_POST['category_name'])
+                ->name($last_id)
                 ->init();
             
             $_POST['category_sub'] = $menu->get(2);

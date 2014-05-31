@@ -6,7 +6,23 @@
 defined ('main') or die ( 'no direct access' );
 defined ('admin') or die ( 'only admin access' );
 
-unset($_SESSION['shop']);
+/* Balthazar3k Core */
+require_once ('include/angelo.b3k/core.php');
+$core = new Core();
+
+$core->header()
+    ->set('font-awesome/css/font-awesome.min.css')
+        
+    ->set('jquery/js/jquery-1.10.2.js')
+    ->set('jquery/js/jquery-ui-1.10.4.custom.min.js')
+    ->set('jquery/css/ui-darkness/jquery-ui-1.10.4.custom.min.css')
+        
+    ->set('core/core.css')
+    ->set('core/core.js')
+
+    ->set('bootstrap/css/bootstrap.min.css')
+    ->set('bootstrap/css/bootstrap-theme.min.css')
+    ->set('bootstrap/js/bootstrap.min.js');
 
 $core->header()->get('font-awesome', 'jquery', 'core', 'bootstrap');
 $tpl = $core->smarty();

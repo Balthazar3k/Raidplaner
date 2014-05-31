@@ -5,10 +5,14 @@
 
 defined ('main') or die ( 'no direct access' );
 
-/* Load Shop Files */
-require_once 'include/angelo.b3k/func.shop.php';
+/* Balthazar3k Core */
+require_once ('include/angelo.b3k/core.php');
+require_once ('include/angelo.b3k/func.shop.php');
+$core = new Core();
 
-//$core->func()->ar($_SESSION['shop'], $_POST);
+$core->header()
+    ->set('core/core.css')
+    ->set('core/core.js');
 
 $core->header()->get('core');
 $tpl = $core->smarty();

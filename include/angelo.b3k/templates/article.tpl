@@ -34,7 +34,7 @@
                             <form id="standart" action="index.php?shop-ajax-shoppingCart">
                                 <input type="hidden" name="article_id" value="{$i.article_id}" />
                                 <input type="hidden" name="article_amount" value="{$i.article_amount}" />
-                                <input type="hidden" name="article_grossprice" value="{$i.article_grossprice}" />
+                                <input type="hidden" name="article_grossprice" value="{$i.article_grossprice|price}" /> <!-- {(round(20*$i.article_grossprice)/20)} -->
                                 <div class="input-group">
                                     <div class="input-group-btn">
                                         <a data-amount="+{$i.article_amount}" class="btn btn-default" href="#">&nbsp;<i class="fa fa-plus-circle"></i></a>

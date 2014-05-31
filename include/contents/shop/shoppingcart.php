@@ -45,6 +45,8 @@ $design = new design ( $title , $hmenu );
 $design->header();
 
 if( is_array($_SESSION['shop']['cart']) ){
+
+	$core->func()->ar($_SESSION['shop']);
     
     $article_id = array();
     foreach ($_SESSION['shop']['cart'] as $key => $val){

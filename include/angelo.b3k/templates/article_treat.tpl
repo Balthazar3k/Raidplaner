@@ -150,7 +150,6 @@
                 <div class="input-group">
                     <span class="input-group-addon" tooltip="Gesamte Menge"><i class="fa fa-tag"></i> </span>
                     <input 
-                        type="number"
                         name="article_number"
                         class="form-control"
                         placeholder="Menge Vorr&auml;tig 2000kg"
@@ -167,7 +166,6 @@
                 <div class="input-group">
                     <span class="input-group-addon" tooltip="Mengeneinheit"><i class="fa fa-tags"></i> </span>
                     <input 
-                        type="number"
                         name="article_amount"
                         class="form-control"
                         placeholder="Verkaufs Menge a 5kg Kiste"

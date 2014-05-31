@@ -4,7 +4,7 @@
         <div class="pull-left">
             Vielen dank f&uuml;r Ihren einkauf.
             
-            Ihnen wird in k&uuml;rze eine Best&auml;tiguns Mail über Ihren einkauf geschickt.
+            Ihnen wird in k&uuml;rze eine Best&auml;tiguns Mail &uuml;ber Ihren einkauf geschickt.
         </div>
         <br class="clearboth" />
     </div>

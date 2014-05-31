@@ -24,7 +24,7 @@
                     <td class="text-center table-bordered"><b>{$smarty.session.shop.cart[$i.article_id].user_amount}</b> {$i.unit_unit}</td>
                     <td class="text-center table-bordered"><a class="btn btn-warning btn-xs"  href="index.php?shop-order-recalc&data=m&{$i|http_build_query}#article-{$i.article_id}"><i class="fa fa-minus-circle"></i></a></td>
                     <td class="text-center table-bordered"><a class="btn btn-danger btn-xs"  href="index.php?shop-order-delete-{$i.article_id}"><i class="fa fa-trash-o"></i></a></td>
-                    <td class="text-right info">{(($smarty.session.shop.cart[$i.article_id].user_amount / $i.article_amount) * $i.article_grossprice|round:2)|price}</td>
+                    <td class="text-right info">{$smarty.session.shop.cart[$i.article_id].user_price|price}</td>
                 </tr>
             {/foreach}
             </tbody>

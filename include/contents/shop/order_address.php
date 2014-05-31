@@ -43,6 +43,7 @@ $tpl->assign('edit', $edit);
 $tpl->assign('address', $core->db()
         ->select('*')
         ->from('shop_address')
+		->where('address_uid', $_SESSION['authid'] )
         ->rows()
 );
 

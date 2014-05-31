@@ -11,7 +11,7 @@ switch ($menu->get(2)){
     case "shoppingCart":
         
         /* Calc Price & List Article ID in Session */       
-        $user_price = (($_POST['user_amount'] / $_POST['article_amount'])*$_POST['article_grossprice']);
+        $user_price = shop_price((($_POST['user_amount'] / $_POST['article_amount'])*$_POST['article_grossprice']));
         $_SESSION['shop']['price'] += $user_price;
                
         $_SESSION['shop']['cart'][$_POST['article_id']] = array(
@@ -19,7 +19,7 @@ switch ($menu->get(2)){
             'article_amount' => $_POST['article_amount'],
             'article_price' => $_POST['article_grossprice'],
             'user_amount' => $_POST['user_amount'] + $_SESSION['shop']['cart'][$_POST['article_id']]['user_amount'],
-            'user_price' => $user_price + $_SESSION['shop']['cart'][$_POST['article_id']]['price'],
+            'user_price' => $user_price + $_SESSION['shop']['cart'][$_POST['article_id']]['price']
         );
         
         
