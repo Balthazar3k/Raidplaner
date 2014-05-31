@@ -8,6 +8,7 @@ defined ('admin') or die ( 'only admin access' );
 
 /* Balthazar3k Core */
 require_once ('include/angelo.b3k/core.php');
+require_once ('include/angelo.b3k/func.shop.php');
 $core = new Core();
 
 $core->header()
@@ -29,7 +30,7 @@ $tpl = $core->smarty();
 $tpl->assign('menu', $menu->menu_ar);
 
 switch($menu->get(1)){
-    default: $shopModule = 'category.php'; break;
+    default: $shopModule = 'order.php'; break;
     case 'category': $shopModule = 'category.php'; break;
     case 'article': $shopModule = 'article.php'; break;
 }

@@ -34,7 +34,6 @@ function session_shoppingCart(){
 function shop_price($price){   
     global $allgAr;
     $price = sprintf("%01.2f", $price);
-    $price = str_replace('.', ',', $price);
     return $price;
 }
 
