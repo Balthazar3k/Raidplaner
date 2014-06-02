@@ -5,7 +5,9 @@ class Confirm {
     
     protected $_message;    
     protected $_true;
+    protected $_btnTrue;
     protected $_false;
+    protected $_btnFalse;
     protected $_button;
     
     public function __construct($object) {
@@ -18,13 +20,15 @@ class Confirm {
         return $this;
     }
     
-    public function onTrue($url) {
+    public function onTrue($url, $btn = 'Löschen') {
         $this->_true = (string) $url;
+        $this->_btnTrue = htmlentities($btn);
         return $this;
     }
     
-    public function onFalse($url){
+    public function onFalse($url, $btn = 'Abbrechen'){
         $this->_false = (string) $url;
+        $this->_btnFalse = htmlentities($btn);
         return $this;
     }
     
@@ -65,8 +69,8 @@ class Confirm {
                     </div>
                     <div class="panel-footer">
                         <div class="btn-group btn-group-justified">
-                            <a class="btn btn-danger" href="'.$this->_true.'"><i class="fa fa-trash-o"></i> L&ouml;schen</a>
-                            <a class="btn btn-default" href="'.$this->_false.'"><i class="fa fa-mail-reply-all"></i> Abbrechen</a>
+                            <a class="btn btn-success" href="'.$this->_true.'">'.$this->_btnTrue.'</a>
+                            <a class="btn btn-warning" href="'.$this->_false.'">'.$this->_btnFalse.'</a>
                         </div>
                     </div>
                 </div>

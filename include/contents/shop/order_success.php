@@ -66,7 +66,7 @@ switch($menu->get(2)){
                     $mail = $tpl->fetch('order_mail.tpl');
                     
                     icmail($user_mail, 'Ihre Bestellung beim Hofladen', $mail, 'noreplay@niggshofladen.li', true);
-					icmail($allgAr['shop_order_email'], 'Ihre Bestellung beim Hofladen', $mail, $user_mail, true);
+                    icmail($allgAr['shop_order_email'], 'Ihre Bestellung beim Hofladen', $mail, $user_mail, true);
                     
                     unset($_SESSION['shop']);
                 }

@@ -49,7 +49,7 @@
                     <td class="text-center">{$payment_type[$i.order_payment].type}</td>
                     <td class="text-center">{$order_type[$i.order_type].type} | {$order_type[$i.order_type].city}</td>
                     <td class="text-center">{$i.num}</td>
-                    <td class="text-center info"><b>{$i.order_price}</b></td>
+                    <td class="text-center info"><b>{$i.order_price|price} {'currency'|config}</b></td>
                 </tr>
                 {/foreach}
             </tbody>
@@ -57,7 +57,7 @@
                 <tr>
                     <th colspan="7">Summe aller auftr&auml;ge</th>
                     <th class="text-right">Total:</th>
-                    <th class="text-center success">{$sum_price}</th>
+                    <th class="text-center success">{$sum_price|price} {'currency'|config}</th>
                 </tr>
             </foot>
         </table>

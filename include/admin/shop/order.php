@@ -17,10 +17,12 @@ $design->header();
 $new = $core->db()->queryCell("SELECT COUNT(order_id) FROM prefix_shop_order WHERE order_process=0;");
 $cur = $core->db()->queryCell("SELECT COUNT(order_id) FROM prefix_shop_order WHERE order_process=1;");
 $old = $core->db()->queryCell("SELECT COUNT(order_id) FROM prefix_shop_order WHERE order_process=2;");
+$sto = $core->db()->queryCell("SELECT COUNT(order_id) FROM prefix_shop_order WHERE order_process=3;");
 
 $tpl->assign('new', $new);
 $tpl->assign('cur', $cur);
 $tpl->assign('old', $old);
+$tpl->assign('sto', $sto);
 $tpl->display('order_index.tpl');
 
 if( !empty($orderModule) ){
