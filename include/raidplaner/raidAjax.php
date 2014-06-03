@@ -47,7 +47,7 @@ switch( $_GET['ajaxAction'] )
 		@unlink("itemlist.gz");
 	break;
 	
-	echo "muh";
+	echo "muh muh muh";
 }
 
 db_close();
