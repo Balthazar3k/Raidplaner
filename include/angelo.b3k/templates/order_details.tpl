@@ -1,4 +1,3 @@
-{debug}
 <div class="col-lg-8">
     <div class="panel panel-{if $data.order.order_process==0}warning{elseif $data.order.order_process==1}info{elseif $data.order.order_process==2}success{/if}">
         <div class="panel-heading">
@@ -30,7 +29,11 @@
             <div class="col-lg-5">
                 <b>Optionen</b>
                 <hr style="margin-bottom: 2px; margin-top: 4px;">
-                Bestellstatus &auml;ndern!
+                <div class="btn-group btn-group-justified">
+                    <a href="admin.php?shop-print-{$menu[2]}" class="btn btn-default" target="_blank"><i class="fa fa-print"></i> Druckansicht</a>
+                </div><br />
+                
+                Bestellstatus &auml;ndern! <a href="#" onclick="window.print( );">Seite ausdrucken</a>
                 <div class="btn-group btn-group-justified">
                     {if $data.order.order_process!=0}<a href="admin.php?shop-details-{$menu[2]}-p0" class="btn btn-warning">Neue Bestellung</a>{/if}
                     {if $data.order.order_process!=1}<a href="admin.php?shop-details-{$menu[2]}-p1" class="btn btn-info">Bearbeitung</a>{/if}
@@ -47,8 +50,8 @@
                     <th class="text-right">Art.Nr.</th>
                     <th>Art.Name</th>
                     <th class="text-center">Einheit</th>
-                    <th class="text-center">Menge</th>
                     <th class="text-center">Einheitspreis</th>
+                    <th class="text-center">Menge</th>
                     <th class="text-center">Gesamt Preis</th>
                 </tr>
             </thead>
@@ -68,10 +71,10 @@
                         <td>
                             <b>{$i.article.article_name}</b>
                             <div class="small text-justify">{$i.article.article_description|truncate:128:'...':true}</div>
-                        </td>
-                        <td class="text-center">{$i.article.article_amount} {$i.article.unit_short}</td>
+                        </td>                       
                         <td class="text-center">{$i.order.user_amount} {$i.article.unit_short}</td>
                         <td class="text-center">{$i.article.article_grossprice|price} {'currency'|config}</td>
+                        <td class="text-center">{$i.article.article_amount} {$i.article.unit_short}</td>
                         <td class="text-center"><b>{$i.order.user_price|price} {'currency'|config}</b></td>
                     </tr>
                 {/foreach}

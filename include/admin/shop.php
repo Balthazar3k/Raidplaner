@@ -33,6 +33,7 @@ switch($menu->get(1)){
     default: $shopModule = 'order.php'; break;
     case 'category': $shopModule = 'category.php'; break;
     case 'article': $shopModule = 'article.php'; break;
+    case 'print': $shopModule = 'printing.php'; break;
 }
 
 if( !empty( $shopModule )){

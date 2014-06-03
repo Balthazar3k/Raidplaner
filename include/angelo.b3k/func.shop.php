@@ -80,19 +80,22 @@ function order_type($get = false){
             'title' => 'Hofladen Balzers',
             'type' => 'Selbstabholer',
             'city' => 'Balzers',
-            'message' => 'Im Laden selber Abholen'
+            'message' => 'Im Laden selber Abholen',
+            'permission' => true
         ),
         2 => array(
             'title' => 'Gem&uuml;eslada in Vaduz',
             'type' => 'Selbstabholer',
             'city' => 'Vaduz',
-            'message' => 'Im Gem&uuml;eslada Vaduz selber Abholen'
+            'message' => 'Im Gem&uuml;eslada Vaduz selber Abholen',
+            'permission' => true
         ),
         3 => array(
             'title' => 'Hauslieferung',
             'type' => 'Lieferung',
             'city' => 'Hofladen',
-            'message' => 'Die Ware wird Geliefert, die Lieferreichweite liegt bei 15km'
+            'message' => 'Die Ware wird Geliefert, die Lieferreichweite liegt bei 15km',
+            'permission' => ($_SESSION['shop']['price'] >= 15)
         )
     );
     

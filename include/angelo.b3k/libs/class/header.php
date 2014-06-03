@@ -3,6 +3,7 @@ class Header{
     
     protected $i = 0;
     protected $parse;
+    protected $set = array();
 
     protected $headers_html = array(
         'css' => '<link id="%s" type="text/css" href="include/angelo.b3k/libs/%s" rel="stylesheet" />',
@@ -27,5 +28,17 @@ class Header{
        
        $ILCH_HEADER_ADDITIONS .= implode("\n\t", $header);
     }
+    
+    public function init(){
+       $header = array();
+       
+       foreach(func_get_args() as $lib){
+           $header[] = implode("\n\t", $this->parse[$lib]);
+       }
+       
+       echo implode("\n", $header);
+    }
+    
+    
 }
 

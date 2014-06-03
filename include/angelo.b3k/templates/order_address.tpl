@@ -23,6 +23,9 @@
                         </div>
                     </a>
                     <div class="btn-group btn-group-justified">	
+                        <a class="btn btn-success" href="index.php?shop-order-address-{$i.address_id}">Benutzen</a>
+                    </div><br />
+                    <div class="btn-group btn-group-justified">	
                         <a class="btn btn-success" href="index.php?shop-order-editAddress-{$i.address_id}"><i class="fa fa-edit"></i> </a>
                         <a class="btn btn-danger" href="index.php?shop-order-deleteAddress-{$i.address_id}"><i class="fa fa-trash-o"></i> </a>
                     </div>
