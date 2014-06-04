@@ -33,7 +33,7 @@
                     <a href="admin.php?shop-print-{$menu[2]}" class="btn btn-default" target="_blank"><i class="fa fa-print"></i> Druckansicht</a>
                 </div><br />
                 
-                Bestellstatus &auml;ndern! <a href="#" onclick="window.print( );">Seite ausdrucken</a>
+                Bestellstatus &auml;ndern!
                 <div class="btn-group btn-group-justified">
                     {if $data.order.order_process!=0}<a href="admin.php?shop-details-{$menu[2]}-p0" class="btn btn-warning">Neue Bestellung</a>{/if}
                     {if $data.order.order_process!=1}<a href="admin.php?shop-details-{$menu[2]}-p1" class="btn btn-info">Bearbeitung</a>{/if}

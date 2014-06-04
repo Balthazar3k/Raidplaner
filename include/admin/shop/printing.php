@@ -2,7 +2,7 @@
 #   Copyright by: Balthazar3k
 #   Support: Balthazar3k.funpic.de
 
-$core->header()->init('bootstrap');
+$core->header()->init('bootstrap', 'font-awesome');
 
 $order_id = escape($menu->get(2), integer);
 

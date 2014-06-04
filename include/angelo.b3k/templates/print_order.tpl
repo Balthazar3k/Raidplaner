@@ -15,13 +15,13 @@
 <div>
     <div class="panel panel-default">
         <div class="panel-heading">
-            <b>Bestellung</b>
+            <b>Kommissionsauftrag - {$data.order.order_id}</b>
         </div>
         <div class="panel-body">
             <table class="table">
                 <tr>
                     <td>
-                        <b>Adresse</b>
+                        <i class="fa fa-home fa-2x"></i> <b>Adresse</b>
                         <hr style="margin-bottom: 2px; margin-top: 4px;">
                         {$data.order.address_company}<br />
                         {$data.order.address_last_name}, {$data.order.address_first_name}<br />
@@ -31,11 +31,14 @@
                         <i class="fa fa-phone-square fa-lg"></i> {$data.order.address_phone}<br />
                     </td>
                     <td>
-                        <b>Information</b>
+                        <i class="fa fa-info-circle fa-2x"></i> <b>Information</b>
                         <hr style="margin-bottom: 2px; margin-top: 4px;">
                         Bestellt am:
                         <b>{$data.order.order_date|date_format:'%a %d.%m.%Y um %H:%M Uhr'}</b><br /><br />
-
+                        
+                        Auftrags Nr.:
+                        <b>{$data.order.order_id}</b><br />
+                        
                         Zahlungstyp:
                         <b>{$payment_type[$data.order.order_payment].type}</b><br />
 

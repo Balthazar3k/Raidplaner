@@ -31,14 +31,10 @@
                 {foreach $orders as $i}
                     {$sum_price=$sum_price+$i.order_price}
                 <tr>
-                    {if $i.order_process == 0 }
-                        <td class="text-center warning table-bordered"><i class="fa fa-check-square-o fa-2x"></i></td>
-                    {elseif $i.order_process == 1}
-                        <td class="text-center info table-bordered"><i class="fa fa-check-square fa-2x"></i></td>
-                    {elseif $i.order_process == 2}
-                        <td class="text-center success table-bordered"><i class="fa fa-check-square fa-2x"></i></td>
-                    {/if}
-                    <td class="text-center table-bordered">
+                    <td class="text-center">
+                        <a href="admin.php?shop-print-{$i.order_id}" target="_blank"><i class="fa fa-print fa-2x"></i> </a>
+                    </td>
+                    <td class="text-center">
                         <a href="admin.php?shop-details-{$i.order_id}">
                             <i class="fa fa-edit fa-2x"></i>
                         </a>
