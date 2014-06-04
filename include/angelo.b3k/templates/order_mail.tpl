@@ -45,6 +45,7 @@
                 <td align="right">Art.-Nr.</td>
                 <td>Artikel</td>
                 <td align="center">Preis - Menge</td>
+                <td align="center">MwSt.</td>
                 <td align="center">Menge</td>
                 <td align="center">Preis</td>
             </tr>
@@ -55,6 +56,7 @@
                 <td bgcolor="#d4d5d6" align="right">{$i.article_id}</td>
                 <td><b>{$i.article_name}</b></td>
                 <td align="center">{$i.article_grossprice|price} f&uuml;r {$i.article_amount}{$i.unit_short} </td>
+                <td>{$i.article_tax}%</td>
                 <td align="center"><b>{$smarty.session.shop.cart[$i.article_id].user_amount}</b> {$i.unit_unit}</td>
                 <td align="center">{$smarty.session.shop.cart[$i.article_id].user_price|price}</td>
             </tr>
@@ -62,18 +64,18 @@
         </tbody>
         <tfoot>
             <tr bgcolor="#95c0ad">
-                <td colspan="3"><span class="small"><i>alle Angaben inkl. MwSt.</i></span> </td>
+                <td colspan="4"><span class="small"><i>alle Angaben inkl. MwSt.</i></span> </td>
                 <td align="right">Total</td>
                 <td align="center"><b>{$smarty.session.shop.price|price}</b></td>
             </tr>
         </tfoot>
     </table>
             <div style="font-size:16px;font-family: 'Ubuntu', sans-serif;font-weight: bold;">
-                Besten Dank für Ihre Bestellung bei www.hofladen.li
+                Besten Dank fï¿½r Ihre Bestellung bei www.hofladen.li
                 <br style="clear: both;"> 
-                Sobald der Status Ihrer Bestellung sich ändern werden Sie per Mail eine Info erhalten.
+                Sobald der Status Ihrer Bestellung sich ï¿½ndern werden Sie per Mail eine Info erhalten.
                 <br style="clear: both;">
-                Wir freuen uns, Sie schon bald wieder in unserem Shop begrüßen zu dürfen!
+                Wir freuen uns, Sie schon bald wieder in unserem Shop begrï¿½ï¿½en zu dï¿½rfen!
                 <br style="clear: both;">
             </div>
 </div>

@@ -45,8 +45,6 @@ $design = new design ( $title , $hmenu );
 $design->header();
 
 if( is_array($_SESSION['shop']['cart']) ){
-
-	$core->func()->ar($_SESSION['shop']);
     
     $article_id = array();
     foreach ($_SESSION['shop']['cart'] as $key => $val){
@@ -59,8 +57,9 @@ if( is_array($_SESSION['shop']['cart']) ){
         ");
     }
 }
-    $tpl->assign('article', $article);
-    $tpl->display('shopping_cart.tpl');
+
+$tpl->assign('article', $article);
+$tpl->display('shopping_cart.tpl');
 
 
 $design->footer();

@@ -52,6 +52,7 @@
                     <th class="text-center">Einheit</th>
                     <th class="text-center">Einheitspreis</th>
                     <th class="text-center">Menge</th>
+                    <th class="text-center">MwSt.</th>
                     <th class="text-center">Gesamt Preis</th>
                 </tr>
             </thead>
@@ -75,13 +76,14 @@
                         <td class="text-center">{$i.order.user_amount} {$i.article.unit_short}</td>
                         <td class="text-center">{$i.article.article_grossprice|price} {'currency'|config}</td>
                         <td class="text-center">{$i.article.article_amount} {$i.article.unit_short}</td>
+                        <td class="text-center">{$i.article.article_tax}%</td>
                         <td class="text-center"><b>{$i.order.user_price|price} {'currency'|config}</b></td>
                     </tr>
                 {/foreach}
             </tbody>
             <tfoot>
                 <tr>
-                    <td colspan="5"></td>
+                    <td colspan="6"></td>
                     <td class="text-right">Total:</td>
                     <td class="text-center"><b>{$sum_price|price}  {'currency'|config}</b></td>
                 </tr>

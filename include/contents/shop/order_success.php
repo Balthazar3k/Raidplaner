@@ -30,7 +30,9 @@ switch($menu->get(2)){
                             ->fields($article)
                             ->init();
                 }
-
+                
+                
+                // Wenn keine Fehler vorkommen, werden eMails Verschickt mit einer Übersicht über dem Einkauf
                 if( !in_array( false, $status ) ){
                     $result = true;
                     
@@ -65,9 +67,10 @@ switch($menu->get(2)){
                     $tpl->assign('article', $article);
                     $mail = $tpl->fetch('order_mail.tpl');
                     
-                    icmail($user_mail, 'Ihre Bestellung beim Hofladen', $mail, 'noreplay@niggshofladen.li', true);
+                    icmail($user_mail, 'Ihre Bestellung beim Hofladen', $mail, $allgAr['email_noreplay'], true);
                     icmail($allgAr['shop_order_email'], 'Ihre Bestellung beim Hofladen', $mail, $user_mail, true);
                     
+                    // Bestellung aus der Session  Löschen
                     unset($_SESSION['shop']);
                 }
             }

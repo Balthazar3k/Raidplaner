@@ -15,8 +15,9 @@
                     <th class="text-right">Art.-Nr.</th>
                     <th>Artikelname</th>
                     <th class="text-center">Kategorie</th>
-                    <th class="text-center">Bruttopreis - Verkaufsmenge</th>
+                    <th class="text-center">Brutto - Menge</th>
                     <th class="text-center table-bordered" colspan="4">&Auml;nderungen</th>
+                    <th class="text-center">MwSt.</th>
                     <th class="text-right">Preis</th>
                 </tr>
             </thead>
@@ -31,15 +32,16 @@
                     <td class="text-center table-bordered"><b>{$smarty.session.shop.cart[$i.article_id].user_amount}</b> {$i.unit_unit}</td>
                     <td class="text-center table-bordered"><a class="btn btn-warning btn-xs"  href="index.php?shop-shoppingcart-recalc&data=m&{$i|http_build_query}#article-{$i.article_id}"><i class="fa fa-minus-circle"></i></a></td>
                     <td class="text-center table-bordered"><a class="btn btn-danger btn-xs"  href="index.php?shop-shoppingcart-delete-{$i.article_id}"><i class="fa fa-trash-o"></i></a></td>
-                    <td class="text-right info">{$smarty.session.shop.cart[$i.article_id].user_price|price}</td>
+                    <td class="text-center">{$i.article_tax}%</td>
+                    <td class="text-center info">{$smarty.session.shop.cart[$i.article_id].user_price|price} {'currency'|config}</td>
                 </tr>
             {/foreach}
             </tbody>
             <tfood>
                 <tr>
-                    <td colspan="7"><span class="small"><i>alle Angaben inkl. MwSt.</i></span> </td>
+                    <td colspan="8"><span class="small"><i>alle Angaben inkl. MwSt.</i></span> </td>
                     <td class="text-right" >Total</td>
-                    <td class="text-right"><b>{$smarty.session.shop.price|price}</b></td>
+                    <td class="text-center"><b>{$smarty.session.shop.price|price} {'currency'|config}</b></td>
                 </tr>
             </tfood>
         </table>        

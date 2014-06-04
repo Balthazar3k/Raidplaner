@@ -11,13 +11,42 @@ if( loggedin() ){
     
     switch($menu->get(2)){
         case 'type':
-            $_SESSION['shop']['order']['order_type'] = $menu->get(3);
+            $type_id = escape($menu->get(3), 'integer');
+            $type = order_type($type_id);
+            
+            // Überprüfen ob Rechte nicht übergangen werden
+            if($type['permission']){
+                $_SESSION['shop']['order']['order_type'] = $type_id;
+            } else {
+                unset($_SESSION['shop']['order']['order_type']);
+            }
         break;
         case 'address':
-            $_SESSION['shop']['order']['order_address'] = $menu->get(3);
+            $address_id = escape($menu->get(3), 'integer');
+            
+            $isset = $core->db()
+                    ->select('address_id')
+                    ->from('shop_address')
+                    ->where(array('address_uid' => $_SESSION['authid'], 'address_id' => $address_id))
+                    ->cell();
+            
+            // Überprüfen ob es die Adresse vom User ist.
+            if($isset){
+                $_SESSION['shop']['order']['order_address'] = $address_id;
+            } else {
+                unset($_SESSION['shop']['order']['order_address']);
+            }
         break;
-        case 'payment':
-            $_SESSION['shop']['order']['order_payment'] = $menu->get(3);
+        case 'payment': 
+            $payment_id = escape($menu->get(3), 'integer');
+            $payment = payment_type($payment_id);
+            
+            // Überprüfen ob Rechte nicht übergangen werden
+            if( $_SESSION['authright'] <= $payment['permission'] ){
+                $_SESSION['shop']['order']['order_payment'] = $payment_id;
+            } else {
+                unset($_SESSION['shop']['order']['order_payment']);
+            }
         break;
         case 'reset':
             unset($_SESSION['shop']['order'][$menu->get(3)]);
@@ -27,6 +56,7 @@ if( loggedin() ){
         break;
         
         case 'success':
+            //$_SESSION['shop']['order']['order_payment'] = 0;
             include('include/contents/shop/order_success.php');
             exit();
         break;
@@ -47,6 +77,12 @@ if( loggedin() ){
     }
     
 } else {
-   /* Login oder Registrieren */
+    // Wenn der User nicht eingeloggt ist!
+    $design = new design ( $title , $hmenu );
+    $design->header();
+
+    $tpl->display('logreg.tpl');
+
+    $design->footer();
 }
 ?>

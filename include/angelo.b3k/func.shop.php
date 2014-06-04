@@ -74,6 +74,7 @@ function recalc_total_price(){
 }
 
 function order_type($get = false){
+    global $allgAr;
     
     $types = array(
         1 => array(
@@ -94,8 +95,8 @@ function order_type($get = false){
             'title' => 'Hauslieferung',
             'type' => 'Lieferung',
             'city' => 'Hofladen',
-            'message' => 'Die Ware wird Geliefert, die Lieferreichweite liegt bei 15km',
-            'permission' => ($_SESSION['shop']['price'] >= 15)
+            'message' => 'Eine Lieferung ist erst ab einem bestellwert von <b>'.$allgAr['min_purchasing_price'].' '.$allgAr['currency'].'</b> m&ouml;glich.',
+            'permission' => ($_SESSION['shop']['price'] >= $allgAr['min_purchasing_price'])
         )
     );
     

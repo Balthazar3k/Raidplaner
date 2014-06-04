@@ -24,7 +24,7 @@
                 </div>
                 <div class="col-lg-4">
                     <ul class="list-group">
-                        <li class="list-group-item list-group-item-info text-center"><b>{$i.article_grossprice|price}</b> - {$i.article_amount} {$i.unit_unit}</li>
+                        <li class="list-group-item list-group-item-info text-center"><b>{$i.article_grossprice|price}</b> - {$i.article_amount} {$i.unit_unit} | {$i.article_tax}% MwSt.</li>
                         {if $i.article_discount != 0}
                             <li class="list-group-item list-group-item-success text-center">
                                 <b>Rabatt: {$i.article_discount}% | <span style="text-decoration: line-through;">{$i.article_taxnetprice|price}</span></b>
