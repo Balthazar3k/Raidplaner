@@ -18,7 +18,7 @@
       <div class="text-center bs-wizard-stepnum">Schritt 3</div>
       <div class="progress"><div class="progress-bar"></div></div>
       <a href="#" class="bs-wizard-dot"></a>
-      <div class="bs-wizard-info text-center"><b>Adresse</b><hr>W&auml;hlen Sie oder erstellen Sie Ihre Adresse.<br>Die Adresse wir auch ben&ouml;tigt f&uuml;r Selbstabholer.</div>
+      <div class="bs-wizard-info text-center"><b>Adresse</b><hr>W&auml;hlen Sie oder erstellen Sie Ihre Adresse.<br>Die Adresse wird auch ben&ouml;tigt f&uuml;r Selbstabholer.</div>
     </div>
 
     <div class="col-xs-3 bs-wizard-step {if isset($smarty.session.shop.order.order_confirm)}complete{elseif ($smarty.session.shop.order|count)-1 >= 4}active{else}disabled{/if}"><!-- active -->
