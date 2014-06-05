@@ -6,8 +6,12 @@ switch($menu->get(2)){
     case 'saveAddress':
 
         $status = array();
+        $ignor = array('address_company');
         foreach($_POST as $key => $val ){
-            $status[$key] = (bool) !empty($val);
+            if(!in_array($key, $ignor) ){
+                echo $key .', ';
+                $status[$key] = (bool) !empty($val);
+            }
         }
         
         if( !in_array(false, $status) ){

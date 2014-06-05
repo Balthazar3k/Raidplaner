@@ -1,7 +1,7 @@
 <div class="col-lg-12">
     <div class="input-group">
         <span class="input-group-btn ">
-            <a class="btn btn-success" href="?shop-article-0"><i class="fa fa-mail-reply-all"></i> Zur&uuml;ck</a>
+            <a class="{if $menu[2] == 0 || empty($menu[2])}disabled btn btn-default{else}btn btn-success{/if}" href="javascript:void(0);" onclick="history.back();"><i class="fa fa-mail-reply-all"></i> Zur&uuml;ck</a>
             <a class="btn btn-info" href="?shop"><i class="fa fa-inbox"></i>&nbsp;Produkte</a>
         </span>
         <span class="input-group-addon"><i class="fa fa-search fa-lg search-icon"></i></span>

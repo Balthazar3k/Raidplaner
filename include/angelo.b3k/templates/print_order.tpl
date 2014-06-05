@@ -6,9 +6,9 @@
 
 <script>
 {literal}
-    window.onload=function(){
-        window.print();
-    };
+
+window.print();
+
 {/literal}
 </script>
 

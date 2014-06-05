@@ -1,4 +1,7 @@
 {if $order_status}
+    <h1 class="text-center">Bestellung wurde abgeschickt!</h1>
+    <hr><br>
+    
     <div class="alert alert-success">
         <i class="fa fa-check-circle fa-3x pull-left"></i>
         <div class="pull-left">

@@ -1,12 +1,5 @@
-<div class="alert alert-info">
-    <i class="fa fa-info-circle fa-2x pull-left"></i> 
-    <div class="pull-left">
-        W&auml;hlen Sie bitte aus ob die Bestellung, als Selbstabholer oder Lieferung bearbeitet werden soll.<br>
-        Bedenken Sie bitte das bei einer Hauslieferung, zus&auml;tzliche Kosten anfallen k&ouml;nnen.
-    </div>
-    <br style="clear: both;" />
-</div>
-
+<h2 class="text-center">Auswahl der Bestellart</h2>
+<hr><br>
 {foreach $type as $k => $i}
     {if $i.permission}
     <div class="col-lg-4">

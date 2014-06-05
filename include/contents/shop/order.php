@@ -68,10 +68,10 @@ if( loggedin() ){
     // Order Type
     if( !isset($_SESSION['shop']['order']['order_type']) ){
         include('include/contents/shop/order_type.php');
-    } else if ( !isset($_SESSION['shop']['order']['order_address']) ){
-        include('include/contents/shop/order_address.php');
     } else if ( !isset($_SESSION['shop']['order']['order_payment']) ){
         include('include/contents/shop/payment_type.php');
+    } else if ( !isset($_SESSION['shop']['order']['order_address']) ){
+        include('include/contents/shop/order_address.php');
     } else if ( !isset($_SESSION['shop']['order']['order_confirm']) ){
         include('include/contents/shop/order_confirm.php');
     }

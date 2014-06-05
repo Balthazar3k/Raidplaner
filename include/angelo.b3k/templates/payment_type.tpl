@@ -1,10 +1,5 @@
-<div class="alert alert-info">
-    <i class="fa fa-info-circle fa-2x pull-left"></i> 
-    <div class="pull-left">
-        Wie m&ouml;chten Sie Bezahlen?<br>
-    </div>
-    <br style="clear: both;" />
-</div>
+<h2 class="text-center">Auswahl der Zahlungsmethode</h2>
+<hr><br>
 
 {foreach $type as $k => $i}
     {if $smarty.session.authright <= $i.permission}

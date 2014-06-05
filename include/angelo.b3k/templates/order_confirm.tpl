@@ -1,3 +1,6 @@
+<h2 class="text-center">Eingaben &Uuml;berpr&uuml;fen & Best&auml;tigen</h2>
+<hr><br>
+
 <div id="article" class="col-lg-8">
     {if !empty($article) }
     <div class="panel panel-default">

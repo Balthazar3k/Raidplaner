@@ -36,7 +36,7 @@ switch ($menu->get(2)){
     break;
     
     case 'search':
-        $search = str_replace(' ', '%', htmlentities($_POST['search']));
+        $search = str_replace(' ', '%', htmlentities(escape($_POST['search'], 'string')));
 
         $article = $core->db()->queryRows(
             standart_article_sql()  

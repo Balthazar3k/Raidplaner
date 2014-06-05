@@ -1,11 +1,5 @@
-<div class="alert alert-info">
-    <i class="fa fa-info-circle fa-2x pull-left"></i> 
-    <div class="pull-left">
-        W&auml;hlen Sie bitte Ihre Adresse aus, die wird auch f&uuml;r eine Selbstabholung ben&ouml;tigt.<br>
-        Bedenken Sie bitte das bei einer Hauslieferung, zus&auml;tzliche Kosten anfallen.
-    </div>
-    <br style="clear: both;" />
-</div>
+<h2 class="text-center">Auswahl Ihrer Adresse</h2>
+<hr><br>
 
 <div class="col-lg-6">
     {foreach $address as $k => $i}
@@ -13,7 +7,7 @@
             <div class="panel panel-default">
                 <div class="panel-body" style="padding: 4px!important;">
                     <a href="index.php?shop-order-address-{$i.address_id}">
-                        <div class="alert alert-info" style="margin-bottom: 4px!important;">
+                        <div class="well well-sm" style="margin-bottom: 4px!important;">
                             {if $i.address_company}{$i.address_company}<br>{/if}
                             {$i.address_first_name}
                             {$i.address_last_name}<br>
@@ -44,14 +38,14 @@
                 {if is_array($status)}
                 <div class="alert alert-danger">
                     <i class="fa fa-info-circle pull-left"></i>
-                    <div class="pull-left small">Alle Felder sind Pflicht, bitte f&uuml;llen Sie alle Rot eingerahmten felder aus.</div>
+                    <div class="pull-left small">Alle Felder die Rot eingerahmt sind, sind pflicht Felder, bitte f&uuml;llen Sie alle Rot eingerahmten felder aus.</div>
                     <br style="clear: both;" />
                 </div>
                 {/if}
 
                 <div class="col-lg-12">
                     
-                    <div class="form-group {if is_array($status) && !$status.address_company}has-error{/if}">
+                    <div class="form-group">
                         <label for="address_company">Firma</label>
                         <input class="form-control" type="text" placeholder="Firmenname" name="address_company" value="{$edit.address_company}" />
                     </div>
