@@ -7,6 +7,7 @@ defined ('main') or die ( 'no direct access' );
 defined ('admin') or die ( 'only admin access' );
 
 switch($menu->get(1)){
+    default: header('Location: admin.php?shop-orders-0'); break;
     case 'orders': $orderModule = 'orders.php'; break;
     case 'details': $orderModule = 'order_details.php'; break;
 }
