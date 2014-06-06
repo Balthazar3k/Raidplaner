@@ -71,7 +71,7 @@
                         <td class="text-right">{$i.article.article_id}</td>
                         <td>
                             <b>{$i.article.article_name}</b>
-                            <div class="small text-justify">{$i.article.article_description|truncate:128:'...':true}</div>
+                            <div class="small text-justify">{$i.article.article_description|truncate:64:'...':true}</div>
                         </td>                       
                         <td class="text-center">{$i.order.user_amount} {$i.article.unit_short}</td>
                         <td class="text-center">{$i.article.article_grossprice|price} {'currency'|config}</td>

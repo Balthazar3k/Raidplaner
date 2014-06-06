@@ -30,6 +30,8 @@ if( !empty($orderModule) ){
     include('include/admin/shop/'.$orderModule);
 }
 
+include('include/admin/shop/box_total.php');
+
 echo '<br style="clear: both;" />';
 
 $design->footer();
