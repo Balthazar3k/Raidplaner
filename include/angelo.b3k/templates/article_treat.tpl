@@ -208,7 +208,6 @@
                 <br />
                 <div class="input-group">
                     <input 
-                        type="number"
                         name="article_tax"
                         class="form-control"
                         placeholder="Mehrwertsteuer"
