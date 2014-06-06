@@ -9,7 +9,6 @@ switch($menu->get(2)){
         $ignor = array('address_company');
         foreach($_POST as $key => $val ){
             if(!in_array($key, $ignor) ){
-                echo $key .', ';
                 $status[$key] = (bool) !empty($val);
             }
         }

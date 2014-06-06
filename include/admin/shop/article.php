@@ -26,9 +26,13 @@ switch ($menu->get(3)){
         
         if($menu->get(4)){
             
-            $_POST['article_image'] = $core->upload()
+            $core->upload()
                 ->name($menu->get(4))
                 ->init();
+            
+            if( $core->upload()->status() ){
+                $_POST['article_image'] = $core->upload()->file();
+            }
             
             $core->db()->singel()
                 ->update('shop_articles')
@@ -41,9 +45,11 @@ switch ($menu->get(3)){
                 SELECT MAX(article_id) FROM prefix_shop_articles;
             ");
             
-            $_POST['article_image'] = $core->upload()
+            $core->upload()
                 ->name($last_id)
                 ->init();
+            
+            $_POST['article_image'] = $core->upload()->file();
             
             $_POST['article_category'] = $menu->get(2);
             $core->db()->singel()

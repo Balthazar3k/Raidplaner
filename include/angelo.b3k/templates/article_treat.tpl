@@ -50,7 +50,13 @@
                 <tr {if $menu[3] == 'edit' && $menu[4] == $i.article_id}class="info"{/if} data-view="{$i.article_name}">
                     <td class="text-right">{$i.article_id}</td>
                     <td><b>{$i.article_name}</b></td>
-                    <td class="text-center">{if !empty($i.article_image)}<i class="fa fa-check-square"></i>{else}{/if}</td>
+                    <td class="text-center">
+                        {if !empty($i.article_image)}
+                            <i class="fa fa-check-square fa-lg"></i>
+                        {else}
+                            <i class="fa fa-square"></i>
+                        {/if}
+                    </td>
                     <td class="text-center">{$i.article_number} {$i.unit_short}</td>
                     <td class="text-center">{$i.article_amount} {$i.unit_short}</td>
                     <td class="text-center">{$i.article_netprice|price}</td>

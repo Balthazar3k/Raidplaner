@@ -1,4 +1,3 @@
-{debug}
 <div class="{if empty($category)}col-lg-12{else}col-lg-9{/if}">
     <div id="article">
         {if ($article|count) != 0 }

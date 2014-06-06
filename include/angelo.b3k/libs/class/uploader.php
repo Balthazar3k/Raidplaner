@@ -9,7 +9,9 @@ class Upload {
     
     protected $pattern;
     
-    protected $status;
+    protected $file;
+    
+    protected $status = false;
     
     protected $errors = array();
 
@@ -59,13 +61,18 @@ class Upload {
 
                 if(move_uploaded_file($val['tmp_name'], $this->path.$this->name)){
                     $this->status = true;
-                    return $this->path.$this->name;
+                    $this->file = $this->path.$this->name;
+                    return true;
                 } else {
                     return null;
                 }
 
             }
         }
+    }
+    
+    public function file(){
+        return $this->file;
     }
     
     public function status(){
