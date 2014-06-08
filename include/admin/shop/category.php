@@ -93,7 +93,8 @@ switch ($menu->get(3)){
             echo $core->confirm()
                 ->message('Möchten Sie wirklich die Kategorie "'.$name.'" löschen, alle Unterkategorien werden mitgelöscht?')
                 ->onTrue('admin.php?shop-category-'.$menu->get(2).'-delete-t'.$menu->get(4))
-                ->html('Aktion bestätigen!');
+                ->onFalse('admin.php?shop-category-'.$menu->get(2))
+                ->panel('Aktion bestätigen!');
         }
                
     break;

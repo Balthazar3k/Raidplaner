@@ -10,7 +10,7 @@ function shop_categoryString($id){
             ->where('category_id', $id)
             ->row();
     
-    if( ((integer) $cat['category_sub']) ){
+    if( ($cat['category_sub']) ){
         $res = shop_categoryString($cat['category_sub']);
         $ar = array_merge($ar, $res);
         $ar[] = $cat;
@@ -30,4 +30,3 @@ function shop_hmenu($name, $url, $id){
     return $tpl->fetch('hmenu_category.tpl');
 }
 ?>
-
