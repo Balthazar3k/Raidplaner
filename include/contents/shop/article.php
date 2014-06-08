@@ -3,14 +3,15 @@
 #   Support: Balthazar3k.funpic.de
 
 defined ('main') or die ( 'no direct access' );
+include('include/angelo.b3k/func.category.php');
 
-$design = new design ( $title , $hmenu );
+$categoryID = (empty($menu->get(2)) ? 0 : $menu->get(2));
+
+$design = new design ( $title , shop_hmenu('Shop:', '?shop-article', $categoryID) );
 $design->header();
 
 shop_bar();
 shop_category();
-
-$categoryID = (empty($menu->get(2)) ? 0 : $menu->get(2));
 
 $categoryInfo = $core->db()
         ->select('*')

@@ -7,11 +7,9 @@
             </div>
             <br style="clear: both;" />
         </li>
-        <a class="list-group-item list-group-item-warning" href="?shop-article-{$smarty.session.shop.last_category}">
-            <div class="col-lg-6"><i class="fa fa-mail-reply-all"></i> <b>Zur&uuml;ck</b></div>
-            <div class="col-lg-6"></div>
-            <br style="clear:both" />
-        </a>
+        <li class="list-group-item list-group-item-warning">
+            {$hmenu}
+        </li>
         {foreach $category as $cat}
         <a class="list-group-item" href="?shop-article-{$cat.category_id}">
             <div class="col-lg-6">{$cat.category_name}</div>

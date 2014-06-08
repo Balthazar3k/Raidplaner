@@ -1,6 +1,7 @@
-<div class="col-lg-6">
+<br class="clear">
+<div class="col-lg-9">
     <div class="col-lg-12">
-        <a class="btn btn-default" href="?shop-category-{$smarty.session.shop.last_category}"><i class="fa fa-reply"></i> Zur&uuml;ck</a>
+        {$hmenu}
         <h4 class="pull-right">
             {if $category|is_array}
                 <b>{$category|count}</b> Kategorien<br>
@@ -15,7 +16,7 @@
             <div class="panel panel-default">
                 <div class="panel-body">
                     <a href="admin.php?shop-category-{$item.category_id}">
-                        {if $item.category_image != ""}<img class="img-thumbnail" src="{$item.category_image}">{/if}
+                        {if file_exists($item.category_image)}<img class="img-thumbnail" src="{$item.category_image}">{/if}
                         <h4 class="text-center">{$item.category_name}</h4>
                         <hr>
                         <p>
@@ -24,7 +25,7 @@
                     </a>
                     <div class="btn-group btn-group-justified">
                         <a class="btn btn-success btn-sm" href="admin.php?shop-category-{$edit.id}-edit-{$item.category_id}"><i class="fa fa-edit"></i> </a>
-                        <a class="btn btn-default btn-sm"><i class="fa fa-plus-circle"></i> </a>
+                        <a class="btn btn-default btn-sm" href="admin.php?shop-article-{$item.category_id}"><i class="fa fa-plus-circle"></i> </a>
                         <a class="btn btn-danger btn-sm" href="admin.php?shop-category-{$edit.id}-delete-{$item.category_id}"><i class="fa fa-trash-o"></i> </a>
                     </div>
                 </div>

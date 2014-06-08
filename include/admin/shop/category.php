@@ -6,6 +6,8 @@
 defined ('main') or die ( 'no direct access' );
 defined ('admin') or die ( 'only admin access' );
 
+include('include/angelo.b3k/func.category.php');
+
 switch ($menu->get(3)){
     case 'edit':
         $categoryEdit = $core->db()
@@ -106,8 +108,8 @@ $core->header()->get('font-awesome', 'jquery', 'core', 'bootstrap');
 $design = new design ( 'Admins Area', 'Admins Area', 2 );
 $design->header();
 
-
 $categoryID = (empty($menu->get(2)) ? 0 : $menu->get(2));
+
 $articleCategory = $core->db()
         ->select('*')
         ->from('shop_category')
@@ -122,6 +124,7 @@ $tpl->assign('edit', array(
     'res' => $categoryEdit
 ));
 
+$tpl->assign('hmenu', shop_hmenu('Kategorien:', '?shop-category', $categoryID));
 $tpl->display('article_category.tpl');
 
 

@@ -6,6 +6,8 @@
 defined ('main') or die ( 'no direct access' );
 defined ('admin') or die ( 'only admin access' );
 
+include('include/angelo.b3k/func.category.php');
+
 switch ($menu->get(3)){
     case 'edit':
         $articleEdit = $core->db()
@@ -111,25 +113,7 @@ $category = $core->db()
         ->where('category_sub', $categoryID)
         ->rows();
 
-$article = $core->db()->queryRows("
-    SELECT
-        SQL_CALC_FOUND_ROWS /* SELECT FOUND_ROWS() */
-        a.*, b.*, c.*,
-        
-        /* Calc Price with Tax */
-        ROUND(((a.article_netprice*a.article_tax)/100),2) AS article_taxprice,
-        ROUND((((a.article_netprice*a.article_tax)/100)+article_netprice),2) AS article_taxnetprice,
-
-        /* Calc Price with Discount */
-        ROUND(((a.article_netprice*a.article_discount)/100),2) AS article_discountprice,
-        ROUND((((a.article_netprice*a.article_discount)/100)-a.article_netprice),2) AS article_discountnetprice,
-
-        /* Calc final Price */
-        ROUND(((a.article_netprice-(a.article_netprice*a.article_discount)/100)+((a.article_netprice*a.article_tax)/100)),2) AS article_grossprice
-    
-    FROM prefix_shop_articles AS a
-        LEFT JOIN prefix_shop_units AS b ON a.article_unit = b.unit_id
-        LEFT JOIN prefix_shop_category AS c ON a.article_category = c.category_id
+$article = $core->db()->queryRows(standart_article_sql() ."
     WHERE a.article_category = '".$categoryID."'
     ORDER BY a.article_name ASC;
 ");
@@ -141,6 +125,7 @@ $units = $core->db()
 
 //$core->func()->ar($article);
 
+$tpl->assign('hmenu', shop_hmenu('Zur&uuml;ck', '?shop-article', $categoryID));
 $tpl->assign('category', $category);
 $tpl->assign('article', $article);
 $tpl->assign('units', $units);
