@@ -40,6 +40,7 @@ switch ($menu->get(2)){
     break;
 }
 
+$title = $hmenu = 'Best&auml;tigen';
 $design = new design ( $title , $hmenu );
 $design->header();
 

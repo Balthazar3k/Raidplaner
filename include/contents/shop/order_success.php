@@ -79,6 +79,7 @@ switch($menu->get(2)){
     break;
 }
 
+$title = $hmenu = 'Bestellung';
 $design = new design ( $title , $hmenu );
 $design->header();
 

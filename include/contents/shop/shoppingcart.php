@@ -41,6 +41,7 @@ switch ($menu->get(2)){
     break;
 }
 
+$title = $hmenu = 'Warenkorb';
 $design = new design ( $title , $hmenu );
 $design->header();
 

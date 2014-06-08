@@ -37,6 +37,7 @@ switch($menu->get(2)){
     break;
 }
 
+$title = $hmenu = 'Adressen';
 $design = new design ( $title , $hmenu );
 $design->header();
 

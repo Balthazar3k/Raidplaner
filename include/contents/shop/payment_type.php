@@ -2,6 +2,7 @@
 #   Copyright by: Balthazar3k
 #   Support: Balthazar3k.funpic.de
 
+$title = $hmenu = 'Zahlungsart';
 $design = new design ( $title , $hmenu );
 $design->header();
 
