@@ -1,4 +1,9 @@
 $(document).ready(function() {
+    /*$('li[href]').css({cursor: 'pointer'}).click(function(event){
+        event.preventDefault();
+        window.location = $(this).attr('href');
+    });*/
+    
     $(document).on('click', "[data-amount]", function(event){
         event.preventDefault();
         var amount = $(this).attr('data-amount');
@@ -52,8 +57,9 @@ $(document).ready(function() {
             var setIn = $(this).attr('data-set'); // Searchstring!      
         
             $.post( action, 'search=' + search, function(data){
-
-                $(setIn).html(data);
+                
+                //console.log($(data).children().children());
+                $(setIn).html($(data).children().children().html());
                 $('.search-icon').toggleClass('fa-spinner fa-spin', 'fa-search');
             }, 'HTML');
         }

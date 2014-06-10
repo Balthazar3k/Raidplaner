@@ -12,14 +12,14 @@ $article = $core->db()->queryRow(
     "
 );
 
-$design = new design ( $title , 'Detail: <b>' . $article['article_name'] .'</b>');
+$hmenu = $title = 'Details von ' . $article['article_name'];
+$design = new design ( $title , $hmenu);
 $design->header();
 
 shop_bar();
 
-$tpl->assign('cart', session_shoppingCart());
-$tpl->assign('article', $article);
-$tpl->display('details.tpl');
+$tpl->assign('a', $article);
+$tpl->display('index_details.tpl');
 
 $design->footer();
 ?>

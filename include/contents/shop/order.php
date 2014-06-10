@@ -2,7 +2,7 @@
 #   Copyright by: Balthazar3k
 #   Support: Balthazar3k.funpic.de
 
-if(count($_SESSION['shop']['cart']) == 0 ){
+if( count($_SESSION['shop']['cart']) == 0 ){
     wd('index.php?shop', 'W&auml;hlen Sie erst ein paar Produkte aus.', 3);
     exit();
 }

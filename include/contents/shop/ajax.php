@@ -52,7 +52,7 @@ switch ($menu->get(2)){
         );
 
         $tpl->assign('article', $article);
-        $tpl->display('shop_search.tpl');
+        $tpl->display('article.tpl');
         exit();
     break;
 }

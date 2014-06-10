@@ -3,24 +3,23 @@
         {if ($article|count) != 0 }
             <ul class="list-group">
                 {foreach $article as $i}
-                <li class="list-group-item" style="padding-left: 0px; padding-right: 0px;">
+                <li  class="list-group-item" style="padding-left: 0px; padding-right: 0px;">
                     <div class="col-lg-2">
                         <img class="img-thumbnail" src="
                              {if file_exists($i.article_image)}
                                  {$i.article_image}
-                             {elseif file_exists($i.category_image)}
-                                 {$i.category_image}
                              {else}
                                  include/angelo.b3k/images/placeholder.png
                              {/if}
                         ">
+                        <div class="btn-group btn-group-justified btn-group-sm" style="margin-top: 3px;">
+                            <a class="btn btn-success" href="index.php?shop-details-{$i.article_id}">Details</a>
+                        </div>
                     </div>
                     <div class="col-lg-5">
-                        <h3 style="margin-top: 5px;">{$i.article_name} <b class="small">- {$i.category_name}</b></h3>
-                        <p>  
-                            <hr>
-                            {$i.article_description|truncate:128}
-                        </p>
+                        <h3 style="margin-top: 5px;">{$i.article_name} <b class="small">- {$i.category_name}</b></h3> 
+                        <hr>
+                        {$i.article_description|truncate:128}
                     </div>
                     <div class="col-lg-5">
                         <ul class="list-group" style="margin-bottom: 0px;">

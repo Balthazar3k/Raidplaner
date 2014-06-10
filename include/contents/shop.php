@@ -19,7 +19,7 @@ $tpl = $core->smarty();
 $tpl->assign('menu', $menu->menu_ar);
 
 switch($menu->get(1)){
-    default: $shopModule = 'article.php'; break; 
+    default: $shopModule = 'article.php'; break;
     case 'details': $shopModule = 'details.php'; break;
     case 'shoppingcart': $shopModule = 'shoppingcart.php'; break;
     case 'order': $shopModule = 'order.php'; break;
