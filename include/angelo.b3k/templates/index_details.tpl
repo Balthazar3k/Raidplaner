@@ -1,4 +1,4 @@
-{debug}<br />
+<br />
 <div id="article">
     <div class="col-lg-7">
         <div class="panel panel-default">
