@@ -6,10 +6,15 @@
  */
 
 defined ('main') or die ( 'no direct access' );
+
+require_once("include/includes/func/b3k_func.php");
+require_once("include/raidplaner/raidplaner.php");
+$raid = new Raidplaner();
+
 $title = $allgAr['title'].' :: Bewerbung';
 $hmenu = 'Bewerbung';
 $design = new design ( $title , $hmenu );
-require_once("include/includes/func/b3k_func.php");
+
 
 $design->header();
 
