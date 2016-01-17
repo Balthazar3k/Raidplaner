@@ -10,7 +10,7 @@
 
         <tr class="Cmite"> 
             <td nowrap="nowrap">Level</td>
-            <td><input type="text" name="charakter[level]" placeholder="80" maxlength="2" value="{$charakter.level}" /></td>
+            <td><input type="text" name="charakter[level]" placeholder="100" maxlength="3" value="{$charakter.level}" /></td>
         </tr>
         
         <tr class="Cnorm"> 
